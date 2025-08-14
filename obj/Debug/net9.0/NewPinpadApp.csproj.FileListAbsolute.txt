@@ -22,7 +22,6 @@ C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\rjsmcshtml.d
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\scopedcss\bundle\NewPinpadApp.styles.css
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\scopedcss\projectbundle\NewPinpadApp.bundle.scp.css
-C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\s36p3vpxyx-b9sayid5wm.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\i08m04056c-61n19gt1b8.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\q70qsufdn2-xtxxf3hu2r.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\1v4ytnajvn-bqjiyaj88i.gz
@@ -227,3 +226,8 @@ C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\bin\Debug\net9.0\runtimes\win
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\NewPinpa.442A0537.Up2Date
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\bin\Debug\net9.0\package-lock.json
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\bin\Debug\net9.0\package.json
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\s36p3vpxyx-yrxsasb6o9.gz
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\94prs00rog-7and8guzmx.gz
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-nyldn6fwcj.gz

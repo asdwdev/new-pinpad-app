@@ -53,24 +53,11 @@
 
   <!-- Table Controls -->
   <div class="flex flex-col md:flex-row justify-between items-center mb-6">
-    <!-- Show entries dropdown -->
-    <div class="flex items-center mb-3 md:mb-0">
-      <span class="text-sm text-gray-700 mr-3">Show:</span>
-      <select class="border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-400 text-sm min-w-[80px]">
-        <option value="5">5</option>
-        <option value="10" selected>10</option>
-        <option value="25">25</option>
-        <option value="50">50</option>
-        <option value="all">All</option>
-      </select>
-      <span class="text-sm text-gray-700 ml-3">entries</span>
-    </div>
-
     <!-- Search field -->
     <div class="flex items-center">
       <label class="text-sm text-gray-700 mr-3">Search:</label>
-      <input type="text" placeholder="Search in all columns..." 
-             class="border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm min-w-[250px]">
+      <input type="text" placeholder="Search in all columns..."
+        class="border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm min-w-[250px]">
     </div>
   </div>
 
@@ -86,150 +73,140 @@
           <th class="px-4 py-3 font-semibold">Action</th>
         </tr>
       </thead>
-      <tbody class="text-sm">
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00999</td>
-          <td class="px-4 py-3 font-mono">0200640050297984</td>
-          <td class="px-4 py-3">24-06-2025 15:44:24</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
-              InActive
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00999</td>
-          <td class="px-4 py-3 font-mono">0200640050297887</td>
-          <td class="px-4 py-3">24-06-2025 15:39:22</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
-              InActive
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00727</td>
-          <td class="px-4 py-3 font-mono">0200640050</td>
-          <td class="px-4 py-3">26-05-2025 17:16:51</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">
-              Maintenance - Tampering
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00291</td>
-          <td class="px-4 py-3 font-mono">0200640050266782</td>
-          <td class="px-4 py-3">26-05-2025 17:16:51</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
-              Not Ready To Use
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00257</td>
-          <td class="px-4 py-3 font-mono">0200640050778899</td>
-          <td class="px-4 py-3">26-05-2025 17:13:06</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
-              Not Ready To Use
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00163</td>
-          <td class="px-4 py-3 font-mono">0200640050277676</td>
-          <td class="px-4 py-3">26-05-2025 16:16:22</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
-              Not Ready To Use
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00049</td>
-          <td class="px-4 py-3 font-mono">0200640050266333</td>
-          <td class="px-4 py-3">26-05-2025 16:16:22</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
-              Not Ready To Use
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
-        <tr class="hover:bg-gray-50 border-b border-gray-200">
-          <td class="px-4 py-3">00411</td>
-          <td class="px-4 py-3 font-mono">0200640050788654</td>
-          <td class="px-4 py-3">26-05-2025 16:13:51</td>
-          <td class="px-4 py-3">
-            <span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">
-              Not Ready To Use
-            </span>
-          </td>
-          <td class="px-4 py-3">
-            <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-              <i class="fa fa-edit"></i>
-            </button>
-          </td>
-        </tr>
+      <tbody id="tableBody" class="text-sm">
+
       </tbody>
     </table>
   </div>
-
   <!-- Pagination -->
   <div class="flex flex-col md:flex-row justify-between items-center mt-4">
-    <div class="text-sm text-gray-600 mb-2 md:mb-0">
-      Showing 1 to 8 of 8 entries
+    <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
+      Showing 0 to 0 of 0 entries
     </div>
-    <div class="flex space-x-1">
-      <!-- Previous button -->
-      <button class="px-3 py-1 border rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+    <div class="flex space-x-1" id="paginationButtons">
+      <button id="prevBtn"
+        class="px-3 py-1 border rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled>
         Previous
       </button>
-      
-      <!-- Page numbers -->
-      <button class="px-3 py-1 border rounded bg-blue-500 text-white border-blue-500 hover:bg-blue-600 text-sm transition-colors">1</button>
-      
-      <!-- Next button -->
-      <button class="px-3 py-1 border rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+      <span id="pageNumbers" class="flex space-x-1"></span>
+      <button id="nextBtn"
+        class="px-3 py-1 border rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled>
         Next
       </button>
     </div>
   </div>
-</div>
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      let currentPage = 1;
+      const pageSize = 10;
+
+      loadPinpads(currentPage);
+
+      function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        const seconds = String(date.getSeconds()).padStart(2, '0');
+        return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+      }
+
+      function loadPinpads(page) {
+        $.ajax({
+          url: 'http://localhost:5125/api/pinpads/inquiry',
+          type: 'GET',
+          dataType: 'json',
+          data: { page: page, size: pageSize },
+          success: function (response) {
+            $('#tableBody').empty();
+            const pinpads = response.data || [];
+
+            if (pinpads.length === 0) {
+              $('#tableBody').append('<tr><td colspan="15" class="text-center py-4">No data available</td></tr>');
+            } else {
+              $.each(pinpads, function (index, item) {
+                const statusClass = getStatusClass(item.status);
+                let row = `
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="px-4 py-3">${item.branch ?? ''}</td>
+                                <td class="px-4 py-3 font-mono">${item.serialNumber ?? ''}</td>
+                                <td class="px-4 py-3">${item.registerDate ? formatDate(item.registerDate) : ''}</td>
+                                <td class="px-4 py-3">
+                                    <span class="inline-block ${statusClass} px-3 py-1 rounded-full text-xs font-medium">
+                                        ${item.status ?? ''}
+                                    </span>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                $('#tableBody').append(row);
+              });
+            }
+
+            // Update info table
+            const start = response.totalData === 0 ? 0 : (response.page - 1) * response.size + 1;
+            const end = Math.min(start + pinpads.length - 1, response.totalData);
+            $('#tableInfo').text(`Showing ${start} to ${end} of ${response.totalData} entries`);
+
+            // Update tombol prev/next
+            $('#prevBtn').prop('disabled', response.page <= 1);
+            $('#nextBtn').prop('disabled', response.page >= response.totalPages);
+
+            // Update nomor halaman dinamis
+            updatePageNumbers(response.page, response.totalPages);
+
+            currentPage = response.page;
+          }
+        });
+      }
+
+      function updatePageNumbers(current, totalPages) {
+        const container = $('#pageNumbers');
+        container.empty();
+
+        const maxButtons = 5; // maksimal tombol halaman terlihat
+        let startPage = Math.max(1, current - Math.floor(maxButtons / 2));
+        let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+        startPage = Math.max(1, endPage - maxButtons + 1);
+
+        for (let i = startPage; i <= endPage; i++) {
+          const btn = $('<button>')
+            .addClass('px-3 py-1 border rounded text-sm transition-colors')
+            .text(i)
+            .toggleClass('bg-blue-500 text-white border-blue-500', i === current)
+            .toggleClass('hover:bg-gray-100', i !== current)
+            .on('click', function () {
+              if (i !== currentPage) loadPinpads(i);
+            });
+          container.append(btn);
+        }
+      }
+
+      $('#prevBtn').on('click', function () {
+        if (currentPage > 1) loadPinpads(currentPage - 1);
+      });
+
+      $('#nextBtn').on('click', function () {
+        loadPinpads(currentPage + 1);
+      });
+
+      function getStatusClass(status) {
+        switch ((status || '').toLowerCase()) {
+          case 'active': return 'bg-green-100 text-green-800';
+          case 'inactive': return 'bg-gray-100 text-gray-800';
+          case 'repair': return 'bg-yellow-100 text-yellow-800';
+          default: return 'bg-gray-100 text-gray-800';
+        }
+      }
+    });
+  </script>

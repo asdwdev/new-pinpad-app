@@ -111,9 +111,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Logistik - DashboardApp</title>
 
-    <!-- TailwindCSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
@@ -121,10 +118,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- Custom CSS -->
-    <link href="~/css/site.css" rel="stylesheet" />
+    @* <link href="~/css/site.css" rel="stylesheet" /> *@
+
+    @* tailwind css *@
+    <link href="~/css/tailwind-output.css" rel="stylesheet">
 </head>
 <body class="bg-gray-50 min-h-screen overflow-x-hidden">
-
     <!-- Tombol Menu Mobile -->
     <div class="md:hidden fixed top-4 left-4 z-50">
         <button id="mobileMenuBtn" class="bg-purple-700 text-white p-2 rounded-md shadow-lg">

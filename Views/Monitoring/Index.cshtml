@@ -20,37 +20,27 @@
             <!-- Regional -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">Regional:</label>
-                <select
+                <select id="regionalSelect"
                     class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                    <option>--Select Regional--</option>
-                    <option>Kanwil Jakarta I</option>
-                    <option>Kanwil Jakarta II</option>
-                    <option>Kanwil Bandung</option>
-                    <option>Kanwil Surabaya</option>
+                    <option>Loading...</option>
                 </select>
             </div>
 
             <!-- Cabang Induk -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
-                <select
+                <select id="cabangIndukSelect"
                     class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                    <option>--Select Cabang Induk--</option>
-                    <option>00701 - KCS JAKARTA HARMONI</option>
-                    <option>00702 - KCS JAKARTA THAMRIN</option>
-                    <option>00703 - KCS BANDUNG</option>
+                    <option value="">--Select Cabang Induk--</option>
                 </select>
             </div>
 
             <!-- Outlet -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">Outlet:</label>
-                <select
+                <select id="outletSelect"
                     class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                    <option>--Select Outlet--</option>
-                    <option>00727 - KCPS Jakarta Tanah Abang</option>
-                    <option>00728 - KCPS Jakarta Senen</option>
-                    <option>00729 - KCPS Bandung</option>
+                    <option value="">--Select Outlet--</option>
                 </select>
             </div>
         </div>
@@ -102,20 +92,6 @@
     <!-- Custom Search and Length Menu -->
     <div class="px-4 sm:px-6 py-6 border-b border-gray-200">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-            <!-- Length Menu -->
-            <div class="flex items-center gap-2">
-                <label class="text-sm font-medium text-gray-700">Show:</label>
-                <select id="pageSize"
-                    class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                    <option value="5">5</option>
-                    <option value="10" selected>10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                <span class="text-sm text-gray-600">entries</span>
-            </div>
-
             <!-- Search Box -->
             <div class="flex items-center gap-2">
                 <label class="text-sm font-medium text-gray-700">Search:</label>
@@ -126,8 +102,8 @@
     </div>
 
     <!-- Table Responsive Wrapper -->
-    <div class="table-responsive">
-        <table id="pinpadListTable" class="w-full text-left border-collapse min-w-full">
+    <div class="overflow-x-auto">
+        <table id="pinpadListTable" class="min-w-[1200px] w-full text-left border-collapse">
             <thead>
                 <tr class="bg-gray-100 text-gray-700 text-sm">
                     <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap"
@@ -273,17 +249,6 @@
                             </div>
                         </div>
                     </th>
-                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap"
-                        data-sortable="true">
-                        <div class="flex items-center justify-between">
-                            <span>Register</span>
-                            <div class="sort-indicator">
-                                <i class="fa fa-sort text-gray-400"></i>
-                                <i class="fa fa-sort-up text-blue-500 hidden"></i>
-                                <i class="fa fa-sort-down text-blue-500 hidden"></i>
-                            </div>
-                        </div>
-                    </th>
                 </tr>
             </thead>
             <tbody id="tableBody" class="text-sm">
@@ -292,65 +257,184 @@
         </table>
     </div>
 
-    <!-- Custom Pagination and Info -->
-    <div class="px-4 sm:px-6 py-4 border-t border-gray-200">
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-            <!-- Info -->
-            <div id="tableInfo" class="text-sm text-gray-600">
-                Showing 1 to 3 of 3 entries
-            </div>
-
-            <!-- Pagination -->
-            <div id="pagination" class="flex items-center gap-1">
-                <button id="prevBtn"
-                    class="px-3 py-2 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled>
-                    Previous
-                </button>
-                <button
-                    class="page-btn current px-3 py-2 text-sm border border-blue-500 bg-blue-500 text-white rounded">1</button>
-                <button id="nextBtn"
-                    class="px-3 py-2 text-sm border border-gray-300 rounded hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                    disabled>
-                    Next
-                </button>
-            </div>
+    <!-- Pagination -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+        <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
+            Showing 0 to 0 of 0 entries
+        </div>
+        <div class="flex space-x-1" id="paginationButtons">
+            <button id="prevBtn"
+                class="px-3 py-1 border rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled>
+                Previous
+            </button>
+            <span id="pageNumbers" class="flex space-x-1"></span>
+            <button id="nextBtn"
+                class="px-3 py-1 border rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled>
+                Next
+            </button>
         </div>
     </div>
 </div>
+
+
+
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $.ajax({
-                url: "http://localhost:5125/api/pinpads",
-                method: "GET",
-                dataType: "json",
-                success: function (json) {
-                    if (json.success) {
-                        let tbody = $("#tableBody");
-                        tbody.empty(); // kosongin dulu
+            let allPinpads = [];
+            let currentPage = 1;
+            const rowsPerPage = 10;
 
-                        $.each(json.data, function (i, p) {
-                            let tr = `
-                                <tr class="hover:bg-gray-50 border-b border-gray-200">
-                                    <td class="px-4 py-3 whitespace-nowrap">${p.regional || '-'}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">${p.ppadId || '-'}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">${p.ppadSn || '-'}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">${p.ppadStatus || '-'}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">${p.ppadUpdateDate || '-'}</td>
-                                </tr>
-                            `;
-                            tbody.append(tr);
-                        });
-                    } else {
-                        console.error("API error:", json.message);
+            loadRegional();
+            loadCabangInduk();
+            loadPinpads();
+
+            function formatDate(dateStr) {
+                const date = new Date(dateStr);
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+                return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+            }
+
+            function loadRegional() {
+                $.ajax({
+                    url: 'http://localhost:5125/api/pinpads',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        const pinpads = response.data || [];
+                        let regionals = [...new Set(pinpads.map(p => p.regional).filter(r => r))];
+
+                        const $select = $('#regionalSelect');
+                        $select.empty().append('<option value="">--Select Regional--</option>');
+                        regionals.forEach(reg => $select.append(`<option value="${reg}">${reg}</option>`));
                     }
-                },
-                error: function (xhr, status, error) {
-                    console.error("Fetch error:", status, error);
-                    console.error("Response text:", xhr.responseText);
+                });
+            }
+
+            function loadCabangInduk(filterRegional = "") {
+                $.ajax({
+                    url: 'http://localhost:5125/api/pinpads',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: filterRegional ? { loc: filterRegional } : {},
+                    success: function (response) {
+                        const pinpads = response.data || [];
+                        let cabangs = [...new Set(pinpads.map(p => `${p.cabangInduk} - ${p.location}`).filter(c => c))];
+
+                        const $select = $('#cabangIndukSelect');
+                        $select.empty().append('<option value="">--Select Cabang Induk--</option>');
+                        cabangs.forEach(cb => $select.append(`<option value="${cb}">${cb}</option>`));
+                    }
+                });
+            }
+
+            function loadPinpads(filters = {}) {
+                $.ajax({
+                    url: 'http://localhost:5125/api/pinpads',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: filters,
+                    success: function (response) {
+                        allPinpads = response.data || [];
+                        currentPage = 1; // reset halaman pertama
+                        renderTable();
+                    }
+                });
+            }
+
+            function renderTable() {
+                const start = (currentPage - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const pageData = allPinpads.slice(start, end);
+
+                $('#tableBody').empty();
+                if (pageData.length === 0) {
+                    $('#tableBody').append('<tr><td colspan="15" class="text-center py-4">No data available</td></tr>');
+                } else {
+                    pageData.forEach(item => {
+                        $('#tableBody').append(`
+                            <tr class="border-b hover:bg-gray-50">
+                                <td class="px-4 py-3">${item.regional ?? ''}</td>
+                                <td class="px-4 py-3">${item.cabangInduk ?? ''}</td>
+                                <td class="px-4 py-3">${item.kodeOutlet ?? ''}</td>
+                                <td class="px-4 py-3">${item.location ?? ''}</td>
+                                <td class="px-4 py-3">${item.registerDate ? formatDate(item.registerDate) : ''}</td>
+                                <td class="px-4 py-3">${item.updateDate ? formatDate(item.updateDate) : ''}</td>
+                                <td class="px-4 py-3">${item.serialNumber ?? ''}</td>
+                                <td class="px-4 py-3">${item.tid ?? ''}</td>
+                                <td class="px-4 py-3">${item.statusPinpad ?? ''}</td>
+                                <td class="px-4 py-3">${item.createBy ?? ''}</td>
+                                <td class="px-4 py-3">${item.ipLow ?? ''}</td>
+                                <td class="px-4 py-3">${item.ipHigh ?? ''}</td>
+                                <td class="px-4 py-3">${item.lastActivity ? formatDate(item.lastActivity) : ''}</td>
+                            </tr>
+                        `);
+                    });
                 }
+
+                renderPagination();
+                updatePaginationInfo();
+            }
+
+            function renderPagination() {
+                const totalPages = Math.ceil(allPinpads.length / rowsPerPage);
+                const $pageNumbers = $('#pageNumbers').empty();
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = $('<button>')
+                        .text(i)
+                        .addClass('px-3 py-1 border rounded text-sm transition-colors')
+                        .toggleClass('bg-blue-500 text-white border-blue-500', i === currentPage)
+                        .toggleClass('hover:bg-gray-100', i !== currentPage)
+                        .click(() => { currentPage = i; renderTable(); });
+                    $pageNumbers.append(btn);
+                }
+
+                $('#prevBtn').prop('disabled', currentPage === 1);
+                $('#nextBtn').prop('disabled', currentPage === totalPages || totalPages === 0);
+            }
+
+            $('#prevBtn').click(function () {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            });
+
+            $('#nextBtn').click(function () {
+                const totalPages = Math.ceil(allPinpads.length / rowsPerPage);
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable();
+                }
+            });
+
+            function updatePaginationInfo() {
+                const totalRows = allPinpads.length;
+                const start = totalRows === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
+                const end = Math.min(currentPage * rowsPerPage, totalRows);
+                $('#tableInfo').text(`Showing ${start} to ${end} of ${totalRows} entries`);
+            }
+
+            // Reload jika filter dipilih
+            $('#regionalSelect').change(function () {
+                const regional = $(this).val();
+                loadCabangInduk(regional);
+                loadPinpads({ regional });
+            });
+
+            $('#cabangIndukSelect').change(function () {
+                const cabang = $(this).val();
+                const regional = $('#regionalSelect').val();
+                loadPinpads({ regional, cabangInduk: cabang });
             });
         });
     </script>
