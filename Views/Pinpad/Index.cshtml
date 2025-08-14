@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Pinpad List";
+}
+<h1>Daftar Pinpad</h1>
+
+<table id="pinpadTable" border="1">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Serial Number</th>
+            <th>Status</th>
+            <th>Branch</th>
+            <th>Update Date</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function () {
+            $.ajax({
+                url: "http://localhost:5125/api/pinpads",
+                method: "GET",
+                success: function (res) {
+                    if (res.success) {
+                        let rows = "";
+                        res.data.forEach(function (item) {
+                            rows += `<tr>
+                                                <td>${item.ppadId}</td>
+                                                <td>${item.ppadSn}</td>
+                                                <td>${item.ppadStatus}</td>
+                                                <td>${item.ppadBranch}</td>
+                                                <td>${item.ppadUpdateDate}</td>
+                                            </tr>`;
+                        });
+                        $("#pinpadTable tbody").html(rows);
+                    }
+                },
+                error: function (err) {
+                    console.error(err);
+                }
+            });
+        });
+    </script>
+}

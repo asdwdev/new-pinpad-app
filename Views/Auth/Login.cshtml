@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Login";
+}
+<h2>Login</h2>
+
+<div id="message"></div>
+
+<form id="loginForm">
+    <label>Username:</label>
+    <input type="text" id="username" required /><br /><br />
+
+    <label>Password:</label>
+    <input type="password" id="password" required /><br /><br />
+
+    <button type="submit">Login</button>
+</form>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $("#loginForm").submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: "http://localhost:5125/api/auth/login",
+                method: "POST",
+                contentType: "application/json",
+                xhrFields: { withCredentials: true }, // supaya session kebawa
+                data: JSON.stringify({
+                    username: $("#username").val(),
+                    password: $("#password").val()
+                }),
+                success: function (res) {
+                    if (res.success) {
+                        window.location.href = "/Home/Index";
+                    } else {
+                        $("#message").text(res.message); // langsung ambil pesan dari API
+                    }
+                },
+                error: function (xhr) {
+                    try {
+                        var err = JSON.parse(xhr.responseText);
+                        $("#message").text(err.message); // langsung pesan dari API error
+                    } catch {
+                        $("#message").text("Terjadi kesalahan saat login.");
+                    }
+                }
+            });
+        });
+    </script>
+}
