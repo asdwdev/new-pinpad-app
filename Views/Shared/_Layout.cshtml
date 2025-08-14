@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿@* <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -87,4 +87,189 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 
+</html> *@
+
+@* Pastikan file ini .cshtml dan _ViewImports.cshtml sudah ada *@
+@* _ViewImports.cshtml harus berisi: @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Logistik - DashboardApp</title>
+
+    <!-- TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body class="bg-gray-50 min-h-screen overflow-x-hidden">
+
+    <!-- Tombol Menu Mobile -->
+    <div class="md:hidden fixed top-4 left-4 z-50">
+        <button id="mobileMenuBtn" class="bg-purple-700 text-white p-2 rounded-md shadow-lg">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="flex flex-row w-full">
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="fixed md:relative inset-y-0 left-0 z-40 w-64 md:w-72 bg-gradient-to-b from-purple-700 to-red-700 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:min-h-screen p-4 md:p-6 shadow-lg">
+            <div class="mb-6 md:mb-8 flex items-center gap-2 md:gap-3">
+                <div>
+                    <h1 class="text-sm md:text-base font-bold">NEW PINPAD</h1>
+                    <p class="text-xs md:text-sm opacity-80">Admin</p>
+                </div>
+            </div>
+
+            <nav class="space-y-2 md:space-y-3">
+                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "bg-white/20 text-white" : "hover:bg-white/10")"
+                   asp-controller="Dashboard" asp-action="Index">
+                    <i class="fa fa-home"></i> Dashboard
+                </a>
+
+                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Monitoring" ? "bg-white/20 text-white" : "hover:bg-white/10")"
+                   asp-controller="Monitoring" asp-action="Index">
+                    <i class="fa-solid fa-chart-column""></i> Monitoring
+                </a>
+
+                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Pinpad" ? "bg-white/20 text-white" : "hover:bg-white/10")"
+                   asp-controller="Pinpad" asp-action="Index">
+                    <i class="fa fa-cubes"></i> Pinpad (Admin Logistik)
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Konten Utama -->
+        <main class="flex-1 p-3 md:p-6 lg:p-8 transition-all duration-300 min-w-0">
+            <!-- Bar Atas -->
+            <div class="flex justify-end items-center mb-4 md:mb-6 lg:mb-8">
+                <div class="relative inline-block text-left">
+                    <button id="userMenuButton" type="button"
+                        class="flex items-center space-x-2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition">
+                        <i class="fa fa-user"></i>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+
+                    <div id="userMenuDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                        <div class="py-1">
+                            <a href="/Profile" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                Admin
+                            </a>
+                            <a href="#" id="logoutBtn" class="block px-3 py-2 text-sm text-red-600 hover:bg-gray-100">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konten Halaman -->
+            <div class="w-full max-w-7xl mx-auto">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <!-- Overlay untuk Mobile -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+
+    <!-- Script -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(function () {
+            const userMenuBtn = $("#userMenuButton");
+            const userMenuDropdown = $("#userMenuDropdown");
+            const sidebar = $("#sidebar");
+            const overlay = $("#overlay");
+
+            // Cek login status
+            $.ajax({
+                url: "http://localhost:5125/api/auth/me",
+                method: "GET",
+                xhrFields: { withCredentials: true },
+                success: function (res) {
+                    if (!res.success) {
+                        window.location.href = "/Auth/Login";
+                    }
+                }
+            });
+
+            // Logout
+            $("#logoutBtn").click(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "http://localhost:5125/api/auth/logout",
+                    method: "POST",
+                    xhrFields: { withCredentials: true },
+                    success: function (res) {
+                        if (res.success) {
+                            window.location.href = "/Auth/Login";
+                        }
+                    }
+                });
+            });
+
+            // Dropdown user
+            userMenuBtn.on("click", () => {
+                userMenuDropdown.toggleClass("hidden");
+            });
+
+            $(document).on("click", (event) => {
+                if (!userMenuBtn[0].contains(event.target) && !userMenuDropdown[0].contains(event.target)) {
+                    userMenuDropdown.addClass("hidden");
+                }
+            });
+
+            // Menu mobile
+            $("#mobileMenuBtn").on("click", () => {
+                sidebar.toggleClass("-translate-x-full");
+                overlay.toggleClass("hidden");
+            });
+
+            overlay.on("click", () => {
+                sidebar.addClass("-translate-x-full");
+                overlay.addClass("hidden");
+            });
+
+            $(window).on("resize", () => {
+                if (window.innerWidth >= 768) {
+                    sidebar.removeClass("-translate-x-full");
+                    overlay.addClass("hidden");
+                } else {
+                    sidebar.addClass("-translate-x-full");
+                }
+            }).trigger("resize");
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
 </html>

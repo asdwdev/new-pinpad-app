@@ -3,6 +3,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Cache buat session
 builder.Services.AddDistributedMemoryCache();
 
+builder.Services.AddHttpClient("ApiClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:5001"); // alamat API
+});
+
 // Konfigurasi session cookie (HttpOnly, Secure)
 builder.Services.AddSession(options =>
 {
@@ -38,7 +43,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Auth}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 

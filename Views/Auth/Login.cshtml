@@ -1,20 +1,39 @@
 @{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
     ViewData["Title"] = "Login";
 }
-<h2>Login</h2>
 
-<div id="message"></div>
+<div class="text-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">Login</h2>
+    <p class="text-gray-500">Silakan masuk untuk melanjutkan</p>
+</div>
 
-<form id="loginForm">
-    <label>Username:</label>
-    <input type="text" id="username" required /><br /><br />
+<div id="message" class="hidden mb-4 rounded-lg border px-4 py-3 text-sm font-medium" role="alert">
+</div>
 
-    <label>Password:</label>
-    <input type="password" id="password" required /><br /><br />
+<form id="loginForm" class="space-y-4">
+    <!-- Username -->
+    <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" id="username" name="username" required
+            class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-300 focus:ring-opacity-50" />
+    </div>
 
-    <button type="submit">Login</button>
+    <!-- Password -->
+    <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" id="password" name="password" required
+            class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-300 focus:ring-opacity-50" />
+    </div>
+
+    <!-- Tombol Login -->
+    <div>
+        <button type="submit"
+            class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md">
+            Login
+        </button>
+    </div>
 </form>
-
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -26,24 +45,36 @@
                 url: "http://localhost:5125/api/auth/login",
                 method: "POST",
                 contentType: "application/json",
-                xhrFields: { withCredentials: true }, // supaya session kebawa
+                xhrFields: { withCredentials: true },
                 data: JSON.stringify({
                     username: $("#username").val(),
                     password: $("#password").val()
                 }),
                 success: function (res) {
                     if (res.success) {
-                        window.location.href = "/Home/Index";
+                        window.location.href = "/Dashboard/Index";
                     } else {
-                        $("#message").text(res.message); // langsung ambil pesan dari API
+                        $("#message")
+                            .removeClass("hidden")
+                            .removeClass("border-green-300 bg-green-50 text-green-800")
+                            .addClass("border-red-300 bg-red-50 text-red-800")
+                            .text(res.message);
                     }
                 },
                 error: function (xhr) {
                     try {
                         var err = JSON.parse(xhr.responseText);
-                        $("#message").text(err.message); // langsung pesan dari API error
+                        $("#message")
+                            .removeClass("hidden")
+                            .removeClass("border-green-300 bg-green-50 text-green-800")
+                            .addClass("border-red-300 bg-red-50 text-red-800")
+                            .text(err.message);
                     } catch {
-                        $("#message").text("Terjadi kesalahan saat login.");
+                        $("#message")
+                            .removeClass("hidden")
+                            .removeClass("border-green-300 bg-green-50 text-green-800")
+                            .addClass("border-red-300 bg-red-50 text-red-800")
+                            .text("Terjadi kesalahan saat login.");
                     }
                 }
             });
