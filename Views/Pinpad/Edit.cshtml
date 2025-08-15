@@ -19,14 +19,14 @@
             <!-- Serial Number -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">SERIAL NUMBER:</label>
-                <input type="text" value="277885" disabled
+                <input id="serialNumber" type="text" disabled
                     class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
             </div>
 
             <!-- Regional -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">REGIONAL:</label>
-                <select disabled
+                <select disabled id="regional"
                     class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
                     <option>Kanwil Jakarta I</option>
                 </select>
@@ -35,7 +35,7 @@
             <!-- Cabang Induk -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">CABANG INDUK:</label>
-                <select disabled
+                <select disabled id="cabangInduk"
                     class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
                     <option>00701 - KCS JAKARTA HARMONI</option>
                 </select>
@@ -44,7 +44,7 @@
             <!-- Outlet -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">OUTLET:</label>
-                <select disabled
+                <select disabled id="outlet"
                     class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
                     <option>00727 - KCPS Jakarta Tanah Abang</option>
                 </select>
@@ -55,14 +55,14 @@
                 <!-- IP Low -->
                 <div>
                     <label class="block text-gray-700 text-sm font-medium mb-2">IP LOW:</label>
-                    <input type="text" value="11.7.27.1" disabled
+                    <input type="text" id="ipLow" disabled
                         class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
                 </div>
 
                 <!-- IP High -->
                 <div>
                     <label class="block text-gray-700 text-sm font-medium mb-2">IP HIGH:</label>
-                    <input type="text" value="11.7.27.254" disabled
+                    <input type="text" id="ipHigh" disabled
                         class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
                 </div>
             </div>
@@ -75,12 +75,9 @@
             <!-- Kerusakan -->
             <div>
                 <label class="block text-gray-700 text-sm font-medium mb-2">KERUSAKAN:</label>
-                <select
+                <select id="kerusakanSelect"
                     class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                    <option>--Select Kerusakan Pinpad--</option>
-                    <option>BM - Error Biometrik</option>
-                    <option>M1 - Tampering</option>
-                    <option>M2 - Kamera Tidak Berfungsi</option>
+                    <option value="">--Select Kerusakan Pinpad--</option>
                 </select>
             </div>
         </div>
@@ -94,3 +91,34 @@
             class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">Update</button>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(async function () {
+        const id = @ViewBag.Id;
+        try {
+            const res = await fetch(`http://localhost:5125/api/pinpads/${id}`);
+            if (!res.ok) throw new Error('Not found');
+            const d = await res.json();
+
+            $('#serialNumber').val(d.serialNumber || '');
+            $('#regional').html(`<option>${d.regional || ''}</option>`);
+            $('#cabangInduk').html(`<option>${d.cabangInduk || ''}</option>`);
+            $('#outlet').html(`<option>${d.outletCode} - ${d.outletName}</option>`);
+            $('#ipLow').val(d.ipLow || '');
+            $('#ipHigh').val(d.ipHigh || '');
+
+            // Isi select kerusakan cuma dari API GetById
+            if (d.statusRepairDesc) {
+                $('#kerusakanSelect').append(
+                    `<option value="${d.statusRepairCode}" selected>${d.statusRepairCode} - ${d.statusRepairDesc}</option>`
+                );
+            }
+
+        } catch (e) {
+            alert('Data tidak ditemukan');
+            window.location.href = '/Pinpad';
+        }
+    });
+
+</script>
