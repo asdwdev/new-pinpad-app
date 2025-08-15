@@ -71,6 +71,8 @@
                         <option value="Active">Active</option>
                         <option value="Inactive">InActive</option>
                         <option value="NotReadyToUse">Not Ready To Use</option>
+                        <option value="ReadyToUse">Ready To Use</option>
+                        <option value="Maintenance">Maintenance</option>
                     </select>
                 </div>
             </div>
@@ -347,15 +349,15 @@
 
             // Show initial message
             $('#tableBody').html(`
-                                            <tr>
-                                                <td colspan="13" class="text-center py-12 text-gray-500">
-                                                    <div class="flex flex-col items-center space-y-3">
-                                                        <p class="text-xl font-medium text-gray-600">No data to display</p>
-                                                        <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        `);
+                                                                                    <tr>
+                                                                                        <td colspan="13" class="text-center py-12 text-gray-500">
+                                                                                            <div class="flex flex-col items-center space-y-3">
+                                                                                                <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                                                                                <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                `);
 
             // Update pagination info
             $('#tableInfo').text('Showing 0 to 0 of 0 entries');
@@ -400,15 +402,15 @@
 
                 // Show initial message
                 $('#tableBody').html(`
-                                                <tr>
-                                                    <td colspan="13" class="text-center py-12 text-gray-500">
-                                                        <div class="flex flex-col items-center space-y-3">
-                                                            <p class="text-xl font-medium text-gray-600">No data to display</p>
-                                                            <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            `);
+                                                                                        <tr>
+                                                                                            <td colspan="13" class="text-center py-12 text-gray-500">
+                                                                                                <div class="flex flex-col items-center space-y-3">
+                                                                                                    <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                                                                                    <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    `);
 
                 // Update pagination info
                 $('#tableInfo').text('Showing 0 to 0 of 0 entries');
@@ -510,38 +512,38 @@
                 $('#tableBody').empty();
                 if (pageData.length === 0) {
                     $('#tableBody').append(`
-                                                    <tr>
-                                                        <td colspan="13" class="text-center py-8 text-gray-500">
-                                                            <div class="flex flex-col items-center space-y-2">
-                                                                <p class="text-sm font-medium text-gray-600">No data found</p>
-                                                                <p class="text-xs text-gray-500">Try adjusting your search term</p>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                `);
+                                                                                            <tr>
+                                                                                                <td colspan="13" class="text-center py-8 text-gray-500">
+                                                                                                    <div class="flex flex-col items-center space-y-2">
+                                                                                                        <p class="text-sm font-medium text-gray-600">No data found</p>
+                                                                                                        <p class="text-xs text-gray-500">Try adjusting your search term</p>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        `);
                 } else {
                     pageData.forEach((item, index) => {
                         const row = `
-                                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                                            <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
-                                                            <td class="px-4 py-3">
-                                                                <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
-                                                                    ${item.statusPinpad || '-'}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
-                                                        </tr>
-                                                    `;
+                                                                                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
+                                                                                                    <td class="px-4 py-3">
+                                                                                                        <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
+                                                                                                            ${item.statusPinpad || '-'}
+                                                                                                        </span>
+                                                                                                    </td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
+                                                                                                </tr>
+                                                                                            `;
                         $('#tableBody').append(row);
                     });
                 }
@@ -591,6 +593,7 @@
                 // Also update debug info
                 // updateDebugInfo(); // Removed
             }
+
 
             // Search function
             function performSearch() {
@@ -802,11 +805,11 @@
             // Show notification function
             function showNotification(message, type) {
                 const notification = $(`
-                                                <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                                                                                        <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                     }">
-                                                    ${message}
-                                                </div>
-                                            `);
+                                                                                            ${message}
+                                                                                        </div>
+                                                                                    `);
 
                 $('body').append(notification);
 
@@ -905,20 +908,20 @@
 
                     if (paginationContainer.length > 0) {
                         const paginationHtml = `
-                                                        <div class="flex items-center space-x-2" id="paginationButtons">
-                                                            <button id="prevBtn"
-                                                                class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                                                                disabled>
-                                                                Previous
-                                                            </button>
-                                                            <span id="pageNumbers" class="flex space-x-1"></span>
-                                                            <button id="nextBtn"
-                                                                class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                                                                disabled>
-                                                                Next
-                                                            </button>
-                                                        </div>
-                                                    `;
+                                                                                                <div class="flex items-center space-x-2" id="paginationButtons">
+                                                                                                    <button id="prevBtn"
+                                                                                                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                                                                                                        disabled>
+                                                                                                        Previous
+                                                                                                    </button>
+                                                                                                    <span id="pageNumbers" class="flex space-x-1"></span>
+                                                                                                    <button id="nextBtn"
+                                                                                                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                                                                                                        disabled>
+                                                                                                        Next
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            `;
                         paginationContainer.append(paginationHtml);
                     }
                 } else {
@@ -965,38 +968,38 @@
                 $('#tableBody').empty();
                 if (pageData.length === 0) {
                     $('#tableBody').append(`
-                                                    <tr>
-                                                        <td colspan="13" class="text-center py-8 text-gray-500">
-                                                            <div class="flex flex-col items-center space-y-2">
-                                                                <p class="text-sm font-medium text-gray-600">No data available</p>
-                                                                <p class="text-xs text-gray-500">Try adjusting your search criteria</p>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                `);
+                                                                                            <tr>
+                                                                                                <td colspan="13" class="text-center py-8 text-gray-500">
+                                                                                                    <div class="flex flex-col items-center space-y-2">
+                                                                                                        <p class="text-sm font-medium text-gray-600">No data available</p>
+                                                                                                        <p class="text-xs text-gray-500">Try adjusting your search criteria</p>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        `);
                 } else {
                     pageData.forEach((item, index) => {
                         const row = `
-                                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                                            <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
-                                                            <td class="px-4 py-3">
-                                                                <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
-                                                                    ${item.statusPinpad || '-'}
-                                                                </span>
-                                                            </td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
-                                                            <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
-                                                        </tr>
-                                                    `;
+                                                                                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
+                                                                                                    <td class="px-4 py-3">
+                                                                                                        <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
+                                                                                                            ${item.statusPinpad || '-'}
+                                                                                                        </span>
+                                                                                                    </td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
+                                                                                                    <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
+                                                                                                </tr>
+                                                                                            `;
                         $('#tableBody').append(row);
                     });
                 }
@@ -1102,4 +1105,17 @@
             // Function to ensure pagination is visible and working
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            const params = new URLSearchParams(window.location.search);
+            const status = params.get('status');
+
+            if (status) {
+                $('#statusFilter').val(status);
+                $('#searchBtn').click(); // langsung jalankan search
+            }
+        });
+
+    </script>
+
 }
