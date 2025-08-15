@@ -13,7 +13,7 @@
     <!-- Filter Form -->
     <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 mb-6">
         <h3 class="text-lg font-semibold text-gray-800 mb-6">Search & Filter</h3>
-        
+
         <!-- Two Column Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Left Column -->
@@ -68,10 +68,9 @@
                     <select id="statusFilter"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
                         <option value="">--Select Status Pinpad--</option>
-                        <option value="Ready To Use">Ready To Use</option>
-                        <option value="Not Ready To Use">Not Ready To Use</option>
-                        <option value="Maintenance">Maintenance</option>
-                        <option value="In Use">In Use</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">InActive</option>
+                        <option value="NotReadyToUse">Not Ready To Use</option>
                     </select>
                 </div>
             </div>
@@ -79,15 +78,15 @@
 
         <!-- Action Buttons -->
         <div class="flex justify-end space-x-4 gap-2 mt-8">
-            <button id="resetBtn" 
+            <button id="resetBtn"
                 style="background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
-                onmouseover="this.style.backgroundColor='#4b5563'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" 
+                onmouseover="this.style.backgroundColor='#4b5563'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
                 onmouseout="this.style.backgroundColor='#6b7280'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
                 <i class="fa fa-refresh mr-2"></i>Reset
             </button>
-            <button id="searchBtn" 
+            <button id="searchBtn"
                 style="background-color: #14b8a6; color: white; padding: 16px 32px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
-                onmouseover="this.style.backgroundColor='#0d9488'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'" 
+                onmouseover="this.style.backgroundColor='#0d9488'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
                 onmouseout="this.style.backgroundColor='#14b8a6'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
                 <i class="fa fa-search mr-2"></i>Search
             </button>
@@ -100,26 +99,26 @@
             <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
             <div class="flex flex-wrap gap-3">
                 <!-- Export PDF (merah) -->
-                <button id="exportPdf" 
+                <button id="exportPdf"
                     style="background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
-                    onmouseover="this.style.backgroundColor='#dc2626'" 
+                    onmouseover="this.style.backgroundColor='#dc2626'"
                     onmouseout="this.style.backgroundColor='#ef4444'">
                     PDF
                 </button>
 
-                
+
 
                 <!-- Export XLSX (biru) -->
-                <button id="exportXlsx" 
+                <button id="exportXlsx"
                     style="background-color:rgb(31, 199, 39); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
-                    onmouseover="this.style.backgroundColor='#2563eb'" 
+                    onmouseover="this.style.backgroundColor='#2563eb'"
                     onmouseout="this.style.backgroundColor='#3b82f6'">
                     XLSX
                 </button>
 
-                 <button id="exportCsv" 
+                <button id="exportCsv"
                     style="background-color:rgb(101, 101, 101); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
-                    onmouseover="this.style.backgroundColor='#10b981'" 
+                    onmouseover="this.style.backgroundColor='#10b981'"
                     onmouseout="this.style.backgroundColor='#10b981'">
                     CSV
                 </button>
@@ -145,9 +144,10 @@
         <!-- Table Header with Search -->
         <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                 <div class="flex items-center mt-2 md:mt-0">
+                <div class="flex items-center mt-2 md:mt-0">
                     <label class="text-sm text-gray-700 mr-3">Show:</label>
-                    <select id="pageSizeSelect" class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
+                    <select id="pageSizeSelect"
+                        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
                         <option value="10">10</option>
                         <option value="25">25</option>
                         <option value="50">50</option>
@@ -169,7 +169,8 @@
             <table id="pinpadListTable" class="min-w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-100 text-gray-700 text-sm">
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Regional</span>
                                 <div class="sort-indicator ml-2">
@@ -177,7 +178,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Cabang Induk</span>
                                 <div class="sort-indicator ml-2">
@@ -185,7 +187,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Kode Outlet</span>
                                 <div class="sort-indicator ml-2">
@@ -193,7 +196,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Location</span>
                                 <div class="sort-indicator ml-2">
@@ -201,7 +205,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Register</span>
                                 <div class="sort-indicator ml-2">
@@ -209,7 +214,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Update Date</span>
                                 <div class="sort-indicator ml-2">
@@ -217,7 +223,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Serial Number</span>
                                 <div class="sort-indicator ml-2">
@@ -225,7 +232,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>TID</span>
                                 <div class="sort-indicator ml-2">
@@ -233,7 +241,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Status Pinpad</span>
                                 <div class="sort-indicator ml-2">
@@ -241,7 +250,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Create By</span>
                                 <div class="sort-indicator ml-2">
@@ -249,7 +259,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>IP Low</span>
                                 <div class="sort-indicator ml-2">
@@ -257,7 +268,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>IP High</span>
                                 <div class="sort-indicator ml-2">
@@ -265,7 +277,8 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
                             <div class="flex items-center justify-between">
                                 <span>Last Activity</span>
                                 <div class="sort-indicator ml-2">
@@ -284,7 +297,7 @@
         <!-- Pagination -->
         <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-               
+
                 <div class="text-sm text-gray-600" id="tableInfo">
                     Showing 0 to 0 of 0 entries
                 </div>
@@ -334,38 +347,38 @@
 
             // Show initial message
             $('#tableBody').html(`
-                <tr>
-                    <td colspan="13" class="text-center py-12 text-gray-500">
-                        <div class="flex flex-col items-center space-y-3">
-                            <p class="text-xl font-medium text-gray-600">No data to display</p>
-                            <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-                        </div>
-                    </td>
-                </tr>
-            `);
-            
+                            <tr>
+                                <td colspan="13" class="text-center py-12 text-gray-500">
+                                    <div class="flex flex-col items-center space-y-3">
+                                        <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                        <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        `);
+
             // Update pagination info
             $('#tableInfo').text('Showing 0 to 0 of 0 entries');
-            
+
             // Hide export section initially
             $('#exportSection').addClass('hidden');
-            
+
             // Ensure pagination section is visible but disabled
             $('#paginationButtons').show();
             $('#prevBtn').prop('disabled', true).show();
             $('#nextBtn').prop('disabled', true).show();
             $('#pageNumbers').show();
-            
+
             // Initialize page size selector
             updatePageSizeSelector();
 
             // Search button event listener
-            $('#searchBtn').on('click', function() {
+            $('#searchBtn').on('click', function () {
                 performSearch();
             });
 
             // Reset button event listener
-            $('#resetBtn').on('click', function() {
+            $('#resetBtn').on('click', function () {
                 // Clear all filter values
                 $('#regionalSelect').val('');
                 $('#cabangIndukSelect').val('');
@@ -374,82 +387,82 @@
                 $('#usernameFilter').val('');
                 $('#statusFilter').val('');
                 $('#searchInput').val('');
-                
+
                 // Clear current filters and sorting
                 currentFilters = {};
                 currentSort = { column: null, direction: 'asc' };
-                
+
                 // Reset sort indicators
                 $('.sort-indicator i').removeClass('fa-sort-up fa-sort-down text-blue-500').addClass('fa-sort text-gray-400');
-                
+
                 // Hide export section
                 $('#exportSection').addClass('hidden');
-                
+
                 // Show initial message
                 $('#tableBody').html(`
-                    <tr>
-                        <td colspan="13" class="text-center py-12 text-gray-500">
-                            <div class="flex flex-col items-center space-y-3">
-                                <p class="text-xl font-medium text-gray-600">No data to display</p>
-                                <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-                            </div>
-                        </td>
-                    </tr>
-                `);
-                
+                                <tr>
+                                    <td colspan="13" class="text-center py-12 text-gray-500">
+                                        <div class="flex flex-col items-center space-y-3">
+                                            <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                            <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `);
+
                 // Update pagination info
                 $('#tableInfo').text('Showing 0 to 0 of 0 entries');
-                
+
                 // Clear pagination buttons
                 $('#paginationButtons').empty();
-                
+
                 // Reset page size to default
                 rowsPerPage = 10;
                 updatePageSizeSelector();
             });
 
             // Export button event listeners
-            $('#exportPdf').on('click', function() {
+            $('#exportPdf').on('click', function () {
                 exportData('pdf');
             });
 
-            $('#exportCsv').on('click', function() {
+            $('#exportCsv').on('click', function () {
                 exportData('csv');
             });
 
-            $('#exportXlsx').on('click', function() {
+            $('#exportXlsx').on('click', function () {
                 exportData('xlsx');
             });
 
             // Page size selector event listener
-            $('#pageSizeSelect').on('change', function() {
+            $('#pageSizeSelect').on('change', function () {
                 const newPageSize = parseInt($(this).val());
-                
+
                 // Update rowsPerPage
                 rowsPerPage = newPageSize;
-                
+
                 // Reset to first page when page size changes
                 currentPage = 1;
-                
+
                 // Re-render table with new page size
                 renderTable();
             });
 
             // Table header click events for sorting
-            $(document).on('click', 'th', function() {
+            $(document).on('click', 'th', function () {
                 const column = $(this).find('span').text().toLowerCase().replace(/\s+/g, '');
                 handleSort(column);
             });
 
             // Pagination event handlers using event delegation
-            $(document).on('click', '#prevBtn', function() {
+            $(document).on('click', '#prevBtn', function () {
                 if (currentPage > 1) {
                     currentPage--;
                     renderTable();
                 }
             });
 
-            $(document).on('click', '#nextBtn', function() {
+            $(document).on('click', '#nextBtn', function () {
                 const totalPages = Math.ceil(allPinpads.length / rowsPerPage);
                 if (currentPage < totalPages) {
                     currentPage++;
@@ -457,7 +470,7 @@
                 }
             });
 
-            $(document).on('click', '#pageNumbers button', function() {
+            $(document).on('click', '#pageNumbers button', function () {
                 const page = parseInt($(this).attr('data-page'));
                 if (page && page !== currentPage) {
                     currentPage = page;
@@ -466,20 +479,20 @@
             });
 
             // Search input event listener for table search
-            $('#searchInput').on('input', function() {
+            $('#searchInput').on('input', function () {
                 const searchTerm = $(this).val().toLowerCase();
-                
+
                 if (searchTerm === '') {
                     // If search is empty, show all data
                     renderTable();
                 } else {
                     // Filter data based on search term
                     const filteredData = allPinpads.filter(item => {
-                        return Object.values(item).some(value => 
+                        return Object.values(item).some(value =>
                             value && value.toString().toLowerCase().includes(searchTerm)
                         );
                     });
-                    
+
                     // Update table with filtered data
                     renderTableWithData(filteredData);
                 }
@@ -489,46 +502,46 @@
             function renderTableWithData(dataToRender) {
                 // Sort data first
                 const sortedData = sortData([...dataToRender]);
-                
+
                 const start = (currentPage - 1) * rowsPerPage;
                 const end = start + rowsPerPage;
                 const pageData = sortedData.slice(start, end);
-                
+
                 $('#tableBody').empty();
                 if (pageData.length === 0) {
                     $('#tableBody').append(`
-                        <tr>
-                            <td colspan="13" class="text-center py-8 text-gray-500">
-                                <div class="flex flex-col items-center space-y-2">
-                                    <p class="text-sm font-medium text-gray-600">No data found</p>
-                                    <p class="text-xs text-gray-500">Try adjusting your search term</p>
-                                </div>
-                            </td>
-                        </tr>
-                    `);
+                                    <tr>
+                                        <td colspan="13" class="text-center py-8 text-gray-500">
+                                            <div class="flex flex-col items-center space-y-2">
+                                                <p class="text-sm font-medium text-gray-600">No data found</p>
+                                                <p class="text-xs text-gray-500">Try adjusting your search term</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `);
                 } else {
                     pageData.forEach((item, index) => {
                         const row = `
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
-                                <td class="px-4 py-3">
-                                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
-                                        ${item.statusPinpad || '-'}
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
-                            </tr>
-                        `;
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                            <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
+                                            <td class="px-4 py-3">
+                                                <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
+                                                    ${item.statusPinpad || '-'}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
+                                        </tr>
+                                    `;
                         $('#tableBody').append(row);
                     });
                 }
@@ -541,7 +554,7 @@
             // Pagination event handlers using event delegation for filtered data
             function renderPaginationWithData(dataToRender) {
                 const totalPages = Math.ceil(dataToRender.length / rowsPerPage);
-                
+
                 const $pageNumbers = $('#pageNumbers').empty();
 
                 if (totalPages <= 1) {
@@ -561,7 +574,7 @@
                         .toggleClass('bg-blue-500 text-white border-blue-500', i === currentPage)
                         .toggleClass('hover:bg-gray-100', i !== currentPage)
                         .attr('data-page', i);
-                    
+
                     $pageNumbers.append(btn);
                 }
 
@@ -574,7 +587,7 @@
                 const start = totalRows === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
                 const end = Math.min(currentPage * rowsPerPage, totalRows);
                 $('#tableInfo').text(`Showing ${start} to ${end} of ${totalRows} entries`);
-                
+
                 // Also update debug info
                 // updateDebugInfo(); // Removed
             }
@@ -592,7 +605,7 @@
 
                 // Check if any filter is applied
                 const hasFilters = Object.values(filters).some(value => value && value.trim() !== '');
-                
+
                 if (!hasFilters) {
                     alert('Please select at least one filter criteria before searching.');
                     return;
@@ -600,7 +613,7 @@
 
                 // Store current filters
                 currentFilters = filters;
-                
+
                 // Build proper filter parameters for API
                 const apiFilters = {};
                 if (filters.regional) apiFilters.loc = filters.regional;
@@ -609,10 +622,10 @@
                 if (filters.serialNumber) apiFilters.serialNumber = filters.serialNumber;
                 if (filters.username) apiFilters.username = filters.username;
                 if (filters.status) apiFilters.status = filters.status;
-                
+
                 // Apply filters and search
                 loadPinpads(apiFilters);
-                
+
                 // Show export section after successful search
                 $('#exportSection').removeClass('hidden');
             }
@@ -637,7 +650,7 @@
                 };
 
                 const actualColumn = columnMap[column];
-                
+
                 if (!actualColumn) {
                     return;
                 }
@@ -653,11 +666,11 @@
 
                 // Update sort indicators
                 $('.sort-indicator i').removeClass('fa-sort-up fa-sort-down text-blue-500').addClass('fa-sort text-gray-400');
-                
+
                 // Find the clicked header and update its icon
                 const clickedHeader = $(`th:has(span:contains("${column.charAt(0).toUpperCase() + column.slice(1).replace(/([A-Z])/g, ' $1')}"))`);
                 const icon = clickedHeader.find('.sort-indicator i');
-                
+
                 if (currentSort.direction === 'asc') {
                     icon.removeClass('fa-sort fa-sort-down text-gray-400').addClass('fa-sort-up text-blue-500');
                 } else {
@@ -719,7 +732,7 @@
                     let result = 0;
                     if (aVal < bVal) result = currentSort.direction === 'asc' ? -1 : 1;
                     else if (aVal > bVal) result = currentSort.direction === 'asc' ? 1 : -1;
-                    
+
                     return result;
                 });
 
@@ -734,7 +747,7 @@
                 // Build query string for filters
                 const queryParams = new URLSearchParams();
                 queryParams.append('format', format);
-                
+
                 // Add filters to query params
                 Object.keys(currentFilters).forEach(key => {
                     if (currentFilters[key] && currentFilters[key].trim() !== '') {
@@ -744,42 +757,42 @@
 
                 // Make API call to export using jQuery
                 const exportUrl = `http://localhost:5125/api/Pinpads/pinpads/export?${queryParams.toString()}`;
-                
+
                 $.ajax({
                     url: exportUrl,
                     method: 'GET',
                     xhrFields: {
                         responseType: 'blob'
                     },
-                    success: function(blob, status, xhr) {
+                    success: function (blob, status, xhr) {
                         // Create download link
                         const url = window.URL.createObjectURL(blob);
                         const a = document.createElement('a');
                         a.style.display = 'none';
                         a.href = url;
-                        
+
                         // Set filename based on format
                         const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
                         a.download = `pinpad_monitoring_${timestamp}.${format}`;
-                        
+
                         // Trigger download
                         document.body.appendChild(a);
                         a.click();
-                        
+
                         // Cleanup
                         window.URL.revokeObjectURL(url);
                         document.body.removeChild(a);
-                        
+
                         // Hide loading overlay
                         $('#exportLoading').addClass('hidden');
-                        
+
                         // Show success message
                         showNotification(`Data exported successfully as ${format.toUpperCase()} file!`, 'success');
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         // Hide loading overlay
                         $('#exportLoading').addClass('hidden');
-                        
+
                         // Show error message
                         showNotification('Export failed. Please try again.', 'error');
                     }
@@ -789,15 +802,14 @@
             // Show notification function
             function showNotification(message, type) {
                 const notification = $(`
-                    <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
-                        type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                                <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
                     }">
-                        ${message}
-                    </div>
-                `);
-                
+                                    ${message}
+                                </div>
+                            `);
+
                 $('body').append(notification);
-                
+
                 // Auto remove after 3 seconds
                 setTimeout(() => {
                     notification.fadeOut(() => notification.remove());
@@ -844,7 +856,7 @@
                         const $select = $('#cabangIndukSelect');
                         $select.empty().append('<option value="">--Select Cabang Induk--</option>');
                         cabangs.forEach(cb => $select.append(`<option value="${cb}">${cb}</option>`));
-                        
+
                         // Reset outlet dropdown
                         $('#outletSelect').empty().append('<option value="">--Select Outlet--</option>');
                     }
@@ -875,13 +887,13 @@
 
             // Function to ensure pagination is visible and working
             function ensurePaginationVisible() {
-                
+
                 // Ensure pagination section exists and is visible
                 ensurePaginationSectionExists();
-                
+
                 // Update page size selector
                 updatePageSizeSelector();
-                
+
             }
 
             // Function to ensure pagination section exists in HTML
@@ -890,23 +902,23 @@
                 if ($('#paginationButtons').length === 0) {
                     // Find the pagination container
                     const paginationContainer = $('.px-6.py-4.border-t.border-gray-200.bg-gray-50 .flex.flex-col.md\\:flex-row.justify-between.items-center.gap-4');
-                    
+
                     if (paginationContainer.length > 0) {
                         const paginationHtml = `
-                            <div class="flex items-center space-x-2" id="paginationButtons">
-                                <button id="prevBtn"
-                                    class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                                    disabled>
-                                    Previous
-                                </button>
-                                <span id="pageNumbers" class="flex space-x-1"></span>
-                                <button id="nextBtn"
-                                    class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                                    disabled>
-                                    Next
-                                </button>
-                            </div>
-                        `;
+                                        <div class="flex items-center space-x-2" id="paginationButtons">
+                                            <button id="prevBtn"
+                                                class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                                                disabled>
+                                                Previous
+                                            </button>
+                                            <span id="pageNumbers" class="flex space-x-1"></span>
+                                            <button id="nextBtn"
+                                                class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                                                disabled>
+                                                Next
+                                            </button>
+                                        </div>
+                                    `;
                         paginationContainer.append(paginationHtml);
                     }
                 } else {
@@ -928,12 +940,12 @@
                     success: function (response) {
                         allPinpads = response.data || [];
                         currentPage = 1; // reset halaman pertama
-                        
+
                         // Ensure pagination is visible before rendering
                         ensurePaginationVisible();
                         renderTable();
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         $('#tableBody').empty().append('<tr><td colspan="13" class="text-center py-4">Failed to load pinpad data.</td></tr>');
                         $('#tableInfo').text('Showing 0 to 0 of 0 entries');
                         $('#paginationButtons').empty();
@@ -942,49 +954,49 @@
             }
 
             function renderTable() {
-                
+
                 // Sort data first
                 const sortedData = sortData([...allPinpads]);
-                
+
                 const start = (currentPage - 1) * rowsPerPage;
                 const end = start + rowsPerPage;
                 const pageData = sortedData.slice(start, end);
-                
+
                 $('#tableBody').empty();
                 if (pageData.length === 0) {
                     $('#tableBody').append(`
-                        <tr>
-                            <td colspan="13" class="text-center py-8 text-gray-500">
-                                <div class="flex flex-col items-center space-y-2">
-                                    <p class="text-sm font-medium text-gray-600">No data available</p>
-                                    <p class="text-xs text-gray-500">Try adjusting your search criteria</p>
-                                </div>
-                            </td>
-                        </tr>
-                    `);
+                                    <tr>
+                                        <td colspan="13" class="text-center py-8 text-gray-500">
+                                            <div class="flex flex-col items-center space-y-2">
+                                                <p class="text-sm font-medium text-gray-600">No data available</p>
+                                                <p class="text-xs text-gray-500">Try adjusting your search criteria</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `);
                 } else {
                     pageData.forEach((item, index) => {
                         const row = `
-                            <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
-                                <td class="px-4 py-3">
-                                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
-                                        ${item.statusPinpad || '-'}
-                                    </span>
-                                </td>
-                                <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
-                                <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
-                            </tr>
-                        `;
+                                        <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                            <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
+                                            <td class="px-4 py-3">
+                                                <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
+                                                    ${item.statusPinpad || '-'}
+                                                </span>
+                                            </td>
+                                            <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
+                                            <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
+                                        </tr>
+                                    `;
                         $('#tableBody').append(row);
                     });
                 }
@@ -995,7 +1007,7 @@
 
             function getStatusClass(status) {
                 if (!status) return 'bg-gray-100 text-gray-800';
-                
+
                 switch (status.toLowerCase()) {
                     case 'ready to use': return 'bg-green-100 text-green-800';
                     case 'not ready to use': return 'bg-red-100 text-red-800';
@@ -1007,13 +1019,13 @@
 
             function renderPagination() {
                 const totalPages = Math.ceil(allPinpads.length / rowsPerPage);
-                
+
                 // Ensure pagination section exists and is visible
                 ensurePaginationSectionExists();
-                
+
                 // Update page size selector
                 updatePageSizeSelector();
-                
+
                 const $pageNumbers = $('#pageNumbers').empty();
 
                 if (totalPages <= 1) {
@@ -1033,13 +1045,13 @@
                         .toggleClass('bg-blue-500 text-white border-blue-500', i === currentPage)
                         .toggleClass('hover:bg-gray-100', i !== currentPage)
                         .attr('data-page', i);
-                    
+
                     $pageNumbers.append(btn);
                 }
 
                 // Next button
                 $('#nextBtn').prop('disabled', currentPage === totalPages);
-                
+
                 // Ensure pagination is visible
                 $('#paginationButtons').show();
                 $('#prevBtn').show();
@@ -1052,7 +1064,7 @@
                 const start = totalRows === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
                 const end = Math.min(currentPage * rowsPerPage, totalRows);
                 $('#tableInfo').text(`Showing ${start} to ${end} of ${totalRows} entries`);
-                
+
                 // Also update debug info
                 // updateDebugInfo(); // Removed
             }

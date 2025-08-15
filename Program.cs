@@ -24,7 +24,6 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-app.UseSession(); // harus sebelum app.MapControllers()
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -35,7 +34,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
+app.UseSession(); // harus sebelum app.MapControllers()
+
 
 app.UseAuthorization();
 

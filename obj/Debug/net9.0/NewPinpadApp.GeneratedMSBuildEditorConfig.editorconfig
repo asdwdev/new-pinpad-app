@@ -17,53 +17,57 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = NewPinpadApp
 build_property.RootNamespace = NewPinpadApp
-build_property.ProjectDir = C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\
+build_property.ProjectDir = C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app
+build_property.MSBuildProjectDirectory = C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Auth/Login.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Dashboard/index.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Dashboard/index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXGluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Monitoring/Index.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Monitoring/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uaXRvcmluZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Pinpad/Index.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Pinpad/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlucGFkXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Pinpad/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlucGFkXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Shared/Error.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Shared/_AuthLayout.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Shared/_AuthLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BdXRoTGF5b3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/_ViewImports.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/_ViewStart.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Shared/_Layout.cshtml]
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-uo70xwcte1

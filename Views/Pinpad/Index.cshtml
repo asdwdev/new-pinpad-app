@@ -1,50 +1,8 @@
-@* @{
-    ViewData["Title"] = "Pinpad List";
+@{
+  Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewData["Title"] = "Pinpad Logistik";
 }
-<h1>Daftar Pinpad</h1>
 
-<table id="pinpadTable" border="1">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Serial Number</th>
-            <th>Status</th>
-            <th>Branch</th>
-            <th>Update Date</th>
-        </tr>
-    </thead>
-    <tbody></tbody>
-</table>
-
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function () {
-            $.ajax({
-                url: "http://localhost:5125/api/pinpads",
-                method: "GET",
-                success: function (res) {
-                    if (res.success) {
-                        let rows = "";
-                        res.data.forEach(function (item) {
-                            rows += `<tr>
-                                                <td>${item.ppadId}</td>
-                                                <td>${item.ppadSn}</td>
-                                                <td>${item.ppadStatus}</td>
-                                <td>${item.ppadBranch}</td>
-                                <td>${item.ppadUpdateDate}</td>
-                            </tr>`;
-                        });
-                        $("#pinpadTable tbody").html(rows);
-                    }
-                },
-                error: function (err) {
-                    console.error(err);
-                }
-            });
-        });
-    </script>
-} *@
 <div class="p-4 md:p-6">
   <div class="mb-4 text-sm px-4 sm:px-0">
     <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Pinpad List</a> /
@@ -59,11 +17,12 @@
       <input type="text" id="searchInput" placeholder="Search in all columns..."
         class="border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm min-w-[250px]">
     </div>
-    
+
     <!-- Page Size Selector -->
     <div class="flex items-center mt-2 md:mt-0">
       <label class="text-sm text-gray-700 mr-3">Show:</label>
-      <select id="pageSizeSelect" class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
+      <select id="pageSizeSelect"
+        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
         <option value="10">10</option>
         <option value="25">25</option>
         <option value="50">50</option>
@@ -81,10 +40,12 @@
           <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors" data-sort="branch">
             Branch <span class="sort-icon ml-1">↕</span>
           </th>
-          <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors" data-sort="serialNumber">
+          <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors"
+            data-sort="serialNumber">
             Serial Number <span class="sort-icon ml-1">↕</span>
           </th>
-          <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors" data-sort="registerDate">
+          <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors"
+            data-sort="registerDate">
             Register Date <span class="sort-icon ml-1">↕</span>
           </th>
           <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors" data-sort="status">
@@ -98,7 +59,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <!-- Pagination -->
   <div class="flex flex-col md:flex-row justify-between items-center mt-4">
     <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
@@ -132,22 +93,22 @@
 
       // Initialize
       loadPinpads();
-      
+
       // Event listeners
-      $('#searchInput').on('input', function() {
+      $('#searchInput').on('input', function () {
         searchTerm = $(this).val().toLowerCase();
         currentPage = 1; // Reset to first page when searching
         filterAndDisplayData();
       });
 
-      $('#pageSizeSelect').on('change', function() {
+      $('#pageSizeSelect').on('change', function () {
         pageSize = parseInt($(this).val());
         currentPage = 1; // Reset to first page when changing page size
         filterAndDisplayData();
       });
 
       // Column sorting
-      $('th[data-sort]').on('click', function() {
+      $('th[data-sort]').on('click', function () {
         const column = $(this).data('sort');
         if (currentSort.column === column) {
           currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
@@ -155,7 +116,7 @@
           currentSort.column = column;
           currentSort.direction = 'asc';
         }
-        
+
         updateSortIcons();
         filterAndDisplayData();
       });
@@ -234,7 +195,7 @@
       function displayPaginatedData() {
         const totalItems = filteredData.length;
         const totalPages = Math.ceil(totalItems / pageSize);
-        
+
         // Ensure current page is valid
         if (totalPages === 0) {
           currentPage = 1;
@@ -256,24 +217,26 @@
           pageData.forEach(function (item) {
             const statusClass = getStatusClass(item.status);
             const row = `
-              <tr class="border-b hover:bg-gray-50">
-                <td class="px-4 py-3">${item.branch || ''}</td>
-                <td class="px-4 py-3 font-mono">${item.serialNumber || ''}</td>
-                <td class="px-4 py-3">${item.registerDate ? formatDate(item.registerDate) : ''}</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block ${statusClass} px-3 py-1 rounded-full text-xs font-medium">
-                    ${item.status || ''}
-                  </span>
-                </td>
-                <td class="px-4 py-3">
-                  <button class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-                    <i class="fa fa-edit"></i>
-                  </button>
-                </td>
-              </tr>
-            `;
+                <tr class="border-b hover:bg-gray-50">
+                  <td class="px-4 py-3">${item.branch || ''}</td>
+                  <td class="px-4 py-3 font-mono">${item.serialNumber || ''}</td>
+                  <td class="px-4 py-3">${item.registerDate ? formatDate(item.registerDate) : ''}</td>
+                  <td class="px-4 py-3">
+                    <span class="inline-block ${statusClass} px-3 py-1 rounded-full text-xs font-medium">
+                      ${item.status || ''}
+                    </span>
+                  </td>
+                  <td class="px-4 py-3">
+                  <a href="/Pinpad/Edit/${item.id}"
+                      class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                  </td>
+                </tr>
+              `;
             $('#tableBody').append(row);
           });
+
         }
 
         // Update pagination info and controls
@@ -345,14 +308,14 @@
       }
 
       // Simple pagination button handlers
-      $('#prevBtn').on('click', function() {
+      $('#prevBtn').on('click', function () {
         if (currentPage > 1) {
           currentPage--;
           displayPaginatedData();
         }
       });
 
-      $('#nextBtn').on('click', function() {
+      $('#nextBtn').on('click', function () {
         const totalPages = Math.ceil(filteredData.length / pageSize);
         if (currentPage < totalPages) {
           currentPage++;
@@ -373,7 +336,7 @@
       setInterval(forceEnableButtons, 2000);
 
       // Also enable buttons when data changes
-      $(document).on('dataLoaded', function() {
+      $(document).on('dataLoaded', function () {
         setTimeout(forceEnableButtons, 100);
       });
 
@@ -382,7 +345,7 @@
         try {
           const date = new Date(dateStr);
           if (isNaN(date.getTime())) return dateStr;
-          
+
           const day = String(date.getDate()).padStart(2, '0');
           const month = String(date.getMonth() + 1).padStart(2, '0');
           const year = date.getFullYear();
@@ -397,7 +360,7 @@
 
       function getStatusClass(status) {
         if (!status) return 'bg-gray-100 text-gray-800';
-        
+
         switch (status.toLowerCase()) {
           case 'active': return 'bg-green-100 text-green-800';
           case 'inactive': return 'bg-gray-100 text-gray-800';

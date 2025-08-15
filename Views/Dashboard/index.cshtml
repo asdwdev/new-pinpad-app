@@ -5,7 +5,7 @@
     <!-- Total Device -->
     <div
         class="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div class="text-2xl md:text-3xl font-bold">40</div>
+        <div id="totalDevice" class="text-2xl md:text-3xl font-bold">0</div>
         <div class="flex justify-between items-center mt-2">
             <span class="text-sm md:text-base">Total Device</span>
             <i class="fa-solid fa-tablet-screen-button text-base md:text-lg"></i>
@@ -15,7 +15,7 @@
     <!-- Not Ready to Use -->
     <div
         class="bg-gradient-to-r from-pink-500 to-orange-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div class="text-2xl md:text-3xl font-bold">23</div>
+        <div id="notReady" class="text-2xl md:text-3xl font-bold">0</div>
         <div class="flex justify-between items-center mt-2">
             <span class="text-sm md:text-base">Not Ready To Used</span>
             <i class="fa-solid fa-lightbulb text-base md:text-lg"></i>
@@ -25,7 +25,7 @@
     <!-- Ready to Use -->
     <div
         class="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div class="text-2xl md:text-3xl font-bold">1</div>
+        <div id="ready" class="text-2xl md:text-3xl font-bold">0</div>
         <div class="flex justify-between items-center mt-2">
             <span class="text-sm md:text-base">Ready To Use</span>
             <i class="fa-solid fa-chart-line text-base md:text-lg"></i>
@@ -35,7 +35,7 @@
     <!-- Active -->
     <div
         class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div class="text-2xl md:text-3xl font-bold">0</div>
+        <div id="active" class="text-2xl md:text-3xl font-bold">0</div>
         <div class="flex justify-between items-center mt-2">
             <span class="text-sm md:text-base">Active</span>
             <i class="fa-solid fa-folder text-base md:text-lg"></i>
@@ -45,7 +45,7 @@
     <!-- Inactive -->
     <div
         class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div class="text-2xl md:text-3xl font-bold">7</div>
+        <div id="inactive" class="text-2xl md:text-3xl font-bold">0</div>
         <div class="flex justify-between items-center mt-2">
             <span class="text-sm md:text-base">Inactive</span>
             <i class="fa-solid fa-folder text-base md:text-lg"></i>
@@ -55,10 +55,37 @@
     <!-- Maintenance -->
     <div
         class="bg-gradient-to-r from-purple-700 to-pink-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div class="text-2xl md:text-3xl font-bold">9</div>
+        <div id="maintenance" class="text-2xl md:text-3xl font-bold">0</div>
         <div class="flex justify-between items-center mt-2">
             <span class="text-sm md:text-base">Maintenance</span>
             <i class="fa-solid fa-folder text-base md:text-lg"></i>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function loadDashboard() {
+                $.ajax({
+                    url: 'http://localhost:5125/api/dashboard/summary',
+                    method: 'GET',
+                    success: function (data) {
+                        $('#totalDevice').text(data.total);
+                        $('#notReady').text(data.notReady);
+                        $('#ready').text(data.ready);
+                        $('#active').text(data.active);
+                        $('#inactive').text(data.inactive);
+                        $('#maintenance').text(data.maintenance);
+                    },
+                    error: function (err) {
+                        console.error('Failed to load dashboard:', err);
+                    }
+                });
+            }
+
+            loadDashboard();
+        });
+    </script>
+}
