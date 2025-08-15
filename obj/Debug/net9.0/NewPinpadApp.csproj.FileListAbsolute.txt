@@ -433,7 +433,6 @@ C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\NewPi
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\NewPinpadApp.genruntimeconfig.cache
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\ref\NewPinpadApp.dll
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\s36p3vpxyx-6agrclfqet.gz
-C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-rtxmp9zqya.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\1v4ytnajvn-t1cqhe9u97.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\94gl6c25l8-sejl45xvog.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\a55blnheo1-xvp3kq03qx.gz
@@ -464,3 +463,4 @@ C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\s
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\zvu0r1dejy-m9qm4tazc0.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\ic3emblrjx-jjsuc0puko.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\vsgpw0pz7j-9vr69e8ynj.gz
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-pgdkepfga6.gz

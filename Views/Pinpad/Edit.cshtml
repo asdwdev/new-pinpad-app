@@ -69,34 +69,43 @@
         </div>
 
         <!-- Right Section - Damage/Malfunction Information -->
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Damage/Malfunction Information</h3>
-
-            <!-- Kerusakan -->
+        <div class="flex flex-col justify-between space-y-4">
             <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2">KERUSAKAN:</label>
-                <select id="kerusakanSelect"
-                    class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                    <option value="">--Select Kerusakan Pinpad--</option>
-                </select>
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">Damage/Malfunction Information</h3>
+
+                <!-- Kerusakan -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">KERUSAKAN:</label>
+                    <select id="kerusakanSelect"
+                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                        <option value="">--Select Kerusakan Pinpad--</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-end gap-3">
+                <button id="btnCancel" type="button"
+                    class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    Cancel
+                </button>
+                <button id="btnUpdate" type="button"
+                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                    Update
+                </button>
             </div>
         </div>
-    </div>
 
-    <!-- Buttons -->
-    <div class="mt-8 flex justify-end gap-3">
-        <button
-            class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">Cancel</button>
-        <button
-            class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">Update</button>
     </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(async function () {
         const id = @ViewBag.Id;
         try {
+            // Ambil data pinpad
             const res = await fetch(`http://localhost:5125/api/pinpads/${id}`);
             if (!res.ok) throw new Error('Not found');
             const d = await res.json();
@@ -108,17 +117,100 @@
             $('#ipLow').val(d.ipLow || '');
             $('#ipHigh').val(d.ipHigh || '');
 
-            // Isi select kerusakan cuma dari API GetById
-            if (d.statusRepairDesc) {
+            // Simpan selected awal
+            const selectedCode = d.statusRepairCode || '';
+            const selectedDesc = d.statusRepairDesc || '';
+
+            // Ambil semua opsi StatusRepair
+            const res2 = await fetch(`http://localhost:5125/api/pinpads/status-repairs`);
+            const list = await res2.json();
+
+            // Kosongkan select dulu
+            $('#kerusakanSelect').empty();
+            $('#kerusakanSelect').append('<option value="">--Select Kerusakan Pinpad--</option>');
+
+            // Loop semua opsi
+            list.forEach(item => {
+                const isSelected = (item.code === selectedCode) ? 'selected' : '';
                 $('#kerusakanSelect').append(
-                    `<option value="${d.statusRepairCode}" selected>${d.statusRepairCode} - ${d.statusRepairDesc}</option>`
+                    `<option value="${item.code}" ${isSelected}>${item.code} - ${item.description}</option>`
                 );
-            }
+            });
 
         } catch (e) {
             alert('Data tidak ditemukan');
             window.location.href = '/Pinpad';
         }
     });
+</script>
+<script>
+    // Tombol Update
+    $('#btnUpdate').on('click', async function () {
+        const id = @ViewBag.Id;
+        const selectedCode = $('#kerusakanSelect').val();
 
+        if (!selectedCode) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Silakan pilih kerusakan terlebih dahulu',
+            });
+            return;
+        }
+
+        const confirmResult = await Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Yakin ingin update status repair?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Update',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        try {
+            const res = await fetch(`http://localhost:5125/api/pinpads/${id}/maintenance`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    statusRepair: selectedCode
+                })
+            });
+
+            const result = await res.json();
+
+            if (res.ok && result.success) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Status repair berhasil diperbarui',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                window.location.href = '/Pinpad/Index';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: result.message || 'Gagal memperbarui status',
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Terjadi kesalahan saat mengupdate',
+            });
+        }
+    });
+
+    // Tombol Cancel
+    $('#btnCancel').on('click', function () {
+        window.location.href = '/Pinpad/Index';
+    });
 </script>
