@@ -12,10 +12,4 @@ public class DashboardController : Controller
     {
         return View();
     }
-
-    [RequireApiSession]
-    public IActionResult Regional()
-    {
-        return View();
-    }
 }
