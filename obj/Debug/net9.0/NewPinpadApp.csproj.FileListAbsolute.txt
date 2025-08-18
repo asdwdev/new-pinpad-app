@@ -156,7 +156,6 @@ C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\scopedcss\Vi
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\scopedcss\bundle\NewPinpadApp.styles.css
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\scopedcss\projectbundle\NewPinpadApp.bundle.scp.css
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\s36p3vpxyx-6agrclfqet.gz
-C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-pcbpiaxevu.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\94prs00rog-7and8guzmx.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\i08m04056c-61n19gt1b8.gz
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\q70qsufdn2-xtxxf3hu2r.gz
@@ -231,3 +230,4 @@ C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\refint\NewPi
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\NewPinpadApp.pdb
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\NewPinpadApp.genruntimeconfig.cache
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\ref\NewPinpadApp.dll
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-vfot9doefr.gz

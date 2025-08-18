@@ -1,0 +1,255 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Monitoring";
+}
+
+<div class="p-4 md:p-6">
+    <!-- Breadcrumb -->
+    <div class="mb-6 text-sm">
+        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Branch</a> /
+        <span class="text-gray-500">Inquiry</span>
+    </div>
+
+    <!-- Filter Form -->
+    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-6">Search & Filter</h3>
+
+        <!-- Two Column Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column -->
+            <div class="space-y-4">
+                <!-- Regional -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Regional:</label>
+                    <select id="regionalSelect"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                        <option value="">--Select Regional--</option>
+                    </select>
+                </div>
+
+                <!-- Cabang Induk -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
+                    <select id="cabangIndukSelect"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                        <option value="">--Select Cabang Induk--</option>
+                    </select>
+                </div>
+
+                <!-- Outlet -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Outlet:</label>
+                    <select id="outletSelect"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                        <option value="">--Select Outlet--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end space-x-4 gap-2 mt-8">
+            <button id="resetBtn"
+                style="background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                onmouseover="this.style.backgroundColor='#4b5563'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
+                onmouseout="this.style.backgroundColor='#6b7280'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                <i class="fa fa-refresh mr-2"></i>Reset
+            </button>
+            <button id="searchBtn"
+                style="background-color: #14b8a6; color: white; padding: 16px 32px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                onmouseover="this.style.backgroundColor='#0d9488'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
+                onmouseout="this.style.backgroundColor='#14b8a6'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+                <i class="fa fa-search mr-2"></i>Search
+            </button>
+        </div>
+    </div>
+
+    <!-- Export Buttons (Hidden by default) -->
+    <div id="exportSection" class="hidden mb-6">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
+            <div class="flex flex-wrap gap-3">
+                <!-- Export PDF (merah) -->
+                <button id="exportPdf"
+                    style="background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#dc2626'"
+                    onmouseout="this.style.backgroundColor='#ef4444'">
+                    PDF
+                </button>
+
+
+
+                <!-- Export XLSX (biru) -->
+                <button id="exportXlsx"
+                    style="background-color:rgb(31, 199, 39); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#2563eb'"
+                    onmouseout="this.style.backgroundColor='#3b82f6'">
+                    XLSX
+                </button>
+
+                <button id="exportCsv"
+                    style="background-color:rgb(101, 101, 101); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#10b981'"
+                    onmouseout="this.style.backgroundColor='#10b981'">
+                    CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay for Export -->
+    <div id="exportLoading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+            <div class="flex items-center space-x-3">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <div>
+                    <p class="text-gray-800 font-medium">Exporting...</p>
+                    <p class="text-gray-600 text-sm">Please wait while we prepare your file</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+        <!-- Table Header with Search -->
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center mt-2 md:mt-0">
+                    <label class="text-sm text-gray-700 mr-3">Show:</label>
+                    <select id="pageSizeSelect"
+                        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="text-sm text-gray-700 ml-2">entries</span>
+                </div>
+                <!-- Search Box -->
+                <div class="flex items-center gap-2">
+                    <label class="text-sm font-medium text-gray-700">Search:</label>
+                    <input type="text" id="searchInput" placeholder="Search in all columns..."
+                        class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-w-[250px]">
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Responsive Wrapper -->
+        <div class="overflow-x-auto">
+            <table id="pinpadListTable" class="min-w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-700 text-sm">
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Kantor Wilayah</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Kode Cabang Induk</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Kode Outlet</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Nama Outlet</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Regional</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Kelas Outlet</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>IP Low</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>IP High</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th
+                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
+                            <div class="flex items-center justify-between">
+                                <span>Action</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="text-sm">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+
+                <div class="text-sm text-gray-600" id="tableInfo">
+                    Showing 0 to 0 of 0 entries
+                </div>
+                <div class="flex items-center space-x-2" id="paginationButtons">
+                    <button id="prevBtn"
+                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                        disabled>
+                        Previous
+                    </button>
+                    <span id="pageNumbers" class="flex space-x-1"></span>
+                    <button id="nextBtn"
+                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                        disabled>
+                        Next
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

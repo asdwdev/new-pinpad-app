@@ -56,6 +56,10 @@
                    asp-controller="Pinpad" asp-action="Index">
                     <i class="fa fa-cubes"></i> Pinpad (Admin Logistik)
                 </a>
+                 <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Branch" ? "bg-white/20 text-white" : "hover:bg-white/10")"
+                   asp-controller="Branch" asp-action="Index">
+                    <i class="fa fa-cubes"></i> Branch
+                </a>
                 <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Regional" ? "bg-white/20 text-white" : "hover:bg-white/10")"
                    asp-controller="Regional" asp-action="Index">
                     <i class="fa fa-cubes"></i> Regional
