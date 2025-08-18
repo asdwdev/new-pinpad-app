@@ -16,5 +16,13 @@ namespace NewPinpadApp.Controllers
         {
             return View();
         }
+
+        [RequireApiSession]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Id = id; // supaya bisa dipakai di view buat fetch data API
+            return View();
+            // return View("Update"); // kalau nama view-nya Update.cshtml
+        }
     }
 }

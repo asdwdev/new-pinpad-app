@@ -1,0 +1,129 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Regional - Update";
+}
+
+<div class="mb-4 text-sm px-4 sm:px-0">
+    <a href="/Regional" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Regional</a> /
+    <span class="text-gray-500">Update</span>
+</div>
+
+<!-- Form -->
+<div class="bg-white p-4 sm:p-6 rounded-lg shadow max-w-4xl mx-auto">
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Update Regional</h3>
+
+        <!-- Code -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">REGIONAL CODE:</label>
+            <input id="code" type="text" disabled
+                class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
+        </div>
+
+        <!-- Name -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">REGIONAL NAME:</label>
+            <input id="name" type="text"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                placeholder="Masukkan nama regional">
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-3 mt-6">
+            <button id="btnCancel" type="button"
+                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                Cancel
+            </button>
+            <button id="btnUpdate" type="button"
+                class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                Update
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(async function () {
+        const id = @ViewBag.Id; // Id dikirim dari controller ke View
+        try {
+            const res = await fetch(`http://localhost:5125/api/regionals/${id}`);
+            if (!res.ok) throw new Error('Regional tidak ditemukan');
+            const d = await res.json();
+
+            $('#code').val(d.code || '');
+            $('#name').val(d.name || '');
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: err.message
+            }).then(() => window.location.href = '/Regional/Index');
+        }
+    });
+
+    $('#btnUpdate').on('click', async function () {
+        const id = @ViewBag.Id;
+        const name = $('#name').val().trim();
+
+        if (!name) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Nama regional wajib diisi',
+            });
+            return;
+        }
+
+        const confirmResult = await Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Yakin ingin update data regional?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Update',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        try {
+            const res = await fetch(`http://localhost:5125/api/regionals/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: $('#code').val(), name })
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Regional berhasil diperbarui',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                window.location.href = '/Regional/Index';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: result.message || 'Gagal update regional',
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Terjadi kesalahan saat update regional',
+            });
+        }
+    });
+
+    $('#btnCancel').on('click', function () {
+        window.location.href = '/Regional/Index';
+    });
+</script>

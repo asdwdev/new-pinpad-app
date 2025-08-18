@@ -216,26 +216,24 @@
             } else {
                 // Populate table
                 pageData.forEach(function (item) {
-                    const statusClass = getStatusClass(item.status);
                     const row = `
-                <tr class="border-b hover:bg-gray-50">
-                  <td class="px-4 py-3">${item.code || ''}</td>
-                  <td class="px-4 py-3 font-mono">${item.name || ''}</td>
-                  <td class="px-4 py-3 text-center space-x-2">
-                        <a href="/Regional/Edit/${item.id}"
-                        class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm transition-colors">
-                        ✎
-                        </a>
-                        <button onclick="deleteRegional(${item.id})"
-                                class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors">
-                            ✕
-                        </button>
-                    </td>
-                </tr>
-              `;
+                        <tr class="border-b hover:bg-gray-50">
+                        <td class="px-4 py-3">${item.code || ''}</td>
+                        <td class="px-4 py-3 font-mono">${item.name || ''}</td>
+                        <td class="px-4 py-3 text-center space-x-2">
+                                <a href="/Regional/Edit/${item.id}"
+                                class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                                ✎
+                                </a>
+                                <button onclick="deleteRegional(${item.id})"
+                                        class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors">
+                                    ✕
+                                </button>
+                            </td>
+                        </tr>
+                    `;
                     $('#tableBody').append(row);
                 });
-
             }
 
             // Update pagination info and controls
