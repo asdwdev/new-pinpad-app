@@ -40,28 +40,37 @@
             <nav class="space-y-2 md:space-y-3">
                 <!-- Menu Logistik (default hidden) -->
                 <a id="menu-dashboard" asp-controller="Dashboard" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
+              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
                     <i class="fa fa-home"></i> Dashboard
                 </a>
+
                 <a id="menu-monitoring" asp-controller="Monitoring" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
+              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
                     <i class="fa-solid fa-chart-column"></i> Monitoring
                 </a>
+
                 <a id="menu-pinpad" asp-controller="Pinpad" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
-                    <i class="fa fa-cubes"></i> Pinpad (Admin Logistik)
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
+              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pinpad" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
+                    <i class="fa-solid fa-credit-card"></i> Pinpad (Admin Logistik)
                 </a>
 
                 <!-- Menu Kantor Cabang (default hidden) -->
                 <a id="menu-branch" asp-controller="Branch" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
-                    <i class="fa fa-cubes"></i> Branch
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
+              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Branch" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
+                    <i class="fa-solid fa-building"></i> Branch
                 </a>
+
                 <a id="menu-regional" asp-controller="Regional" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
-                    <i class="fa fa-cubes"></i> Regional
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
+              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Regional" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
+                    <i class="fa-solid fa-map"></i> Regional
                 </a>
             </nav>
+
         </aside>
 
         <!-- Konten Utama -->
