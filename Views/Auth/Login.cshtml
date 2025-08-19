@@ -52,32 +52,39 @@
                 }),
                 success: function (res) {
                     if (res.success) {
-                        window.location.href = "/Dashboard/Index";
-                    } else {
-                        $("#message")
-                            .removeClass("hidden")
-                            .removeClass("border-green-300 bg-green-50 text-green-800")
-                            .addClass("border-red-300 bg-red-50 text-red-800")
-                            .text(res.message);
+                        // redirect sesuai role
+                        const role = (res.user.role || "").toLowerCase();
+                        if (role === "admin logistik") {
+                            window.location.href = "/Dashboard/Index";
+                            return;
+                        }
+                        if (role === "admin kantor cabang") {
+                            window.location.href = "/Branch/Index";
+                            return;
+                        }
                     }
+                    // kalau gagal login atau role tidak dikenali
+                    showMessage(res.message || "Invalid username or password", false);
                 },
                 error: function (xhr) {
+                    let msg = "Terjadi kesalahan saat login.";
                     try {
-                        var err = JSON.parse(xhr.responseText);
-                        $("#message")
-                            .removeClass("hidden")
-                            .removeClass("border-green-300 bg-green-50 text-green-800")
-                            .addClass("border-red-300 bg-red-50 text-red-800")
-                            .text(err.message);
-                    } catch {
-                        $("#message")
-                            .removeClass("hidden")
-                            .removeClass("border-green-300 bg-green-50 text-green-800")
-                            .addClass("border-red-300 bg-red-50 text-red-800")
-                            .text("Terjadi kesalahan saat login.");
-                    }
+                        const err = JSON.parse(xhr.responseText);
+                        msg = err.message || msg;
+                    } catch { }
+                    showMessage(msg, false);
                 }
             });
         });
+
+        // helper biar gak nulis class toggle berkali-kali
+        function showMessage(message, isSuccess) {
+            $("#message")
+                .removeClass("hidden border-green-300 bg-green-50 text-green-800 border-red-300 bg-red-50 text-red-800")
+                .addClass(isSuccess
+                    ? "border-green-300 bg-green-50 text-green-800"
+                    : "border-red-300 bg-red-50 text-red-800")
+                .text(message);
+        }
     </script>
 }
