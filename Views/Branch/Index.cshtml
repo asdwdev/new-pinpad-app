@@ -890,20 +890,25 @@
             $('#nextBtn').prop('disabled', true);
         }
 
+        // helper buat normalisasi nama area
+        function cleanArea(value) {
+            return value ? value.replace(/^Area\s+/i, "") : value;
+        }
+
         async function exportData(format) {
             $('#exportLoading').removeClass('hidden');
 
             try {
+
                 // mapping UI -> API (sesuaikan bila nama param di server beda)
                 const mapping = {
-                    regional: 'loc',
+                    regional: 'area',          // FIX: sebelumnya 'loc'
                     cabangInduk: 'ctrlbr',
                     branchCode: 'code',
-                    outlet: 'code',
+                    outlet: 'code',            // hati2 duplicate, sudah dihandle
                     branchName: 'name',
-                    branchType: 'branchTypeName'
+                    branchType: 'type'         // FIX: sebelumnya 'branchTypeName'
                 };
-
                 // read current filter values directly from DOM to avoid stale currentFilters
                 const uiFilters = {
                     regional: $('#regionalSelect').val(),
@@ -917,11 +922,14 @@
                 const buildQuery = (includeFormat) => {
                     const qp = new URLSearchParams();
                     Object.keys(uiFilters).forEach(k => {
-                        const v = uiFilters[k];
+                        let v = uiFilters[k];
                         if (v && v.toString().trim() !== '') {
                             const apiKey = mapping[k];
-                            // avoid duplicate 'code' keys for outlet/branchCode
-                            if (apiKey === 'code' && qp.has('code')) return;
+                            // kalau area, buang prefix "Area "
+                            if (apiKey === 'area') {
+                                v = cleanArea(v);
+                            }
+                            if (apiKey === 'code' && qp.has('code')) return; // hindari duplikat
                             qp.append(apiKey, v);
                         }
                     });
@@ -929,6 +937,8 @@
                     qp.append('_t', Date.now().toString());
                     return qp;
                 };
+
+
 
                 const qp = buildQuery(true);
                 const exportUrl = `http://localhost:5125/api/branches/export?${qp.toString()}`;
