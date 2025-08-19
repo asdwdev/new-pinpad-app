@@ -1,102 +1,230 @@
 @{
     ViewData["Title"] = "Dashboard";
 }
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
 
-    <!-- Total Device -->
-    <div
-        class="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
-        <div id="totalDevice" class="text-2xl md:text-3xl font-bold">0</div>
-        <div class="flex justify-between items-center mt-2">
-            <span class="text-sm md:text-base">Total Device</span>
-            <i class="fa-solid fa-tablet-screen-button text-base md:text-lg"></i>
+<!-- Dashboard Content Container -->
+<div id="dashboardContent">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+        
+        <!-- Total Device -->
+        <div class="bg-gradient-to-r from-blue-500 to-purple-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px]">
+            <div id="totalDevice" class="text-2xl md:text-3xl font-bold">-</div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm md:text-base">Total Device</span>
+                <i class="fa-solid fa-tablet-screen-button text-base md:text-lg"></i>
+            </div>
         </div>
-    </div>
 
-    <!-- Not Ready to Use -->
-    <div class="bg-gradient-to-r from-pink-500 to-orange-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card"
-        data-status="NotReadyToUse">
-        <div id="notReady" class="text-2xl md:text-3xl font-bold">0</div>
-        <div class="flex justify-between items-center mt-2">
-            <span class="text-sm md:text-base">Not Ready To Use</span>
-            <i class="fa-solid fa-lightbulb text-base md:text-lg"></i>
+        <!-- Not Ready to Use -->
+        <div class="bg-gradient-to-r from-pink-500 to-orange-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card hover:opacity-90 transition-opacity"
+            data-status="NotReadyToUse">
+            <div id="notReady" class="text-2xl md:text-3xl font-bold">-</div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm md:text-base">Not Ready To Use</span>
+                <i class="fa-solid fa-lightbulb text-base md:text-lg"></i>
+            </div>
         </div>
-    </div>
 
-    <!-- Ready to Use -->
-    <div class="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card"
-        data-status="ReadyToUse">
-        <div id="ready" class="text-2xl md:text-3xl font-bold">0</div>
-        <div class="flex justify-between items-center mt-2">
-            <span class="text-sm md:text-base">Ready To Use</span>
-            <i class="fa-solid fa-chart-line text-base md:text-lg"></i>
+        <!-- Ready to Use -->
+        <div class="bg-gradient-to-r from-green-500 to-blue-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card hover:opacity-90 transition-opacity"
+            data-status="ReadyToUse">
+            <div id="ready" class="text-2xl md:text-3xl font-bold">-</div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm md:text-base">Ready To Use</span>
+                <i class="fa-solid fa-chart-line text-base md:text-lg"></i>
+            </div>
         </div>
-    </div>
 
-    <!-- Active -->
-    <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card"
-        data-status="Active">
-        <div id="active" class="text-2xl md:text-3xl font-bold">0</div>
-        <div class="flex justify-between items-center mt-2">
-            <span class="text-sm md:text-base">Active</span>
-            <i class="fa-solid fa-folder text-base md:text-lg"></i>
+        <!-- Active -->
+        <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card hover:opacity-90 transition-opacity"
+            data-status="Active">
+            <div id="active" class="text-2xl md:text-3xl font-bold">-</div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm md:text-base">Active</span>
+                <i class="fa-solid fa-folder text-base md:text-lg"></i>
+            </div>
         </div>
-    </div>
 
-    <!-- Inactive -->
-    <div class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card"
-        data-status="Inactive">
-        <div id="inactive" class="text-2xl md:text-3xl font-bold">0</div>
-        <div class="flex justify-between items-center mt-2">
-            <span class="text-sm md:text-base">Inactive</span>
-            <i class="fa-solid fa-folder text-base md:text-lg"></i>
+        <!-- Inactive -->
+        <div class="bg-gradient-to-r from-blue-700 to-blue-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card hover:opacity-90 transition-opacity"
+            data-status="Inactive">
+            <div id="inactive" class="text-2xl md:text-3xl font-bold">-</div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm md:text-base">Inactive</span>
+                <i class="fa-solid fa-folder text-base md:text-lg"></i>
+            </div>
         </div>
-    </div>
 
-    <!-- Maintenance -->
-    <div class="bg-gradient-to-r from-purple-700 to-pink-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card"
-        data-status="Maintenance">
-        <div id="maintenance" class="text-2xl md:text-3xl font-bold">0</div>
-        <div class="flex justify-between items-center mt-2">
-            <span class="text-sm md:text-base">Maintenance</span>
-            <i class="fa-solid fa-folder text-base md:text-lg"></i>
+        <!-- Maintenance -->
+        <div class="bg-gradient-to-r from-purple-700 to-pink-500 text-white p-4 md:p-5 rounded-lg shadow-lg flex flex-col justify-between min-h-[120px] cursor-pointer dashboard-card hover:opacity-90 transition-opacity"
+            data-status="Maintenance">
+            <div id="maintenance" class="text-2xl md:text-3xl font-bold">-</div>
+            <div class="flex justify-between items-center mt-2">
+                <span class="text-sm md:text-base">Maintenance</span>
+                <i class="fa-solid fa-folder text-base md:text-lg"></i>
+            </div>
         </div>
     </div>
 </div>
+
+<!-- Loading State -->
+<div id="dashboardLoading" class="flex justify-center items-center py-20" style="display:none;">
+    <div class="text-center">
+        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-500 mx-auto mb-4"></div>
+        <span class="text-gray-600 text-lg">Loading dashboard...</span>
+    </div>
+</div>
+
+<!-- Error State -->
+<div id="dashboardError" class="flex justify-center items-center py-20" style="display:none;">
+    <div class="text-center">
+        <div class="text-red-500 text-6xl mb-4">
+            <i class="fa-solid fa-exclamation-triangle"></i>
+        </div>
+        <h3 class="text-xl font-semibold text-gray-700 mb-2">Failed to Load Dashboard</h3>
+        <p class="text-gray-600 mb-4">Unable to fetch dashboard data. Please try again.</p>
+        <button id="retryButton" class="bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-lg transition-colors">
+            Retry
+        </button>
+    </div>
+</div>
+
+ 
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            let dataLoaded = false; // Flag to track if data has been loaded
+
+            function showLoading() {
+                $("#dashboardLoading").fadeIn(300);
+                $("#dashboardContent").fadeOut(300);
+                $("#dashboardError").fadeOut(300);
+            }
+
+            function hideLoading() {
+                $("#dashboardLoading").fadeOut(300);
+                $("#dashboardContent").fadeIn(300);
+            }
+
+            function showError() {
+                $("#dashboardLoading").fadeOut(300);
+                $("#dashboardContent").fadeOut(300);
+                $("#dashboardError").fadeIn(300);
+            }
+
+            function showNavigationLoading() {
+                $("#navigationLoading").fadeIn(300);
+            }
+
+            function hideNavigationLoading() {
+                $("#navigationLoading").fadeOut(300);
+            }
 
             function loadDashboard() {
+                // Only load if data hasn't been loaded before
+                if (dataLoaded) {
+                    return;
+                }
+                
+                showLoading();
+                
                 $.ajax({
                     url: 'http://localhost:5125/api/dashboard/summary',
                     method: 'GET',
+                    timeout: 10000, // 10 second timeout
                     success: function (data) {
-                        $('#totalDevice').text(data.total);
-                        $('#notReady').text(data.notReady);
-                        $('#ready').text(data.ready);
-                        $('#active').text(data.active);
-                        $('#inactive').text(data.inactive);
-                        $('#maintenance').text(data.maintenance);
+                        try {
+                            // Validate data structure
+                            if (typeof data !== 'object' || data === null) {
+                                throw new Error('Invalid data format received');
+                            }
+
+                            // Update dashboard values with proper error handling
+                            $('#totalDevice').text(data.total ?? 0);
+                            $('#notReady').text(data.notReady ?? 0);
+                            $('#ready').text(data.ready ?? 0);
+                            $('#active').text(data.active ?? 0);
+                            $('#inactive').text(data.inactive ?? 0);
+                            $('#maintenance').text(data.maintenance ?? 0);
+                            
+                            dataLoaded = true; // Mark as loaded
+                            hideLoading();
+                        } catch (error) {
+                            console.error('Error processing dashboard data:', error);
+                            showError();
+                        }
                     },
-                    error: function (err) {
-                        console.error('Failed to load dashboard:', err);
+                    error: function (xhr, status, error) {
+                        console.error('Failed to load dashboard:', {
+                            status: status,
+                            error: error,
+                            responseText: xhr.responseText
+                        });
+                        showError();
                     }
                 });
             }
 
-            // Klik card -> redirect ke monitoring dengan query string
-            $(document).on('click', '.dashboard-card', function () {
+            // Click card -> redirect to monitoring with loading state
+            $(document).on('click', '.dashboard-card', function (e) {
+                e.preventDefault();
+                
+                // Prevent multiple clicks
+                if ($(this).hasClass('redirecting')) {
+                    return;
+                }
+                
+                $(this).addClass('redirecting');
                 let status = $(this).data('status');
+                let targetUrl;
+                
                 if (status) {
-                    window.location.href = `/Monitoring/Index?status=${encodeURIComponent(status)}`;
+                    targetUrl = `/Monitoring/Index?status=${encodeURIComponent(status)}`;
                 } else {
-                    window.location.href = `/Monitoring/Index`;
+                    targetUrl = `/Monitoring/Index`;
+                }
+
+                // Show simple loading overlay
+                showNavigationLoading();
+                
+                // Navigate immediately
+                try {
+                    window.location.href = targetUrl;
+                } catch (error) {
+                    console.error('Navigation error:', error);
+                    hideNavigationLoading();
+                    $(this).removeClass('redirecting');
+                    alert('Failed to navigate to monitoring page. Please try again.');
                 }
             });
 
+            // Handle browser back button and page visibility
+            $(window).on('pageshow', function(event) {
+                // Hide navigation loading if user comes back via browser back button
+                hideNavigationLoading();
+                $('.dashboard-card').removeClass('redirecting');
+            });
+
+            $(window).on('beforeunload', function() {
+                // Clean up any ongoing states
+                $('.dashboard-card').removeClass('redirecting');
+            });
+
+            // Handle page focus for cleanup only
+            $(window).on('focus', function() {
+                hideNavigationLoading();
+                $('.dashboard-card').removeClass('redirecting');
+            });
+
+            // Retry button functionality
+            $(document).on('click', '#retryButton', function () {
+                dataLoaded = false; // Reset the flag to allow retry
+                loadDashboard();
+            });
+
+            // Initial load only
             loadDashboard();
         });
     </script>
