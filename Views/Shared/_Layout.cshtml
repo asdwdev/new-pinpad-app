@@ -1,9 +1,10 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Logistik - DashboardApp</title>
+    <title>DashboardApp</title>
 
     <!-- DataTables -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
@@ -11,12 +12,10 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <!-- Custom CSS -->
-    @* <link href="~/css/site.css" rel="stylesheet" /> *@
-
-    @* tailwind css *@
+    <!-- Tailwind CSS -->
     <link href="~/css/tailwind-output.css" rel="stylesheet">
 </head>
+
 <body class="bg-gray-50 min-h-screen overflow-x-hidden">
     <!-- Tombol Menu Mobile -->
     <div class="md:hidden fixed top-4 left-4 z-50">
@@ -29,39 +28,37 @@
         <!-- Sidebar -->
         <aside id="sidebar"
             class="fixed md:relative inset-y-0 left-0 z-40 w-64 md:w-72 bg-gradient-to-b from-purple-700 to-red-700 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:min-h-screen p-4 md:p-6 shadow-lg">
+
             <div class="mb-6 md:mb-8 flex items-center gap-3">
-    <!-- Logo -->
-    <img src="~/img/Logo-BTN.png" alt="Logo" class="w-12 h-12 object-contain">
-
-    <!-- Teks -->
-    <div>
-        <h1 class="text-lg md:text-xl font-bold leading-tight">NEW PINPAD</h1>
-        <p class="text-sm md:text-base text-white-500">Admin</p>
-    </div>
-</div>
-
+                <img src="~/img/Logo-BTN.png" alt="Logo" class="w-12 h-12 object-contain">
+                <div>
+                    <h1 class="text-lg md:text-xl font-bold leading-tight">NEW PINPAD</h1>
+                    <p class="text-sm md:text-base text-white-500">Admin</p>
+                </div>
+            </div>
 
             <nav class="space-y-2 md:space-y-3">
-                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Dashboard" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "bg-white/20 text-white" : "hover:bg-white/10")"
-                   asp-controller="Dashboard" asp-action="Index">
+                <!-- Menu Logistik (default hidden) -->
+                <a id="menu-dashboard" asp-controller="Dashboard" asp-action="Index"
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
                     <i class="fa fa-home"></i> Dashboard
                 </a>
-
-                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Monitoring" ? "bg-white/20 text-white" : "hover:bg-white/10")"
-                   asp-controller="Monitoring" asp-action="Index">
-                    <i class="fa-solid fa-chart-column""></i> Monitoring
+                <a id="menu-monitoring" asp-controller="Monitoring" asp-action="Index"
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
+                    <i class="fa-solid fa-chart-column"></i> Monitoring
                 </a>
-
-                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Pinpad" ? "bg-white/20 text-white" : "hover:bg-white/10")"
-                   asp-controller="Pinpad" asp-action="Index">
+                <a id="menu-pinpad" asp-controller="Pinpad" asp-action="Index"
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
                     <i class="fa fa-cubes"></i> Pinpad (Admin Logistik)
                 </a>
-                 <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Branch" ? "bg-white/20 text-white" : "hover:bg-white/10")"
-                   asp-controller="Branch" asp-action="Index">
+
+                <!-- Menu Kantor Cabang (default hidden) -->
+                <a id="menu-branch" asp-controller="Branch" asp-action="Index"
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
                     <i class="fa fa-cubes"></i> Branch
                 </a>
-                <a class="flex items-center gap-3 p-2 md:p-3 rounded-lg transition-colors duration-200 text-sm md:text-base @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Regional" ? "bg-white/20 text-white" : "hover:bg-white/10")"
-                   asp-controller="Regional" asp-action="Index">
+                <a id="menu-regional" asp-controller="Regional" asp-action="Index"
+                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg hover:bg-white/10">
                     <i class="fa fa-cubes"></i> Regional
                 </a>
             </nav>
@@ -76,8 +73,7 @@
                         class="flex items-center space-x-2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition">
                         <i class="fa fa-user"></i>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                  d="M19 9l-7 7-7-7" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
 
@@ -85,7 +81,7 @@
                         class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
                         <div class="py-1">
                             <a href="/Profile" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Admin
+                                Profile
                             </a>
                             <a href="#" id="logoutBtn" class="block px-3 py-2 text-sm text-red-600 hover:bg-gray-100">
                                 Logout
@@ -116,15 +112,24 @@
             const sidebar = $("#sidebar");
             const overlay = $("#overlay");
 
-            // Cek login status
+            // Cek login & role
             $.ajax({
                 url: "http://localhost:5125/api/auth/me",
                 method: "GET",
-                xhrFields: { withCredentials: true },
+                xhrFields: { withCredentials: true }, // penting biar cookie session ikut
                 success: function (res) {
                     if (!res.success) {
                         window.location.href = "/Auth/Login";
+                    } else {
+                        if (res.role === "Admin Logistik") {
+                            $("#menu-dashboard, #menu-monitoring, #menu-pinpad").removeClass("hidden");
+                        } else if (res.role === "Admin Kantor Cabang") {
+                            $("#menu-branch, #menu-regional").removeClass("hidden");
+                        }
                     }
+                },
+                error: function () {
+                    window.location.href = "/Auth/Login";
                 }
             });
 
@@ -178,4 +183,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
