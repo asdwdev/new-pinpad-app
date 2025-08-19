@@ -667,9 +667,8 @@
                         <td class="px-4 py-3">${item.ppad_iphigh || '-'}</td>
                         <td class="px-4 py-3">
                             <div class="flex space-x-2">
-                                <button onclick="editBranch('${item.code}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-all">
-                                    <i class="fas fa-edit mr-1"></i>
-                                </button>
+                               <a href="/Branch/Edit/${item.id}"
+                                   class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm transition-colors">✎</a>
                                 <button onclick="showDeleteModal('${item.code}', '${item.name}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition-all">
                                     <i class="fas fa-trash mr-1"></i>
                                 </button>
@@ -715,9 +714,8 @@
                         <td class="px-4 py-3 text-gray-900">${item.ppad_iphigh || '-'}</td>
                         <td class="px-4 py-3">
                             <div class="flex space-x-2">
-                                <button onclick="editBranch('${item.code}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-all">
-                                    <i class="fas fa-edit mr-1"></i>Edit
-                                </button>
+                                <a href="/Branch/Edit/${item.id}"
+                                   class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm transition-colors">✎</a>
                                 <button onclick="showDeleteModal('${item.code}', '${item.name}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition-all">
                                     <i class="fas fa-trash mr-1"></i>Delete
                                 </button>

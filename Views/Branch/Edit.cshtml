@@ -1,0 +1,224 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Branch - Update";
+}
+
+<div class="mb-4 text-sm px-4 sm:px-0">
+    <a href="/Branch" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Branch</a> /
+    <span class="text-gray-500">Update</span>
+</div>
+
+<!-- Form -->
+<div class="bg-white p-4 sm:p-6 rounded-lg shadow max-w-4xl mx-auto">
+    <div class="space-y-4">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Update Branch</h3>
+
+        <!-- Code -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">BRANCH CODE:</label>
+            <input id="code" type="text" disabled
+                class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
+        </div>
+
+        <!-- Name -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">BRANCH NAME:</label>
+            <input id="name" type="text"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                placeholder="Masukkan nama branch">
+        </div>
+
+        <!-- Area -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">AREA CODE:</label>
+            <select id="area"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                <option value="">-- Pilih Area --</option>
+            </select>
+        </div>
+
+        <!-- Branch Type -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">BRANCH TYPE:</label>
+            <select id="branchType"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                <option value="">-- Pilih Branch Type --</option>
+            </select>
+        </div>
+
+        <!-- Ctrlbr -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">CTRLBR:</label>
+            <input id="ctrlbr" type="text"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                placeholder="Masukkan Ctrlbr">
+        </div>
+
+        <!-- IP Pad Low -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">PPAD IP LOW:</label>
+            <input id="ppad_iplow" type="text"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                placeholder="Masukkan IP Low">
+        </div>
+
+        <!-- IP Pad High -->
+        <div>
+            <label class="block text-gray-700 text-sm font-medium mb-2">PPAD IP HIGH:</label>
+            <input id="ppad_iphigh" type="text"
+                class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all"
+                placeholder="Masukkan IP High">
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-3 mt-6">
+            <button id="btnCancel" type="button"
+                class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                Cancel
+            </button>
+            <button id="btnUpdate" type="button"
+                class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                Update
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Fungsi untuk load dropdown dan pre-select value
+    async function loadDropdowns(selectedArea, selectedType) {
+        try {
+            const [areasRes, typesRes] = await Promise.all([
+                fetch('http://localhost:5125/api/branches/areas'),
+                fetch('http://localhost:5125/api/branches/branch-types')
+            ]);
+
+            const areas = await areasRes.json();
+            const types = await typesRes.json();
+
+            const areaSelect = $('#area');
+            areaSelect.empty().append('<option value="">-- Pilih Area --</option>');
+            areas.forEach(a => {
+                areaSelect.append(`<option value="${a.code}" ${a.code === selectedArea ? 'selected' : ''}>${a.name}</option>`);
+            });
+
+            const typeSelect = $('#branchType');
+            typeSelect.empty().append('<option value="">-- Pilih Branch Type --</option>');
+            types.forEach(bt => {
+                typeSelect.append(`<option value="${bt.code}" ${bt.code === selectedType ? 'selected' : ''}>${bt.name}</option>`);
+            });
+        } catch (err) {
+            console.error('Error loading dropdowns', err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Gagal load dropdown data'
+            });
+        }
+    }
+
+    $(async function () {
+        const id = @ViewBag.Id; // pastikan ViewBag.Id sudah di-set
+        try {
+            const res = await fetch(`http://localhost:5125/api/branches/${id}`);
+            if (!res.ok) throw new Error('Branch tidak ditemukan');
+            const d = await res.json();
+
+            $('#code').val(d.code || '');
+            $('#name').val(d.name || '');
+            $('#ctrlbr').val(d.ctrlbr || '');
+            $('#ppad_iplow').val(d.ppad_iplow || '');
+            $('#ppad_iphigh').val(d.ppad_iphigh || '');
+
+            // Load dropdown dan pilih value sesuai data branch
+            await loadDropdowns(d.area, d.branchType);
+
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: err.message
+            }).then(() => window.location.href = '/Branch/Index');
+        }
+    });
+
+    // Tombol Update
+    $('#btnUpdate').on('click', async function () {
+        const id = @ViewBag.Id;
+        const name = $('#name').val().trim();
+        const area = $('#area').val().trim();
+        const branchType = $('#branchType').val().trim();
+
+        if (!name || !area || !branchType) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Nama, Area, dan Branch Type wajib diisi',
+            });
+            return;
+        }
+
+        const confirmResult = await Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Yakin ingin update data branch?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Update',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        try {
+            const res = await fetch(`http://localhost:5125/api/branches/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    code: $('#code').val(),
+                    name,
+                    area,
+                    branchType,
+                    ctrlbr: $('#ctrlbr').val(),
+                    ppad_iplow: $('#ppad_iplow').val(),
+                    ppad_iphigh: $('#ppad_iphigh').val()
+                })
+            });
+
+            const result = await res.json();
+
+            if (res.ok) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil',
+                    text: 'Branch berhasil diperbarui',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                window.location.href = '/Branch/Index';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal',
+                    text: result.message || 'Gagal update branch',
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Terjadi kesalahan saat update branch',
+            });
+        }
+    });
+
+    // Tombol Cancel
+    $('#btnCancel').on('click', function () {
+        window.location.href = '/Branch/Index';
+    });
+</script>

@@ -10,5 +10,12 @@ namespace NewPinpadApp.Controllers
         {
             return View();
         }
+
+        [RequireApiSession]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
     }
 }
