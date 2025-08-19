@@ -1,255 +1,1051 @@
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Monitoring";
-}
-
 <div class="p-4 md:p-6">
-    <!-- Breadcrumb -->
-    <div class="mb-6 text-sm">
-        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Branch</a> /
-        <span class="text-gray-500">Inquiry</span>
-    </div>
-
-    <!-- Filter Form -->
-    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 mb-6">
-        <h3 class="text-lg font-semibold text-gray-800 mb-6">Search & Filter</h3>
-
-        <!-- Two Column Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <!-- Left Column -->
-            <div class="space-y-4">
-                <!-- Regional -->
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">Regional:</label>
-                    <select id="regionalSelect"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                        <option value="">--Select Regional--</option>
-                    </select>
-                </div>
-
-                <!-- Cabang Induk -->
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
-                    <select id="cabangIndukSelect"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                        <option value="">--Select Cabang Induk--</option>
-                    </select>
-                </div>
-
-                <!-- Outlet -->
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">Outlet:</label>
-                    <select id="outletSelect"
-                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                        <option value="">--Select Outlet--</option>
-                    </select>
-                </div>
+    <!-- Header -->
+    <div class="mb-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">Branch Management</h1>
+                <nav class="text-sm text-gray-600 mt-2">
+                    <a href="#" class="text-teal-500 hover:text-teal-600">Dashboard</a>
+                    <span class="mx-2">/</span>
+                    <span>Branch</span>
+                </nav>
             </div>
+
         </div>
 
-        <!-- Action Buttons -->
-        <div class="flex justify-end space-x-4 gap-2 mt-8">
-            <button id="resetBtn"
-                style="background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
-                onmouseover="this.style.backgroundColor='#4b5563'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
-                onmouseout="this.style.backgroundColor='#6b7280'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
-                <i class="fa fa-refresh mr-2"></i>Reset
+        <!-- Filter Section -->
+        <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 mb-6">
+            <h3 class="text-lg font-semibold text-gray-800 mb-6">Search & Filter</h3>
+
+            <!-- Two Column Layout -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Left Column -->
+                <div class="space-y-4">
+                    <!-- Regional -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Regional:</label>
+                        <select id="regionalSelect"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                            <option value="">--Select Regional--</option>
+                        </select>
+                    </div>
+
+                    <!-- Cabang Induk -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
+                        <select id="cabangIndukSelect"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                            <option value="">--Select Cabang Induk--</option>
+                        </select>
+                    </div>
+
+                    <!-- Outlet -->
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Outlet:</label>
+                        <select id="outletSelect"
+                            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
+                            <option value="">--Select Outlet--</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Action Buttons -->
+    <div class="flex justify-end space-x-4 gap-2 mt-8">
+        <button id="resetBtn"
+            style="background-color: #6b7280; color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+            onmouseover="this.style.backgroundColor='#4b5563'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
+            onmouseout="this.style.backgroundColor='#6b7280'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+            <i class="fa fa-refresh mr-2"></i>Reset
+        </button>
+        <button id="searchBtn"
+            style="background-color: #14b8a6; color: white; padding: 16px 32px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+            onmouseover="this.style.backgroundColor='#0d9488'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
+            onmouseout="this.style.backgroundColor='#14b8a6'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
+            <i class="fa fa-search mr-2"></i>Search
+        </button>
+    </div>
+</div>
+
+<!-- Export Buttons (Hidden by default) -->
+<div id="exportSection" class="hidden mb-6">
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
+        <div class="flex flex-wrap gap-3">
+            <!-- Export PDF (merah) -->
+            <button id="exportPdf"
+                style="background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                onmouseover="this.style.backgroundColor='#dc2626'" onmouseout="this.style.backgroundColor='#ef4444'">
+                PDF
             </button>
-            <button id="searchBtn"
-                style="background-color: #14b8a6; color: white; padding: 16px 32px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
-                onmouseover="this.style.backgroundColor='#0d9488'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.15)'"
-                onmouseout="this.style.backgroundColor='#14b8a6'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)'">
-                <i class="fa fa-search mr-2"></i>Search
+
+
+
+            <!-- Export XLSX (biru) -->
+            <button id="exportXlsx"
+                style="background-color:rgb(31, 199, 39); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                onmouseover="this.style.backgroundColor='#2563eb'" onmouseout="this.style.backgroundColor='#3b82f6'">
+                XLSX
+            </button>
+
+            <button id="exportCsv"
+                style="background-color:rgb(101, 101, 101); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                onmouseover="this.style.backgroundColor='#10b981'" onmouseout="this.style.backgroundColor='#10b981'">
+                CSV
             </button>
         </div>
     </div>
+</div>
 
-    <!-- Export Buttons (Hidden by default) -->
-    <div id="exportSection" class="hidden mb-6">
-        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
-            <div class="flex flex-wrap gap-3">
-                <!-- Export PDF (merah) -->
-                <button id="exportPdf"
-                    style="background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
-                    onmouseover="this.style.backgroundColor='#dc2626'"
-                    onmouseout="this.style.backgroundColor='#ef4444'">
-                    PDF
-                </button>
+<button id="createBranchBtn"
+    class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-3 rounded-lg mt-6 mb-6 font-semibold transition-all duration-200 shadow-lg hover:shadow-xl">
+    <i class="fas fa-plus mr-2"></i>Create Branch
+</button>
 
 
-
-                <!-- Export XLSX (biru) -->
-                <button id="exportXlsx"
-                    style="background-color:rgb(31, 199, 39); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
-                    onmouseover="this.style.backgroundColor='#2563eb'"
-                    onmouseout="this.style.backgroundColor='#3b82f6'">
-                    XLSX
-                </button>
-
-                <button id="exportCsv"
-                    style="background-color:rgb(101, 101, 101); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
-                    onmouseover="this.style.backgroundColor='#10b981'"
-                    onmouseout="this.style.backgroundColor='#10b981'">
-                    CSV
-                </button>
+<!-- Table Container -->
+<div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+    <!-- Table Header -->
+    <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center">
+                <label class="text-sm text-gray-700 mr-3">Show:</label>
+                <select id="pageSizeSelect"
+                    class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-teal-500 text-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                <span class="text-sm text-gray-700 ml-2">entries</span>
             </div>
+            @* <div id="tableInfo" class="text-sm text-gray-600">
+                Showing 0 to 0 of 0 entries
+            </div> *@
         </div>
     </div>
 
-    <!-- Loading Overlay for Export -->
-    <div id="exportLoading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
-            <div class="flex items-center space-x-3">
-                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-                <div>
-                    <p class="text-gray-800 font-medium">Exporting...</p>
-                    <p class="text-gray-600 text-sm">Please wait while we prepare your file</p>
-                </div>
-            </div>
-        </div>
+    <!-- Table -->
+    <div class="overflow-x-auto">
+        <table id="branchTable" class="min-w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-gray-100 text-gray-700 text-sm">
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>Regional</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>Control Branch</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>Code</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>Name</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>Branch Type</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>IP Low</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors">
+                        <div class="flex items-center justify-between">
+                            <span>IP High</span>
+                            <i class="fas fa-sort text-gray-400"></i>
+                        </div>
+                    </th>
+                    <th class="px-4 py-3 font-semibold">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="text-sm">
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
     </div>
 
-    <!-- Table Container -->
-    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
-        <!-- Table Header with Search -->
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center mt-2 md:mt-0">
-                    <label class="text-sm text-gray-700 mr-3">Show:</label>
-                    <select id="pageSizeSelect"
-                        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span class="text-sm text-gray-700 ml-2">entries</span>
-                </div>
-                <!-- Search Box -->
-                <div class="flex items-center gap-2">
-                    <label class="text-sm font-medium text-gray-700">Search:</label>
-                    <input type="text" id="searchInput" placeholder="Search in all columns..."
-                        class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-w-[250px]">
-                </div>
+    <!-- Pagination -->
+    <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div id="tableInfo" class="text-sm text-gray-600">
+                Showing 0 to 0 of 0 entries
             </div>
-        </div>
-
-        <!-- Table Responsive Wrapper -->
-        <div class="overflow-x-auto">
-            <table id="pinpadListTable" class="min-w-full text-left border-collapse">
-                <thead>
-                    <tr class="bg-gray-100 text-gray-700 text-sm">
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Kantor Wilayah</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Kode Cabang Induk</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Kode Outlet</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Nama Outlet</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Regional</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Kelas Outlet</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>IP Low</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>IP High</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                        <th
-                            class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-                            <div class="flex items-center justify-between">
-                                <span>Action</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody" class="text-sm">
-                    <!-- Data will be populated here -->
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-
-                <div class="text-sm text-gray-600" id="tableInfo">
-                    Showing 0 to 0 of 0 entries
-                </div>
-                <div class="flex items-center space-x-2" id="paginationButtons">
-                    <button id="prevBtn"
-                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                        disabled>
-                        Previous
-                    </button>
-                    <span id="pageNumbers" class="flex space-x-1"></span>
-                    <button id="nextBtn"
-                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                        disabled>
-                        Next
-                    </button>
-                </div>
+            <div class="flex items-center space-x-2" id="paginationButtons">
+                <button id="prevBtn"
+                    class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                    disabled>
+                    Previous
+                </button>
+                <span id="pageNumbers" class="flex space-x-1"></span>
+                <button id="nextBtn"
+                    class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                    disabled>
+                    Next
+                </button>
             </div>
         </div>
     </div>
 </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-md mx-4">
+        <div class="flex items-center mb-4">
+            <div class="bg-red-100 rounded-full p-3 mr-4">
+                <i class="fas fa-exclamation-triangle text-red-500 text-xl"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Confirm Delete</h3>
+                <p class="text-gray-600 text-sm">This action cannot be undone.</p>
+            </div>
+        </div>
+        <p class="text-gray-700 mb-6">Are you sure you want to delete this branch?</p>
+        <div class="flex justify-end space-x-3">
+            <button id="cancelDelete"
+                class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all">Cancel</button>
+            <button id="confirmDelete"
+                class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+        <div class="flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
+            <div>
+                <p class="text-gray-800 font-medium">Loading...</p>
+                <p class="text-gray-600 text-sm">Please wait</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- XLSX (SheetJS) -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+<!-- jsPDF + AutoTable -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        let allBranches = [];
+        let currentPage = 1;
+        let rowsPerPage = 10;
+        let currentFilters = {};
+        let currentSort = { column: null, direction: 'asc' };
+        let deleteId = null;
+
+        // Load filter dropdowns
+        loadRegional();
+        loadBranchTypes();
+
+        // Show initial message
+        $('#tableBody').html(`
+        <tr>
+            <td colspan="8" class="text-center py-12 text-gray-500">
+                <div class="flex flex-col items-center space-y-3">
+                    <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
+                    <p class="text-xl font-medium text-gray-600">No data to display</p>
+                    <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                </div>
+            </td>
+        </tr>
+    `);
+
+        // Update pagination info
+        $('#tableInfo').text('Showing 0 to 0 of 0 entries');
+
+        // Hide export section initially
+        $('#exportSection').addClass('hidden');
+
+        // Event handlers
+        $('#createBranchBtn').click(function () {
+            window.open('branch-create.html', '_blank');
+        });
+
+        $('#searchBtn').on('click', function () {
+            performSearch();
+        });
+
+        $('#resetBtn').on('click', function () {
+            // Clear all filter values
+            $('#regionalSelect').val('');
+            $('#cabangIndukSelect').val('');
+            $('#outletSelect').val('');
+            $('#branchCodeFilter').val('');
+            $('#branchNameFilter').val('');
+            $('#branchTypeFilter').val('');
+            $('#searchInput').val('');
+
+            // Clear current filters and sorting
+            currentFilters = {};
+            currentSort = { column: null, direction: 'asc' };
+            allBranches = [];
+
+            // Reset sort indicators
+            $('.sort-indicator i').removeClass('fa-sort-up fa-sort-down text-teal-500').addClass('fa-sort text-gray-400');
+
+            // Hide export section
+            $('#exportSection').addClass('hidden');
+
+            // Show initial message
+            $('#tableBody').html(`
+            <tr>
+                <td colspan="8" class="text-center py-12 text-gray-500">
+                    <div class="flex flex-col items-center space-y-3">
+                        <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
+                        <p class="text-xl font-medium text-gray-600">No data to display</p>
+                        <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                    </div>
+                </td>
+            </tr>
+        `);
+
+            // Update pagination info
+            $('#tableInfo').text('Showing 0 to 0 of 0 entries');
+
+            // Reset page size to default
+            rowsPerPage = 10;
+            updatePageSizeSelector();
+
+            // Reset pagination
+            resetPagination();
+        });
+
+        // Export button event listeners
+        $('#exportPdf').on('click', function () {
+            exportData('pdf');
+        });
+
+        $('#exportCsv').on('click', function () {
+            exportData('csv');
+        });
+
+        $('#exportXlsx').on('click', function () {
+            exportData('xlsx');
+        });
+
+        // Page size selector event listener
+        $('#pageSizeSelect').on('change', function () {
+            const newPageSize = parseInt($(this).val());
+            rowsPerPage = newPageSize;
+            currentPage = 1;
+            renderTable();
+        });
+
+        // Table header click events for sorting
+        $(document).on('click', 'th', function () {
+            if ($(this).find('.sort-indicator').length > 0) {
+                const column = $(this).find('span').text().toLowerCase().replace(/\s+/g, '');
+                handleSort(column);
+            }
+        });
+
+        // Pagination event handlers
+        $(document).on('click', '#prevBtn', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        $(document).on('click', '#nextBtn', function () {
+            const totalPages = Math.ceil(allBranches.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
+            }
+        });
+
+        $(document).on('click', '#pageNumbers button', function () {
+            const page = parseInt($(this).attr('data-page'));
+            if (page && page !== currentPage) {
+                currentPage = page;
+                renderTable();
+            }
+        });
+
+        // Search input event listener for table search
+        $('#searchInput').on('input', function () {
+            const searchTerm = $(this).val().toLowerCase();
+
+            if (allBranches.length === 0) {
+                return; // No data to search
+            }
+
+            if (searchTerm === '') {
+                renderTable();
+            } else {
+                const filteredData = allBranches.filter(item => {
+                    return Object.values(item).some(value =>
+                        value && value.toString().toLowerCase().includes(searchTerm)
+                    );
+                });
+                renderTableWithData(filteredData);
+            }
+        });
+
+        // Modal handlers
+        $('#cancelDelete').click(function () {
+            $('#deleteModal').addClass('hidden');
+            deleteId = null;
+        });
+
+        $('#confirmDelete').click(function () {
+            if (deleteId) {
+                deleteBranch(deleteId);
+            }
+        });
+
+        // Dropdown change handlers
+        $('#regionalSelect').change(function () {
+            const regional = $(this).val();
+            if (regional) {
+                loadCabangInduk(regional);
+            } else {
+                $('#cabangIndukSelect').empty().append('<option value="">--Select Cabang Induk--</option>');
+                $('#outletSelect').empty().append('<option value="">--Select Outlet--</option>');
+            }
+        });
+
+        $('#cabangIndukSelect').change(function () {
+            const cabang = $(this).val();
+            const regional = $('#regionalSelect').val();
+            if (cabang && regional) {
+                loadOutlets(regional, cabang);
+            } else {
+                $('#outletSelect').empty().append('<option value="">--Select Outlet--</option>');
+            }
+        });
+
+        // Functions
+        function loadRegional() {
+            $.ajax({
+                url: 'http://localhost:5125/api/branches',
+                type: 'GET',
+                success: function (response) {
+                    const branches = response || [];
+                    const regionals = [...new Set(branches.map(b => b.areaName).filter(Boolean))];
+
+                    const $select = $('#regionalSelect');
+                    $select.empty().append('<option value="">--Select Regional--</option>');
+                    regionals.forEach(reg => {
+                        $select.append(`<option value="${reg}">${reg}</option>`);
+                    });
+                },
+                error: function () {
+                    console.error('Error loading regional data');
+                }
+            });
+        }
+
+        function loadCabangInduk(filterRegional = "") {
+            const params = {};
+            if (filterRegional) {
+                params.regional = filterRegional;
+            }
+
+            $.ajax({
+                url: 'http://localhost:5125/api/branches',
+                type: 'GET',
+                data: params,
+                success: function (response) {
+                    const branches = response || [];
+                    // Filter branches by regional if specified
+                    const filteredBranches = filterRegional ?
+                        branches.filter(b => b.areaName === filterRegional) : branches;
+
+                    const cabangs = [...new Set(filteredBranches.map(b => b.ctrlbr).filter(Boolean))];
+
+                    const $select = $('#cabangIndukSelect');
+                    $select.empty().append('<option value="">--Select Cabang Induk--</option>');
+                    cabangs.forEach(cb => {
+                        $select.append(`<option value="${cb}">${cb}</option>`);
+                    });
+
+                    // Reset outlet dropdown
+                    $('#outletSelect').empty().append('<option value="">--Select Outlet--</option>');
+                }
+            });
+        }
+
+        function loadOutlets(filterRegional = "", filterCabangInduk = "") {
+            $.ajax({
+                url: 'http://localhost:5125/api/branches',
+                type: 'GET',
+                success: function (response) {
+                    const branches = response || [];
+                    // Apply filters step by step
+                    let filteredBranches = branches;
+
+                    if (filterRegional) {
+                        filteredBranches = filteredBranches.filter(b => b.areaName === filterRegional);
+                    }
+
+                    if (filterCabangInduk) {
+                        filteredBranches = filteredBranches.filter(b => b.ctrlbr === filterCabangInduk);
+                    }
+
+                    const outlets = [...new Set(filteredBranches.map(b => b.code).filter(Boolean))];
+
+                    const $select = $('#outletSelect');
+                    $select.empty().append('<option value="">--Select Outlet--</option>');
+                    outlets.forEach(outlet => {
+                        $select.append(`<option value="${outlet}">${outlet}</option>`);
+                    });
+                }
+            });
+        }
+
+        function loadBranchTypes() {
+            $.ajax({
+                url: 'http://localhost:5125/api/branches',
+                type: 'GET',
+                success: function (response) {
+                    const branches = response || [];
+                    const branchTypes = [...new Set(branches.map(b => b.branchTypeName).filter(Boolean))];
+
+                    const $select = $('#branchTypeFilter');
+                    $select.empty().append('<option value="">--Select Branch Type--</option>');
+                    branchTypes.forEach(type => {
+                        $select.append(`<option value="${type}">${type}</option>`);
+                    });
+                }
+            });
+        }
+
+        function performSearch() {
+            const filters = {
+                regional: $('#regionalSelect').val(),
+                cabangInduk: $('#cabangIndukSelect').val(),
+                outlet: $('#outletSelect').val(),
+                branchCode: $('#branchCodeFilter').val(),
+                branchName: $('#branchNameFilter').val(),
+                branchType: $('#branchTypeFilter').val()
+            };
+
+            // Check if any filter is applied
+            const hasFilters = Object.values(filters).some(value => value && value.trim() !== '');
+
+            if (!hasFilters) {
+                alert('Please select at least one filter criteria before searching.');
+                return;
+            }
+
+            // Store current filters
+            currentFilters = filters;
+
+            // Load all branches first, then filter client-side for accurate results
+            loadBranchesAndFilter(filters);
+            $('#exportSection').removeClass('hidden');
+        }
+
+        function loadBranchesAndFilter(filters) {
+            showLoading(true);
+            $.ajax({
+                url: 'http://localhost:5125/api/branches',
+                method: 'GET',
+                success: function (data) {
+                    let branches = data || [];
+
+                    // Apply filters step by step for accurate filtering
+                    if (filters.regional && filters.regional.trim() !== '') {
+                        branches = branches.filter(b =>
+                            b.areaName && b.areaName.toLowerCase().includes(filters.regional.toLowerCase())
+                        );
+                    }
+
+                    if (filters.cabangInduk && filters.cabangInduk.trim() !== '') {
+                        branches = branches.filter(b =>
+                            b.ctrlbr && b.ctrlbr.toLowerCase().includes(filters.cabangInduk.toLowerCase())
+                        );
+                    }
+
+                    if (filters.outlet && filters.outlet.trim() !== '') {
+                        branches = branches.filter(b =>
+                            b.code && b.code.toLowerCase().includes(filters.outlet.toLowerCase())
+                        );
+                    }
+
+                    if (filters.branchCode && filters.branchCode.trim() !== '') {
+                        branches = branches.filter(b =>
+                            b.code && b.code.toLowerCase().includes(filters.branchCode.toLowerCase())
+                        );
+                    }
+
+                    if (filters.branchName && filters.branchName.trim() !== '') {
+                        branches = branches.filter(b =>
+                            b.name && b.name.toLowerCase().includes(filters.branchName.toLowerCase())
+                        );
+                    }
+
+                    if (filters.branchType && filters.branchType.trim() !== '') {
+                        branches = branches.filter(b =>
+                            b.branchTypeName && b.branchTypeName.toLowerCase().includes(filters.branchType.toLowerCase())
+                        );
+                    }
+
+                    allBranches = branches;
+                    currentPage = 1;
+                    renderTable();
+                    showLoading(false);
+                },
+                error: function (xhr) {
+                    console.error('Error loading branches:', xhr);
+                    showError('Failed to load branch data');
+                    showLoading(false);
+                    $('#tableBody').html(`
+                    <tr>
+                        <td colspan="8" class="text-center py-8 text-gray-500">
+                            Failed to load branch data. Please try again.
+                        </td>
+                    </tr>
+                `);
+                }
+            });
+        }
+
+        function renderTable() {
+            const sortedData = sortData([...allBranches]);
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = sortedData.slice(start, end);
+
+            const tbody = $('#tableBody');
+            tbody.empty();
+
+            if (pageData.length === 0) {
+                tbody.append(`
+                <tr>
+                    <td colspan="8" class="text-center py-8 text-gray-500">
+                        <div class="flex flex-col items-center space-y-2">
+                            <i class="fas fa-search text-4xl mb-4 opacity-50"></i>
+                            <p class="text-sm font-medium text-gray-600">No data found</p>
+                            <p class="text-xs text-gray-500">Try adjusting your search criteria</p>
+                        </div>
+                    </td>
+                </tr>
+            `);
+            } else {
+                pageData.forEach(item => {
+                    tbody.append(`
+                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                        <td class="px-4 py-3">${item.areaName || '-'}</td>
+                        <td class="px-4 py-3">${item.ctrlbr || '-'}</td>
+                        <td class="px-4 py-3 font-medium">${item.code}</td>
+                        <td class="px-4 py-3">${item.name}</td>
+                        <td class="px-4 py-3">${item.branchTypeName || '-'}</td>
+                        <td class="px-4 py-3">${item.ppad_iplow || '-'}</td>
+                        <td class="px-4 py-3">${item.ppad_iphigh || '-'}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex space-x-2">
+                                <button onclick="editBranch('${item.code}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                    <i class="fas fa-edit mr-1"></i>
+                                </button>
+                                <button onclick="showDeleteModal('${item.code}', '${item.name}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                    <i class="fas fa-trash mr-1"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `);
+                });
+            }
+
+            renderPagination();
+            updatePaginationInfo();
+        }
+
+        function renderTableWithData(dataToRender) {
+            const sortedData = sortData([...dataToRender]);
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = sortedData.slice(start, end);
+
+            $('#tableBody').empty();
+            if (pageData.length === 0) {
+                $('#tableBody').append(`
+                <tr>
+                    <td colspan="8" class="text-center py-8 text-gray-500">
+                        <div class="flex flex-col items-center space-y-2">
+                            <p class="text-sm font-medium text-gray-600">No data found</p>
+                            <p class="text-xs text-gray-500">Try adjusting your search term</p>
+                        </div>
+                    </td>
+                </tr>
+            `);
+            } else {
+                pageData.forEach((item, index) => {
+                    const row = `
+                    <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                        <td class="px-4 py-3 text-gray-900">${item.areaName || '-'}</td>
+                        <td class="px-4 py-3 text-gray-900">${item.ctrlbr || '-'}</td>
+                        <td class="px-4 py-3 text-gray-900 font-medium">${item.code}</td>
+                        <td class="px-4 py-3 text-gray-900">${item.name}</td>
+                        <td class="px-4 py-3 text-gray-900">${item.branchTypeName || '-'}</td>
+                        <td class="px-4 py-3 text-gray-900">${item.ppad_iplow || '-'}</td>
+                        <td class="px-4 py-3 text-gray-900">${item.ppad_iphigh || '-'}</td>
+                        <td class="px-4 py-3">
+                            <div class="flex space-x-2">
+                                <button onclick="editBranch('${item.code}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                    <i class="fas fa-edit mr-1"></i>Edit
+                                </button>
+                                <button onclick="showDeleteModal('${item.code}', '${item.name}')" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition-all">
+                                    <i class="fas fa-trash mr-1"></i>Delete
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                    $('#tableBody').append(row);
+                });
+            }
+
+            renderPaginationWithData(dataToRender);
+            updatePaginationInfoWithData(dataToRender);
+        }
+
+        function handleSort(column) {
+            // Map display names to actual data properties
+            const columnMap = {
+                'regional': 'areaName',
+                'controlbranch': 'ctrlbr',
+                'code': 'code',
+                'name': 'name',
+                'branchtype': 'branchTypeName',
+                'iplow': 'ppad_iplow',
+                'iphigh': 'ppad_iphigh'
+            };
+
+            const actualColumn = columnMap[column];
+
+            if (!actualColumn) {
+                return;
+            }
+
+            if (currentSort.column === actualColumn) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = actualColumn;
+                currentSort.direction = 'asc';
+            }
+
+            // Update sort indicators
+            $('.sort-indicator i').removeClass('fa-sort-up fa-sort-down text-teal-500').addClass('fa-sort text-gray-400');
+
+            // Find the clicked header and update its icon
+            const clickedHeader = $(`th:has(span:contains("${column.charAt(0).toUpperCase() + column.slice(1).replace(/([A-Z])/g, ' $1')}"))`);
+            const icon = clickedHeader.find('.sort-indicator i');
+
+            if (currentSort.direction === 'asc') {
+                icon.removeClass('fa-sort fa-sort-down text-gray-400').addClass('fa-sort-up text-teal-500');
+            } else {
+                icon.removeClass('fa-sort fa-sort-up text-gray-400').addClass('fa-sort-down text-teal-500');
+            }
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        function sortData(data) {
+            if (!currentSort.column) {
+                return data;
+            }
+
+            const sortedData = data.sort((a, b) => {
+                let aVal = a[currentSort.column];
+                let bVal = b[currentSort.column];
+
+                if (aVal === null || aVal === undefined) aVal = '';
+                if (bVal === null || bVal === undefined) bVal = '';
+
+                if (typeof aVal === 'string') {
+                    aVal = aVal.toLowerCase();
+                    bVal = bVal.toLowerCase();
+                }
+
+                let result = 0;
+                if (aVal < bVal) result = currentSort.direction === 'asc' ? -1 : 1;
+                else if (aVal > bVal) result = currentSort.direction === 'asc' ? 1 : -1;
+
+                return result;
+            });
+
+            return sortedData;
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(allBranches.length / rowsPerPage);
+            const $pageNumbers = $('#pageNumbers').empty();
+
+            if (totalPages <= 1) {
+                $('#prevBtn').prop('disabled', true);
+                $('#nextBtn').prop('disabled', true);
+                return;
+            }
+
+            $('#prevBtn').prop('disabled', currentPage === 1);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = $('<button>')
+                    .text(i)
+                    .addClass('px-3 py-1 border rounded text-sm transition-colors')
+                    .toggleClass('bg-teal-500 text-white border-teal-500', i === currentPage)
+                    .toggleClass('hover:bg-gray-100', i !== currentPage)
+                    .attr('data-page', i);
+
+                $pageNumbers.append(btn);
+            }
+
+            $('#nextBtn').prop('disabled', currentPage === totalPages);
+        }
+
+        function renderPaginationWithData(dataToRender) {
+            const totalPages = Math.ceil(dataToRender.length / rowsPerPage);
+            const $pageNumbers = $('#pageNumbers').empty();
+
+            if (totalPages <= 1) {
+                $('#prevBtn').prop('disabled', true);
+                $('#nextBtn').prop('disabled', true);
+                return;
+            }
+
+            $('#prevBtn').prop('disabled', currentPage === 1);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = $('<button>')
+                    .text(i)
+                    .addClass('px-3 py-1 border rounded text-sm transition-colors')
+                    .toggleClass('bg-teal-500 text-white border-teal-500', i === currentPage)
+                    .toggleClass('hover:bg-gray-100', i !== currentPage)
+                    .attr('data-page', i);
+
+                $pageNumbers.append(btn);
+            }
+
+            $('#nextBtn').prop('disabled', currentPage === totalPages);
+        }
+
+        function updatePaginationInfo() {
+            const totalRows = allBranches.length;
+            const start = totalRows === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
+            const end = Math.min(currentPage * rowsPerPage, totalRows);
+            $('#tableInfo').text(`Showing ${start} to ${end} of ${totalRows} entries`);
+        }
+
+        function updatePaginationInfoWithData(dataToRender) {
+            const totalRows = dataToRender.length;
+            const start = totalRows === 0 ? 0 : (currentPage - 1) * rowsPerPage + 1;
+            const end = Math.min(currentPage * rowsPerPage, totalRows);
+            $('#tableInfo').text(`Showing ${start} to ${end} of ${totalRows} entries`);
+        }
+
+        function updatePageSizeSelector() {
+            $('#pageSizeSelect').val(rowsPerPage);
+        }
+
+        function resetPagination() {
+            $('#paginationButtons #pageNumbers').empty();
+            $('#prevBtn').prop('disabled', true);
+            $('#nextBtn').prop('disabled', true);
+        }
+
+        async function exportData(format) {
+            $('#exportLoading').removeClass('hidden');
+
+            try {
+                // mapping UI -> API (sesuaikan bila nama param di server beda)
+                const mapping = {
+                    regional: 'loc',
+                    cabangInduk: 'ctrlbr',
+                    branchCode: 'code',
+                    outlet: 'code',
+                    branchName: 'name',
+                    branchType: 'branchTypeName'
+                };
+
+                // read current filter values directly from DOM to avoid stale currentFilters
+                const uiFilters = {
+                    regional: $('#regionalSelect').val(),
+                    cabangInduk: $('#cabangIndukSelect').val(),
+                    outlet: $('#outletSelect').val(),
+                    branchCode: $('#branchCodeFilter') ? $('#branchCodeFilter').val() : '',
+                    branchName: $('#branchNameFilter') ? $('#branchNameFilter').val() : '',
+                    branchType: $('#branchTypeFilter') ? $('#branchTypeFilter').val() : ''
+                };
+
+                const buildQuery = (includeFormat) => {
+                    const qp = new URLSearchParams();
+                    Object.keys(uiFilters).forEach(k => {
+                        const v = uiFilters[k];
+                        if (v && v.toString().trim() !== '') {
+                            const apiKey = mapping[k];
+                            // avoid duplicate 'code' keys for outlet/branchCode
+                            if (apiKey === 'code' && qp.has('code')) return;
+                            qp.append(apiKey, v);
+                        }
+                    });
+                    if (includeFormat) qp.append('format', format);
+                    qp.append('_t', Date.now().toString());
+                    return qp;
+                };
+
+                const qp = buildQuery(true);
+                const exportUrl = `http://localhost:5125/api/branches/export?${qp.toString()}`;
+                console.log('Export URL (server):', exportUrl);
+
+                const res = await fetch(exportUrl, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: { 'Accept': format === 'pdf' ? 'application/pdf' : '*/*' },
+                    // credentials: 'include' // uncomment if backend requires auth cookies
+                });
+
+                if (!res.ok) {
+                    const txt = await res.text().catch(() => '');
+                    console.error('Export failed', res.status, txt);
+                    showNotification(`Export failed: server ${res.status} ${txt || ''}`, 'error');
+                    return;
+                }
+
+                // If requesting PDF, validate content-type and download
+                const ct = res.headers.get('content-type') || '';
+                if (format === 'pdf' && !ct.includes('pdf')) {
+                    const txt = await res.text().catch(() => '');
+                    console.error('Expected PDF but got:', ct, txt);
+                    showNotification('Server did not return PDF', 'error');
+                    return;
+                }
+
+                const blob = await res.blob();
+                let filename = `branch_data_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.${format}`;
+                const cd = res.headers.get('content-disposition');
+                if (cd) {
+                    const m = /filename\*=UTF-8''(.+)$/.exec(cd) || /filename="?([^"]+)"?/.exec(cd);
+                    if (m && m[1]) filename = decodeURIComponent(m[1]);
+                }
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+
+                showNotification('Export started (server)', 'success');
+            } catch (e) {
+                console.error('Export error:', e);
+                showNotification('Export failed: ' + (e.message || ''), 'error');
+            } finally {
+                $('#exportLoading').addClass('hidden');
+            }
+        }
+
+
+
+
+        function showNotification(message, type) {
+            const notification = $(`
+            <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${type === 'success' ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}">
+                ${message}
+            </div>
+        `);
+
+            $('body').append(notification);
+
+            setTimeout(() => {
+                notification.fadeOut(() => notification.remove());
+            }, 3000);
+        }
+
+        function showLoading(show) {
+            if (show) {
+                $('#loadingOverlay').removeClass('hidden');
+            } else {
+                $('#loadingOverlay').addClass('hidden');
+            }
+        }
+
+        function showError(message) {
+            alert('Error: ' + message);
+        }
+
+        function showSuccess(message) {
+            alert('Success: ' + message);
+        }
+
+        // Global functions for buttons
+        window.editBranch = function (code) {
+            window.open(`branch-edit.html?code=${encodeURIComponent(code)}`, '_blank');
+        }
+
+        window.showDeleteModal = function (code, name) {
+            deleteId = code;
+            $('#deleteModal p').text(`Are you sure you want to delete branch "${name}" (${code})?`);
+            $('#deleteModal').removeClass('hidden');
+        }
+
+        function deleteBranch(code) {
+            showLoading(true);
+            const branch = allBranches.find(b => b.code === code);
+            if (!branch) {
+                showError('Branch not found');
+                showLoading(false);
+                return;
+            }
+
+            $.ajax({
+                url: `http://localhost:5125/api/branches/${branch.id}`,
+                method: 'DELETE',
+                success: function () {
+                    $('#deleteModal').addClass('hidden');
+                    deleteId = null;
+                    showSuccess('Branch deleted successfully');
+                    // Reload data with current filters
+                    if (Object.keys(currentFilters).length > 0) {
+                        loadBranchesAndFilter(currentFilters);
+                    }
+                },
+                error: function (xhr) {
+                    console.error('Error deleting branch:', xhr);
+                    let errorMsg = 'Failed to delete branch';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    showError(errorMsg);
+                    showLoading(false);
+                }
+            });
+        }
+    });
+</script>
