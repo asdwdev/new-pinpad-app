@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("NewPinpadApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60852661e776da84074f0264b64266dc6bd6881f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9a80f75e8d4bc1754d908b6f43e0bbe800178189")]
 [assembly: System.Reflection.AssemblyProductAttribute("NewPinpadApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("NewPinpadApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
