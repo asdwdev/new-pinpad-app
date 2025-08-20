@@ -52,6 +52,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uaXRvcmluZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Outlet/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3V0bGV0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Outlet/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3V0bGV0XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Outlet/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3V0bGV0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Arya/Desktop/dotnet-projects/NewPinpadApp/Views/Pinpad/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGlucGFkXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
