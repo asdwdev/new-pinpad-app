@@ -13,128 +13,319 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <!-- Tailwind CSS -->
-    <link href="~/css/tailwind-output.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
+<style>
+    .no-transitions * {
+        transition: none !important;
+    }
+</style>
 
-<body class="bg-gray-50 min-h-screen overflow-x-hidden">
-    <!-- Tombol Menu Mobile -->
+<body class="bg-gray-50 min-h-screen font-sans">
+    <!-- Mobile Menu Button -->
     <div class="md:hidden fixed top-4 left-4 z-50">
-        <button id="mobileMenuBtn" class="bg-purple-700 text-white p-2 rounded-md shadow-lg">
-            <i class="fa fa-bars"></i>
+        <button id="mobileMenuBtn"
+            class="bg-gradient-to-r from-purple-600 to-purple-700 text-white p-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105">
+            <i class="fa fa-bars text-lg"></i>
         </button>
     </div>
 
-    <div class="flex flex-row w-full">
+    <div class="flex min-h-screen">
         <!-- Sidebar -->
-        <aside id="sidebar"
-            class="fixed md:relative inset-y-0 left-0 z-40 w-64 md:w-72 bg-gradient-to-b from-purple-700 to-red-700 text-white transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:min-h-screen p-4 md:p-6 shadow-lg">
+        <aside id="sidebar" class="fixed md:sticky md:top-0 inset-y-0 left-0 z-40 w-72
+    bg-gradient-to-br from-purple-700 via-purple-800 to-red-700 text-white
+    transform -translate-x-full md:translate-x-0
+    transition-transform duration-300 ease-in-out md:transition-none md:duration-0
+    h-screen overflow-y-auto shadow-2xl will-change-transform">
 
-            <div class="mb-6 md:mb-8 flex items-center gap-3">
-                <img src="~/img/Logo-BTN.png" alt="Logo" class="w-12 h-12 object-contain">
-                <div>
-                    <h1 class="text-lg md:text-xl font-bold leading-tight">NEW PINPAD</h1>
-                    <p class="text-sm md:text-base text-white-500">Admin</p>
-                </div>
-            </div>
 
-            <nav class="space-y-2 md:space-y-3">
-                <!-- Menu Logistik (default hidden) -->
-                <a id="menu-dashboard" asp-controller="Dashboard" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
-              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
-                    <i class="fa fa-home"></i> Dashboard
-                </a>
 
-                <a id="menu-monitoring" asp-controller="Monitoring" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
-              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
-                    <i class="fa-solid fa-chart-column"></i> Monitoring
-                </a>
-
-                <a id="menu-pinpad" asp-controller="Pinpad" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
-              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pinpad" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
-                    <i class="fa-solid fa-credit-card"></i> Pinpad (Admin Logistik)
-                </a>
-
-                <!-- Menu Kantor Cabang (default hidden) -->
-                <a id="menu-branch" asp-controller="Branch" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
-              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Branch" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
-                    <i class="fa-solid fa-building"></i> Branch
-                </a>
-
-                <a id="menu-regional" asp-controller="Regional" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-2 md:p-3 rounded-lg 
-              @(ViewContext.RouteData.Values["controller"]?.ToString() == "Regional" ? "bg-white/20 font-semibold border-l-4 border-white pl-4" : "hover:bg-white/10")">
-                    <i class="fa-solid fa-map"></i> Regional
-                </a>
-            </nav>
-
-        </aside>
-
-        <!-- Konten Utama -->
-        <main class="flex-1 p-3 md:p-6 lg:p-8 transition-all duration-300 min-w-0">
-            <!-- Bar Atas -->
-            <div class="flex justify-end items-center mb-4 md:mb-6 lg:mb-8">
-                <div class="relative inline-block text-left">
-                    <button id="userMenuButton" type="button"
-                        class="flex items-center space-x-2 text-sm text-gray-500 hover:text-gray-700 focus:outline-none p-2 rounded-lg hover:bg-gray-100 transition">
-                        <i class="fa fa-user"></i>
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-
-                    <div id="userMenuDropdown"
-                        class="hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 z-50">
-                        <div class="py-1">
-                            <a href="/Profile" class="block px-3 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                                Profile
-                            </a>
-                            <a href="#" id="logoutBtn" class="block px-3 py-2 text-sm text-red-600 hover:bg-gray-100">
-                                Logout
-                            </a>
-                        </div>
+            <!-- Sidebar Header -->
+            <div class="p-6 border-b border-white border-opacity-20">
+                <div class="flex items-center gap-4">
+                    <div
+                        class="w-12 h-12 bg-white bg-opacity-20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                        <img src="~/img/Logo-BTN.png" alt="Logo" class="w-8 h-8 object-contain">
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold leading-tight">NEW PINPAD</h1>
+                        <p class="text-sm text-purple-200">Admin Dashboard</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Konten Halaman -->
-            <div class="w-full max-w-7xl mx-auto">
-                @RenderBody()
+            <!-- Navigation Menu -->
+            <nav class="p-4 space-y-2">
+                <!-- Dashboard Menu -->
+                <a id="menu-dashboard" asp-controller="Dashboard" asp-action="Index"
+                    class="hidden flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard"
+                                                                                                                                 ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                 : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fa fa-home text-lg"></i>
+                    </div>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+
+                <!-- Monitoring Parent Menu -->
+                <div class="space-y-1">
+                    <button type="button" id="menu-monitoring-toggle"
+                        class="w-full group flex items-center justify-between p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-200">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="fa-solid fa-chart-column text-lg"></i>
+                            </div>
+                            <span class="font-medium">Monitoring</span>
+                        </div>
+                        <i id="monitoring-arrow"
+                            class="fa-solid fa-chevron-down text-sm transition-transform duration-200"></i>
+                    </button>
+
+                    <!-- Monitoring Submenu -->
+                    <div id="monitoring-children" class="ml-6 space-y-1 hidden">
+                        <a id="menu-pinpad-list" asp-controller="Monitoring" asp-action="Index"
+                            class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
+                            @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "Index"
+                                                                                                                                                            ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                            : "hover:bg-white hover:bg-opacity-10")">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="fa-solid fa-tablet-screen-button"></i>
+                            </div>
+                            <span>Pinpad List</span>
+                        </a>
+
+                        <a id="menu-pinpad-log" asp-controller="Monitoring" asp-action="PinpadLog"
+                            class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
+                            @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "PinpadLog"
+                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                            <span>Pinpad Log</span>
+                        </a>
+
+                        <a id="menu-transaction-log" asp-controller="Monitoring" asp-action="TransactionLog"
+                            class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
+                            @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "TransactionLog"
+                                                                                                                                                                         ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                         : "hover:bg-white hover:bg-opacity-10")">
+                            <div class="w-6 h-6 flex items-center justify-center">
+                                <i class="fa-solid fa-receipt"></i>
+                            </div>
+                            <span>Transaction Log</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div id="line-top" class="hidden border-t border-white border-opacity-20 my-4"></div>
+
+                <!-- Pinpad Menu -->
+                <a id="menu-pinpad" asp-controller="Pinpad" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pinpad"
+                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-credit-card text-lg"></i>
+                    </div>
+                    <span id="pinpad-label" class="font-medium">Pinpad (Admin Logistik)</span>
+                </a>
+
+                <!-- Divider -->
+                <div id="line-bottom" class="hidden border-t border-white border-opacity-20 my-4"></div>
+
+                <!-- Users Menu -->
+                <a id="menu-user" asp-controller="User" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "User"
+                                                                                                                       ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                       : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-users text-lg"></i>
+                    </div>
+                    <span class="font-medium">Users</span>
+                </a>
+
+                <!-- Branch Menu -->
+                <a id="menu-branch" asp-controller="Branch" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Branch"
+                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-building text-lg"></i>
+                    </div>
+                    <span class="font-medium">Branch</span>
+                </a>
+
+                <!-- Regional Menu -->
+                <a id="menu-regional" asp-controller="Regional" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Regional"
+                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fa-solid fa-map text-lg"></i>
+                    </div>
+                    <span class="font-medium">Regional</span>
+                </a>
+
+                <!-- Hak Akses Menu -->
+                <a id="menu-roleAkses" asp-controller="User" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "RoleAkses"
+                                                                                                                            ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                            : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fas fa-user-cog text-lg"></i>
+                    </div>
+                    <span class="font-medium">Role Akses</span>
+                </a>
+
+                <!-- Response Code Menu -->
+                <a id="menu-responsecode" asp-controller="User" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "ResponseCode"
+                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="far fa-comments text-lg"></i>
+                    </div>
+                    <span class="font-medium">Response Code</span>
+                </a>
+
+                <!-- Device API Log Menu -->
+                <a id="menu-deviceapilog" asp-controller="User" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "DeviceAPILog"
+                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fas fa-tasks text-lg"></i>
+                    </div>
+                    <span class="font-medium">Device API Log</span>
+                </a>
+
+                <!-- Audit Log Menu -->
+                <a id="menu-auditlog" asp-controller="User" asp-action="Index"
+                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
+                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "AuditLog"
+                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="fa fa-history text-lg"></i>
+                    </div>
+                    <span class="font-medium">Audit Log</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col min-w-0">
+            <!-- Top Bar -->
+            <header class="bg-white shadow-sm border-b border-gray-200 px-4 md:px-6 lg:px-8 py-4">
+                <div class="flex justify-between items-center">
+                    <!-- Page Title -->
+                    <div class="hidden md:block">
+                        <h2 class="text-2xl font-semibold text-gray-800">Dashboard</h2>
+                        <p class="text-sm text-gray-500 mt-1">Welcome back to your admin panel</p>
+                    </div>
+
+                    <!-- User Menu -->
+                    <div class="relative">
+                        <button id="userMenuButton" type="button"
+                            class="flex items-center space-x-3 text-sm bg-white border border-gray-200 rounded-xl px-4 py-2 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-200">
+                            <div
+                                class="w-8 h-8 bg-gradient-to-r from-purple-600 to-purple-700 rounded-lg flex items-center justify-center">
+                                <i class="fa fa-user text-white text-sm"></i>
+                            </div>
+                            <span class="hidden sm:block font-medium text-gray-700">Admin</span>
+                            <i class="fa-solid fa-chevron-down text-gray-400 text-xs"></i>
+                        </button>
+
+                        <!-- User Dropdown -->
+                        <div id="userMenuDropdown"
+                            class="hidden absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 z-50 overflow-hidden">
+                            <div class="py-2">
+                                <a href="/Profile"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors">
+                                    <i class="fa-solid fa-user-circle text-gray-400"></i>
+                                    <span>Profile</span>
+                                </a>
+                                <hr class="border-gray-100">
+                                <a href="#" id="logoutBtn"
+                                    class="flex items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                                    <i class="fa-solid fa-sign-out-alt text-red-500"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="flex-1 p-4 md:p-6 lg:p-8 overflow-auto">
+                <div class="max-w-5xl mx-auto">
+                    @RenderBody()
+                </div>
             </div>
         </main>
     </div>
 
-    <!-- Overlay untuk Mobile -->
-    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+    <!-- Mobile Overlay -->
+    <div id="overlay"
+        class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden transition-opacity duration-300"></div>
 
-    <!-- Script -->
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
+        document.documentElement.classList.add('no-transitions');
+        window.addEventListener('load', () => {
+            document.documentElement.classList.remove('no-transitions');
+        });
         $(function () {
             const userMenuBtn = $("#userMenuButton");
             const userMenuDropdown = $("#userMenuDropdown");
             const sidebar = $("#sidebar");
             const overlay = $("#overlay");
+            const mobileMenuBtn = $("#mobileMenuBtn");
 
-            // Cek login & role
+            // Check login & role
             $.ajax({
                 url: "http://localhost:5125/api/auth/me",
                 method: "GET",
-                xhrFields: { withCredentials: true }, // penting biar cookie session ikut
+                xhrFields: { withCredentials: true },
+                crossDomain: true,
                 success: function (res) {
-                    if (!res.success) {
+                    if (!res || !res.success) {
                         window.location.href = "/Auth/Login";
+                        return;
+                    }
+
+                    const role = (res.role || "").trim();
+
+                    // Show/hide menus based on role
+                    if (role === "Admin Logistik") {
+                        $("#menu-dashboard, #menu-pinpad").removeClass("hidden");
+                        $("#menu-monitoring-toggle, #menu-pinpad-list").removeClass("hidden");
+                        $("#menu-pinpad-log, #menu-transaction-log").addClass("hidden");
+                    } else if (role === "Admin Kantor Cabang") {
+                        $("#menu-branch, #menu-regional").removeClass("hidden");
+                        $("#menu-monitoring-toggle").addClass("hidden");
+                        $("#pinpad-label").text("Pinpad");
+                    } else if (role === "Customer Service") {
+                        $("#menu-dashboard, #menu-user, #menu-regional").removeClass("hidden");
+                        $("#menu-monitoring-toggle, #menu-pinpad-list, #menu-pinpad-log, #menu-transaction-log, #menu-pinpad, #menu-branch, #menu-roleAkses, #menu-responsecode, #menu-transactionlog, #menu-deviceapilog, #menu-auditlog").removeClass("hidden");
+                        $("#pinpad-label").text("Pinpad");
+                        $("#line-top, #line-bottom").removeClass("hidden");
                     } else {
-                        if (res.role === "Admin Logistik") {
-                            $("#menu-dashboard, #menu-monitoring, #menu-pinpad").removeClass("hidden");
-                        } else if (res.role === "Admin Kantor Cabang") {
-                            $("#menu-branch, #menu-regional").removeClass("hidden");
-                        }
+                        window.location.href = "/Auth/Login";
                     }
                 },
                 error: function () {
@@ -142,51 +333,65 @@
                 }
             });
 
-            // Logout
-            $("#logoutBtn").click(function (e) {
+            // Toggle Monitoring dropdown
+            $("#menu-monitoring-toggle").on("click", function () {
+                const children = $("#monitoring-children");
+                const arrow = $("#monitoring-arrow");
+
+                children.toggleClass("hidden");
+                arrow.toggleClass("rotate-180");
+            });
+
+            // Logout functionality
+            $("#logoutBtn").on("click", function (e) {
                 e.preventDefault();
+
                 $.ajax({
                     url: "http://localhost:5125/api/auth/logout",
                     method: "POST",
                     xhrFields: { withCredentials: true },
+                    crossDomain: true,
                     success: function (res) {
-                        if (res.success) {
+                        if (res && res.success) {
                             window.location.href = "/Auth/Login";
                         }
                     }
                 });
             });
 
-            // Dropdown user
-            userMenuBtn.on("click", () => {
+            // User dropdown toggle
+            userMenuBtn.on("click", function (e) {
+                e.stopPropagation();
                 userMenuDropdown.toggleClass("hidden");
             });
 
-            $(document).on("click", (event) => {
-                if (!userMenuBtn[0].contains(event.target) && !userMenuDropdown[0].contains(event.target)) {
+            // Close dropdown when clicking outside
+            $(document).on("click", function (e) {
+                if (!userMenuBtn[0].contains(e.target) && !userMenuDropdown[0].contains(e.target)) {
                     userMenuDropdown.addClass("hidden");
                 }
             });
 
-            // Menu mobile
-            $("#mobileMenuBtn").on("click", () => {
+            // Mobile menu functionality
+            mobileMenuBtn.on("click", function () {
                 sidebar.toggleClass("-translate-x-full");
                 overlay.toggleClass("hidden");
             });
 
-            overlay.on("click", () => {
+            overlay.on("click", function () {
                 sidebar.addClass("-translate-x-full");
                 overlay.addClass("hidden");
             });
 
-            $(window).on("resize", () => {
+            // Handle window resize
+            $(window).on("resize", function () {
                 if (window.innerWidth >= 768) {
                     sidebar.removeClass("-translate-x-full");
                     overlay.addClass("hidden");
-                } else {
-                    sidebar.addClass("-translate-x-full");
                 }
-            }).trigger("resize");
+            });
+
+            console.log("Dashboard initialized successfully");
         });
     </script>
 

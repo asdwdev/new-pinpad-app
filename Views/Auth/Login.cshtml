@@ -58,8 +58,12 @@
                             window.location.href = "/Dashboard/Index";
                             return;
                         }
-                        if (role === "admin kantor cabang") {
+                        else if (role === "admin kantor cabang") {
                             window.location.href = "/Branch/Index";
+                            return;
+                        }
+                        else if (role === "customer service") {
+                            window.location.href = "/Dashboard/Index";
                             return;
                         }
                     }

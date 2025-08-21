@@ -33,4 +33,18 @@ public class PinpadController : Controller
         ViewBag.Id = id;            // atau pakai model strongly-typed
         return View();
     }
+
+
+    public IActionResult CreateMany(int id)
+    {
+        // ViewBag.Id = id;            // atau pakai model strongly-typed
+        return View();
+    }
+
+
+    public IActionResult Create(int id)
+    {
+        // ViewBag.Id = id;            // atau pakai model strongly-typed
+        return View();
+    }
 }

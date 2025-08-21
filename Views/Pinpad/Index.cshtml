@@ -9,6 +9,18 @@
     <span class="text-gray-500">Inquiry</span>
   </div>
 
+  <!-- Action Buttons (Only visible for Customer Service) -->
+  <div class="mb-4 flex gap-2">
+    <button class="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-colors flex items-center gap-2 text-sm font-medium cs-only">
+      <i class="fa fa-plus"></i>
+      Tambah Pinpad
+    </button>
+    <button class="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition-colors flex items-center gap-2 text-sm font-medium cs-only">
+      <i class="fa fa-upload"></i>
+      Tambah Banyak Pinpad
+    </button>
+  </div>
+
   <!-- Table Controls -->
   <div class="flex flex-col md:flex-row justify-between items-center mb-6">
     <!-- Search field -->
@@ -91,8 +103,22 @@
       let currentSort = { column: null, direction: 'asc' };
       let searchTerm = '';
 
+      // Check user role and show/hide CS-only elements
+      checkUserRole();
+
       // Initialize
       loadPinpads();
+
+      // Event listeners for new buttons
+      $('.cs-only').first().on('click', function() {
+        // Handle Tambah Pinpad - redirect to add page
+        window.location.href = '/Pinpad/Create';
+      });
+
+      $('.cs-only').last().on('click', function() {
+        // Handle Tambah Banyak Pinpad - redirect to bulk add page or open modal
+        window.location.href = '/Pinpad/CreateMany';
+      });
 
       // Event listeners
       $('#searchInput').on('input', function () {
@@ -120,6 +146,34 @@
         updateSortIcons();
         filterAndDisplayData();
       });
+
+      function checkUserRole() {
+        $.ajax({
+          url: "http://localhost:5125/api/auth/me",
+          method: "GET",
+          xhrFields: { withCredentials: true },
+          crossDomain: true,
+          success: function (res) {
+            if (!res || !res.success) {
+              window.location.href = "/Auth/Login";
+              return;
+            }
+
+            const role = (res.role || "").trim();
+            
+            // Show/hide elements based on role
+            if (role === "Customer Service") {
+              $('.cs-only').show();
+            } else {
+              $('.cs-only').hide();
+            }
+          },
+          error: function() {
+            // If auth check fails, redirect to login
+            window.location.href = "/Auth/Login";
+          }
+        });
+      }
 
       function updateSortIcons() {
         $('.sort-icon').text('↕');
@@ -227,10 +281,17 @@
                     </span>
                   </td>
                   <td class="px-4 py-3">
-                  <a href="/Pinpad/Edit/${item.id}"
-                      class="bg-blue-500 text-white w-8 h-8 rounded hover:bg-blue-600 transition-colors flex items-center justify-center">
-                        <i class="fa fa-edit"></i>
-                    </a>
+                    <div class="flex gap-2">
+                      <a href="/Pinpad/Edit/${item.id}"
+                          class="bg-orange-500 text-white w-8 h-8 rounded hover:bg-orange-600 transition-colors flex items-center justify-center">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <button onclick="deletePinpad('${item.id}', '${item.serialNumber}')"
+                            class="bg-red-500 text-white w-8 h-8 rounded hover:bg-red-600 transition-colors flex items-center justify-center cs-only"
+                            style="display: none;">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </div>
                   </td>
                 </tr>
               `;
@@ -370,6 +431,23 @@
           default: return 'bg-gray-100 text-gray-800';
         }
       }
+
+      // Delete function
+      window.deletePinpad = function(id, serialNumber) {
+        if (confirm(`Are you sure you want to delete Pinpad ${serialNumber}?`)) {
+          $.ajax({
+            url: `/api/pinpads/${id}`,
+            type: 'DELETE',
+            success: function(response) {
+              alert('Pinpad deleted successfully');
+              loadPinpads(); // Reload data
+            },
+            error: function(xhr, status, error) {
+              alert('Error deleting pinpad: ' + error);
+            }
+          });
+        }
+      };
     });
   </script>
 </div>

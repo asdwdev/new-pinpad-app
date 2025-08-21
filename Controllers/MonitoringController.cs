@@ -7,4 +7,14 @@ public class MonitoringController : Controller
     {
         return View();
     }
+
+    public IActionResult PinpadLog()
+    {
+        return View();
+    }
+
+    public IActionResult TransactionLog()
+    {
+        return View();
+    }
 }
