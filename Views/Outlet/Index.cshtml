@@ -1,0 +1,315 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Outlet";
+}
+
+<div class="p-6">
+    <!-- Breadcrumb -->
+    <div class="mb-4 text-sm">
+        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Outlet</a> /
+        <span class="text-gray-500">Inquiry</span>
+    </div>
+
+    <!-- Baris 1: Tambah Outlet -->
+    <div class="mb-4">
+        <a href="/Outlet/Create"
+            class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md shadow text-sm font-medium transition-colors inline-flex items-center">
+            <span class="mr-1 font-bold text-lg">+</span> Tambah Outlet
+        </a>
+    </div>
+
+    <!-- Baris 2: Show Entries (kiri) dan Search (kanan) -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+        <!-- Show Entries -->
+        <div class="flex items-center space-x-2 mb-3 md:mb-0">
+            <label for="entriesSelect" class="text-sm text-gray-700">Show</label>
+            <select id="entriesSelect"
+                class="border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-teal-500">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span class="text-sm text-gray-700">entries</span>
+        </div>
+
+        <!-- Search -->
+        <div>
+            <div class="flex items-center">
+                <label for="searchInput" class="text-sm text-gray-700 mr-2">Search:</label>
+                <input type="text" id="searchInput" placeholder="Search..."
+                    class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-teal-500 text-sm min-w-[220px]">
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white shadow rounded-lg border border-gray-200 overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-100 text-gray-700 text-sm">
+                <tr>
+                    <th class="px-4 py-3 font-semibold">Code</th>
+                    <th class="px-4 py-3 font-semibold">Nama Outlet</th>
+                    <th class="px-4 py-3 font-semibold text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="text-sm">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+        <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
+            Showing 1 to 2 of 2 entries
+        </div>
+        <div class="flex space-x-1" id="paginationButtons">
+            <button id="prevBtn"
+                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
+                disabled>
+                ← Previous
+            </button>
+            <span id="pageNumbers" class="flex space-x-1">
+                <button class="px-3 py-1 border border-teal-500 bg-teal-500 text-white rounded-md text-sm">1</button>
+            </span>
+            <button id="nextBtn"
+                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
+                disabled>
+                Next →
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        // Global variables
+        let allData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        let pageSize = 10;
+        let currentSort = { column: null, direction: 'asc' };
+        let searchTerm = '';
+
+        // Initialize
+        loadOutlets();
+
+        // Event listeners
+        $('#searchInput').on('input', function () {
+            searchTerm = $(this).val().toLowerCase();
+            currentPage = 1;
+            filterAndDisplayData();
+        });
+
+        $('#pageSizeSelect').on('change', function () {
+            pageSize = parseInt($(this).val());
+            currentPage = 1;
+            filterAndDisplayData();
+        });
+
+        $('th[data-sort]').on('click', function () {
+            const column = $(this).data('sort');
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+            updateSortIcons();
+            filterAndDisplayData();
+        });
+
+        // Delegated delete handler (tanpa inline onclick)
+        $(document).on('click', '.btn-delete', function () {
+            const id = $(this).data('id');
+            deleteOutlet(id);
+        });
+
+        // ========== FUNCTIONS ==========
+
+        function loadOutlets() {
+            $.ajax({
+                url: 'http://localhost:5125/api/outlets',
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    allData = response || [];
+                    filteredData = [...allData];
+                    filterAndDisplayData();
+                },
+                error: function () {
+                    $('#tableBody').html('<tr><td colspan="5" class="text-center py-4 text-red-500">Error loading data</td></tr>');
+                }
+            });
+        }
+
+        function filterAndDisplayData() {
+            if (searchTerm) {
+                filteredData = allData.filter(item =>
+                    (item.code && item.code.toLowerCase().includes(searchTerm)) ||
+                    (item.name && item.name.toLowerCase().includes(searchTerm))
+                );
+            } else {
+                filteredData = [...allData];
+            }
+            if (currentSort.column) sortData();
+            displayPaginatedData();
+        }
+
+        function sortData() {
+            filteredData.sort((a, b) => {
+                let aVal = a[currentSort.column] || '';
+                let bVal = b[currentSort.column] || '';
+                aVal = aVal.toString().toLowerCase();
+                bVal = bVal.toString().toLowerCase();
+                if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+        }
+
+        function displayPaginatedData() {
+            const totalItems = filteredData.length;
+            const totalPages = Math.ceil(totalItems / pageSize);
+            if (totalPages === 0) currentPage = 1;
+            else if (currentPage > totalPages) currentPage = totalPages;
+
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = Math.min(startIndex + pageSize, totalItems);
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            $('#tableBody').empty();
+
+            if (pageData.length === 0) {
+                $('#tableBody').append('<tr><td colspan="5" class="text-center py-4 text-gray-500">No data available</td></tr>');
+            } else {
+                pageData.forEach(function (item) {
+                    const row = `
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-4 py-3">${item.code || ''}</td>
+                            <td class="px-4 py-3 font-mono">${item.name || ''}</td>
+                            <td class="px-4 py-3 text-center space-x-2">
+                                <a href="/Outlet/Edit/${item.id}"
+                                   class="bg-orange-500 hover:bg-orange-600 text-white px-3 py-1 rounded text-sm transition-colors">✎</a>
+                                <button class="btn-delete bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm transition-colors"
+                                        data-id="${item.id}">✕</button>
+                            </td>
+                        </tr>`;
+                    $('#tableBody').append(row);
+                });
+            }
+
+            updatePaginationInfo(startIndex, endIndex, totalItems);
+            updatePaginationControls(totalPages);
+        }
+
+        function deleteOutlet(id) {
+            Swal.fire({
+                title: 'Konfirmasi',
+                text: 'Yakin ingin menghapus outlet ini?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (!result.isConfirmed) return;
+
+                $.ajax({
+                    url: `http://localhost:5125/api/outlets/${id}`,
+                    type: "DELETE",
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: response.message || 'Outlet berhasil dihapus',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        // Hapus data dari list tanpa reload full page
+                        allData = allData.filter(item => item.id !== id);
+                        filterAndDisplayData();
+                    },
+                    error: function (xhr) {
+                        const res = xhr.responseJSON;
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: res?.message || 'Terjadi kesalahan saat menghapus data'
+                        });
+                    }
+                });
+            });
+        }
+
+        function updatePaginationInfo(start, end, total) {
+            const displayStart = total === 0 ? 0 : start + 1;
+            $('#tableInfo').text(`Showing ${displayStart} to ${end} of ${total} entries`);
+        }
+
+        function updatePaginationControls(totalPages) {
+            $('#prevBtn').prop('disabled', currentPage <= 1);
+            $('#nextBtn').prop('disabled', currentPage >= totalPages);
+            updatePageNumbers(currentPage, totalPages);
+        }
+
+        function updatePageNumbers(current, totalPages) {
+            const container = $('#pageNumbers');
+            container.empty();
+            if (totalPages <= 1) return;
+
+            const maxButtons = 5;
+            let startPage = Math.max(1, current - Math.floor(maxButtons / 2));
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+            startPage = Math.max(1, endPage - maxButtons + 1);
+
+            if (startPage > 1) {
+                container.append(createPageButton(1, current));
+                if (startPage > 2) container.append('<span class="px-2 py-1 text-gray-500">...</span>');
+            }
+            for (let i = startPage; i <= endPage; i++) {
+                container.append(createPageButton(i, current));
+            }
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) container.append('<span class="px-2 py-1 text-gray-500">...</span>');
+                container.append(createPageButton(totalPages, current));
+            }
+        }
+
+        function createPageButton(pageNum, currentPageParam) {
+            const btn = $('<button>')
+                .addClass('px-3 py-1 border rounded text-sm transition-colors')
+                .text(pageNum)
+                .toggleClass('bg-blue-500 text-white border-blue-500', pageNum === currentPageParam)
+                .toggleClass('hover:bg-gray-100', pageNum !== currentPageParam)
+                .on('click', function () {
+                    if (pageNum !== currentPage) {
+                        currentPage = pageNum;
+                        displayPaginatedData();
+                    }
+                });
+            return btn;
+        }
+
+        $('#prevBtn').on('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                displayPaginatedData();
+            }
+        });
+
+        $('#nextBtn').on('click', function () {
+            const totalPages = Math.ceil(filteredData.length / pageSize);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayPaginatedData();
+            }
+        });
+    });
+</script>
+</div>
