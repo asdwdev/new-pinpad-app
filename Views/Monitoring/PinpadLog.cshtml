@@ -19,82 +19,71 @@
 
       <!-- Kolom Kiri -->
       <div class="space-y-4">
-        <!-- Jangka Waktu -->
+        <!-- Date -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Jangka Waktu:</label>
+          <label class="block text-gray-700 text-sm font-medium mb-2">Date:</label>
           <div class="flex space-x-2">
-            <input type="date"
+            <input type="date" id="startDate"
               class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <input type="date"
+            <input type="date" id="endDate"
               class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
           </div>
         </div>
 
-        <!-- Regional -->
+        <!-- Username -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Regional:</label>
-          <select
+          <label class="block text-gray-700 text-sm font-medium mb-2">Username:</label>
+          <input type="text" id="filterUsername" placeholder="Enter Username"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <option value="">-- Select Regional --</option>
-            <option>Kanwil Jakarta I</option>
-            <option>Kanwil Jawa Barat</option>
-          </select>
         </div>
 
-        <!-- Cabang Induk -->
+        <!-- Action Type -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
-          <select
+          <label class="block text-gray-700 text-sm font-medium mb-2">Action Type:</label>
+          <select id="filterAction"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <option value="">-- Select Cabang Induk --</option>
-            <option>00014 - KC JAKARTA HARMONI</option>
-          </select>
-        </div>
-
-        <!-- Outlet -->
-        <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Outlet:</label>
-          <select
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <option value="">-- Select Outlet --</option>
+            <option value="">-- Select Action --</option>
+            <option value="Created">Created</option>
+            <option value="Updated">Updated</option>
+            <option value="Deleted">Deleted</option>
           </select>
         </div>
       </div>
 
       <!-- Kolom Kanan -->
       <div class="space-y-4">
-        <!-- Serial Number -->
+        <!-- Key Values -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Serial Number:</label>
-          <input type="text" placeholder="Please enter your Serial Number"
+          <label class="block text-gray-700 text-sm font-medium mb-2">Key Values:</label>
+          <input type="text" id="filterKey" placeholder="Enter Key Values"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
         </div>
 
-        <!-- Username -->
+        <!-- Old Values -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Username:</label>
-          <input type="text" placeholder="Please enter your Username"
+          <label class="block text-gray-700 text-sm font-medium mb-2">Old Values:</label>
+          <input type="text" id="filterOld" placeholder="Search Old Values"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
         </div>
 
-        <!-- Response Code -->
+        <!-- New Values -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Response Code:</label>
-          <select
+          <label class="block text-gray-700 text-sm font-medium mb-2">New Values:</label>
+          <input type="text" id="filterNew" placeholder="Search New Values"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <option value="">-- Select Device Transaction --</option>
-          </select>
         </div>
       </div>
     </div>
 
     <!-- Tombol Action -->
     <div class="flex justify-end mt-6">
-      <button class="bg-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-teal-700 transition">
-        Search
+      <button id="filterBtn"
+        class="bg-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-teal-700 transition">
+        Apply Filter
       </button>
     </div>
   </div>
+
 
   <!-- Export Buttons (Hidden by default) -->
   <div id="exportSection" class="hidden mb-6">
@@ -218,6 +207,7 @@
     let pageSize = 10;
     let searchTerm = "";
 
+    // Fungsi load default tanpa filter
     async function loadPinpadLogs() {
       try {
         const res = await fetch("http://localhost:5125/api/audit/pinpads");
@@ -226,10 +216,52 @@
           return;
         }
 
-        allLogs = await res.json();
+        const data = await res.json();
+        if (data.message) {
+          allLogs = [];
+        } else {
+          allLogs = data;
+        }
         renderTable();
       } catch (err) {
         console.error("Error load logs:", err);
+      }
+    }
+
+    // Fungsi Apply Filter ke API
+    async function applyFilter() {
+      const username = $("#filterUsername").val();
+      const actionType = $("#filterAction").val();
+      const keyValues = $("#filterKey").val();
+      const oldValues = $("#filterOld").val();
+      const newValues = $("#filterNew").val();
+      const startDate = $("#startDate").val();
+      const endDate = $("#endDate").val();
+
+      // Buat query string dinamis
+      const params = new URLSearchParams();
+      if (username) params.append("username", username);
+      if (actionType) params.append("actionType", actionType);
+      if (keyValues) params.append("keyValues", keyValues);
+      if (oldValues) params.append("oldValues", oldValues);
+      if (newValues) params.append("newValues", newValues);
+      if (startDate) params.append("startDate", startDate);
+      if (endDate) params.append("endDate", endDate);
+
+      try {
+        const res = await fetch(`http://localhost:5125/api/audit/pinpads?${params.toString()}`);
+        const data = await res.json();
+
+        if (data.message) {
+          allLogs = [];
+        } else {
+          allLogs = data;
+        }
+
+        currentPage = 1; // reset ke halaman pertama
+        renderTable();
+      } catch (err) {
+        console.error("Error filter logs:", err);
       }
     }
 
@@ -237,7 +269,7 @@
       const tbody = document.getElementById("tableBody");
       tbody.innerHTML = "";
 
-      // Filter data sesuai search
+      // Filter tambahan dari search input global
       const filteredLogs = allLogs.filter(log => {
         const values = Object.values(log).join(" ").toLowerCase();
         return values.includes(searchTerm.toLowerCase());
@@ -272,18 +304,18 @@
         }
 
         tr.innerHTML = `
-            <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
-            <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
-            <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
-            <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
-            <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
-            <td class="px-4 py-3 border-b border-gray-200 align-top">
-                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
-            </td>
-            <td class="px-4 py-3 border-b border-gray-200 align-top">
-                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
-            </td>
-          `;
+              <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
+              <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
+              <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
+              <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
+              <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
+              <td class="px-4 py-3 border-b border-gray-200 align-top">
+                  <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
+              </td>
+              <td class="px-4 py-3 border-b border-gray-200 align-top">
+                  <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
+              </td>
+            `;
 
         tbody.appendChild(tr);
       });
@@ -309,8 +341,8 @@
         const btn = document.createElement("button");
         btn.innerText = i;
         btn.className = `px-3 py-1 border rounded text-sm transition-colors ${i === currentPage
-            ? "bg-teal-500 text-white border-teal-500"
-            : "bg-white border-gray-300 hover:bg-gray-100"
+          ? "bg-teal-500 text-white border-teal-500"
+          : "bg-white border-gray-300 hover:bg-gray-100"
           }`;
         btn.addEventListener("click", () => {
           currentPage = i;
@@ -350,6 +382,11 @@
       searchTerm = $(this).val();
       currentPage = 1; // reset ke halaman pertama
       renderTable();
+    });
+
+    // Event listener untuk Apply Filter
+    $(document).on("click", "#filterBtn", function () {
+      applyFilter();
     });
 
     // Auto load saat halaman ready
