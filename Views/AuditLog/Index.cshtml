@@ -1,0 +1,206 @@
+@{
+    ViewData["Title"] = "Audit Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-6">
+    <!-- Page Header -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Audit Log</h1>
+    </div>
+
+    <!-- Search/Filter Section -->
+    <div class="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+        <div class="flex flex-col sm:flex-row gap-4 items-end">
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Username:</label>
+                <input type="text" 
+                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                       placeholder="Please enter your Username">
+            </div>
+            <div class="flex-1">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Activity:</label>
+                <input type="text" 
+                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+                       placeholder="Please enter your Activity">
+            </div>
+            <div>
+                <button class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Options -->
+    <div class="mb-6">
+        <div class="flex gap-3">
+            <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-200">
+                Export Excel
+            </button>
+            <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-200">
+                Export PDF
+            </button>
+            <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-200">
+                Export CSV
+            </button>
+        </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DateTime</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activity</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Key Value</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:34:00</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Audit Log - Inquiry</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:45</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">OTA</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:30</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Upload OTA File - Update</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">Perubahan field Serial Number: diubah ke 277114</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:15</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad - Inquiry</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:00</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            <div class="space-y-1">
+                                <div>Perubahan field Regional: diubah ke Kanwil Jakarta I</div>
+                                <div>Perubahan field Cabang Induk: diubah ke 00014 - KC JAKARTA HARMONI</div>
+                                <div>Perubahan field Outlet: diubah ke KCP Sawah Besar</div>
+                                <div>Perubahan field IP Low: diubah ke 10.6.47.1</div>
+                                <div>Perubahan field IP High: diubah ke 10.6.47.254</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:45</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            <div class="space-y-1">
+                                <div>Perubahan field Outlet: diubah ke KCP Sawah Besar</div>
+                                <div>Perubahan field IP Low: diubah ke 10.6.47.1</div>
+                                <div>Perubahan field IP High: diubah ke 10.6.47.254</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:30</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">User</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:15</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">
+                            <div class="space-y-1">
+                                <div>Perubahan field Outlet: dari KCP Merdeka ke KCP Sawah Besar</div>
+                                <div>Perubahan field IP Low: dari 10.5.10.1 ke 10.6.47.1</div>
+                                <div>Perubahan field IP High: dari 10.5.10.254 ke 10.6.47.254</div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:00</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad - Inquiry</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:31:45</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Audit Log - Inquiry</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:31:30</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad - Inquiry</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
+                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="px-6 py-3 border-t border-gray-200 flex items-center justify-between">
+            <div class="text-sm text-gray-700">
+                Showing 1 to 10 of 99 entries
+            </div>
+            <div class="flex items-center space-x-2">
+                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-50">Previous</button>
+                <span class="px-3 py-1 text-sm bg-teal-600 text-white rounded">1</span>
+                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-50">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchBtn = document.querySelector('button:contains("Search")');
+        const usernameInput = document.querySelector('input[placeholder*="Username"]');
+        const activityInput = document.querySelector('input[placeholder*="Activity"]');
+
+        if (searchBtn) {
+            searchBtn.addEventListener('click', function() {
+                // Add search logic here
+                console.log('Searching for:', {
+                    username: usernameInput?.value,
+                    activity: activityInput?.value
+                });
+            });
+        }
+
+        // Export functionality
+        const exportButtons = document.querySelectorAll('button:contains("Export")');
+        exportButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const exportType = this.textContent.trim();
+                console.log('Exporting as:', exportType);
+                // Add export logic here
+            });
+        });
+    });
+</script>

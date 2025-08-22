@@ -1,0 +1,319 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Role Akses";
+}
+
+<div class="p-6">
+    <!-- Breadcrumb -->
+    <div class="mb-4 text-sm">
+        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Role Akses</a> /
+        <span class="text-gray-500">Inquiry</span>
+    </div>
+
+    <!-- Baris 1: Tambah Role -->
+    <div class="mb-4">
+        <a href="/RoleAkses/Create"
+            class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md shadow text-sm font-medium transition-colors inline-flex items-center">
+            <span class="mr-1 font-bold text-lg">+</span> Tambah Role
+        </a>
+    </div>
+
+    <!-- Baris 2: Show Entries (kiri) dan Search (kanan) -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+        <!-- Show Entries -->
+        <div class="flex items-center space-x-2 mb-3 md:mb-0">
+            <label for="entriesSelect" class="text-sm text-gray-700">Show</label>
+            <select id="entriesSelect"
+                class="border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-teal-500">
+                <option value="10" selected>10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            <span class="text-sm text-gray-700">entries</span>
+        </div>
+
+        <!-- Search -->
+        <div>
+            <div class="flex items-center">
+                <label for="searchInput" class="text-sm text-gray-700 mr-2">Search:</label>
+                <input type="text" id="searchInput" placeholder="Search..."
+                    class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-teal-500 text-sm min-w-[220px]">
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white shadow rounded-lg border border-gray-200 overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-gray-100 text-gray-700 text-sm">
+                <tr>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200" onclick="sortTable('nama')">
+                        Nama
+                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200" onclick="sortTable('catatan')">
+                        Catatan
+                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                    </th>
+                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 text-center" onclick="sortTable('action')">
+                        Action
+                        <i class="fas fa-sort ml-1 text-gray-400"></i>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="text-sm">
+                <!-- Data akan diisi melalui JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+        <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
+            Showing 1 to 8 of 8 entries
+        </div>
+        <div class="flex space-x-1" id="paginationButtons">
+            <button id="prevBtn"
+                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
+                disabled>
+                ← Previous
+            </button>
+            <span id="pageNumbers" class="flex space-x-1">
+                <button class="px-3 py-1 border border-blue-500 bg-blue-500 text-white rounded-md text-sm">1</button>
+            </span>
+            <button id="nextBtn"
+                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
+                disabled>
+                Next →
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        // Global variables
+        let allData = [];
+        let filteredData = [];
+        let currentPage = 1;
+        let pageSize = 10;
+        let currentSort = { column: null, direction: 'asc' };
+        let searchTerm = '';
+
+        // Sample data - dalam implementasi nyata akan diambil dari API
+        const sampleRoles = [
+            {
+                id: 1,
+                nama: "Access Management Administrator - CEOD",
+                catatan: "KANTOR PUSAT - CEOD",
+                canDelete: true
+            },
+            {
+                id: 2,
+                nama: "Admin Logistik",
+                catatan: "Acces Logistik",
+                canDelete: true
+            },
+            {
+                id: 3,
+                nama: "Customer Services",
+                catatan: "Kantor Cabang",
+                canDelete: true
+            },
+            {
+                id: 4,
+                nama: "Device Management - DGOD",
+                catatan: "KANTOR PUSAT-DGOD",
+                canDelete: true
+            },
+            {
+                id: 5,
+                nama: "Digital & Services Application Administrator - CEOD",
+                catatan: "KANTOR PUSAT-CEOD",
+                canDelete: true
+            },
+            {
+                id: 6,
+                nama: "Super Admin",
+                catatan: "Super Admin",
+                canDelete: false
+            },
+            {
+                id: 7,
+                nama: "Teller Services",
+                catatan: "Kantor Cabang",
+                canDelete: true
+            },
+            {
+                id: 8,
+                nama: "UAT",
+                catatan: "Role Akses UAT",
+                canDelete: false
+            }
+        ];
+
+        // Initialize
+        allData = sampleRoles;
+        filteredData = [...allData];
+        renderTable();
+        updatePagination();
+
+        // Event listeners
+        $('#searchInput').on('input', function() {
+            searchTerm = $(this).val().toLowerCase();
+            filterData();
+        });
+
+        $('#entriesSelect').on('change', function() {
+            pageSize = parseInt($(this).val());
+            currentPage = 1;
+            renderTable();
+            updatePagination();
+        });
+
+        // Functions
+        function filterData() {
+            filteredData = allData.filter(item => 
+                item.nama.toLowerCase().includes(searchTerm) ||
+                item.catatan.toLowerCase().includes(searchTerm)
+            );
+            currentPage = 1;
+            renderTable();
+            updatePagination();
+        }
+
+        function renderTable() {
+            const startIndex = (currentPage - 1) * pageSize;
+            const endIndex = startIndex + pageSize;
+            const pageData = filteredData.slice(startIndex, endIndex);
+
+            let tableHTML = '';
+            pageData.forEach((role, index) => {
+                const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
+                const actionButtons = `
+                    <a href="/RoleAkses/Edit/${role.id}" 
+                       class="inline-flex items-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white text-xs rounded transition-colors mr-2">
+                        <i class="fas fa-pencil-alt mr-1"></i> Edit
+                    </a>
+                    ${role.canDelete ? 
+                        `<button onclick="deleteRole(${role.id}, '${role.nama}')" 
+                         class="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition-colors">
+                            <i class="fas fa-times mr-1"></i> Delete
+                         </button>` : 
+                        '<span class="text-gray-400 text-xs">Cannot Delete</span>'
+                    }
+                `;
+
+                tableHTML += `
+                    <tr class="${rowClass} hover:bg-gray-100 transition-colors">
+                        <td class="px-4 py-3 border-t border-gray-200">${role.nama}</td>
+                        <td class="px-4 py-3 border-t border-gray-200">${role.catatan}</td>
+                        <td class="px-4 py-3 border-t border-gray-200 text-center">${actionButtons}</td>
+                    </tr>
+                `;
+            });
+
+            $('#tableBody').html(tableHTML);
+            updateTableInfo();
+        }
+
+        function updateTableInfo() {
+            const totalEntries = filteredData.length;
+            const startEntry = totalEntries === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+            const endEntry = Math.min(currentPage * pageSize, totalEntries);
+            
+            $('#tableInfo').text(`Showing ${startEntry} to ${endEntry} of ${totalEntries} entries`);
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredData.length / pageSize);
+            
+            // Update Previous button
+            $('#prevBtn').prop('disabled', currentPage === 1);
+            
+            // Update Next button
+            $('#nextBtn').prop('disabled', currentPage === totalPages);
+            
+            // Update page numbers
+            let pageNumbersHTML = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const isActive = i === currentPage;
+                pageNumbersHTML += `
+                    <button onclick="goToPage(${i})" 
+                            class="px-3 py-1 border rounded-md text-sm transition-colors ${
+                                isActive 
+                                    ? 'border-blue-500 bg-blue-500 text-white' 
+                                    : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100'
+                            }">
+                        ${i}
+                    </button>
+                `;
+            }
+            $('#pageNumbers').html(pageNumbersHTML);
+        }
+
+        // Pagination functions
+        window.goToPage = function(page) {
+            currentPage = page;
+            renderTable();
+            updatePagination();
+        };
+
+        window.deleteRole = function(id, nama) {
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: `Apakah Anda yakin ingin menghapus role "${nama}"?`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Di sini akan ada call ke API untuk delete
+                    // Untuk demo, kita hapus dari array lokal
+                    allData = allData.filter(role => role.id !== id);
+                    filteredData = filteredData.filter(role => role.id !== id);
+                    
+                    Swal.fire(
+                        'Terhapus!',
+                        `Role "${nama}" telah berhasil dihapus.`,
+                        'success'
+                    );
+                    
+                    renderTable();
+                    updatePagination();
+                }
+            });
+        };
+
+        window.sortTable = function(column) {
+            if (currentSort.column === column) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = column;
+                currentSort.direction = 'asc';
+            }
+
+            filteredData.sort((a, b) => {
+                let aVal = a[column];
+                let bVal = b[column];
+                
+                if (column === 'action') {
+                    aVal = a.canDelete ? '1' : '0';
+                    bVal = b.canDelete ? '1' : '0';
+                }
+
+                if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
+                if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            renderTable();
+        };
+    });
+</script>

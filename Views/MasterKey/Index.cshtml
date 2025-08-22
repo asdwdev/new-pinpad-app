@@ -1,0 +1,57 @@
+<div class="max-w-5xl mx-auto p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-4">
+        <h1 class="text-xl font-semibold text-gray-700">Master Key / Inquiry</h1>
+        <button class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded text-sm shadow">
+            + Tambah Master Key
+        </button>
+    </div>
+
+    <!-- Tabel -->
+    <div class="overflow-x-auto bg-white rounded-lg shadow">
+        <table class="min-w-full text-sm text-left text-gray-600">
+            <thead class="bg-gray-100 border-b">
+                <tr>
+                    <th class="px-4 py-3">Code</th>
+                    <th class="px-4 py-3">Description</th>
+                    <th class="px-4 py-3">Register Date</th>
+                    <th class="px-4 py-3">Update Date</th>
+                    <th class="px-4 py-3 text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-2">M_Key</td>
+                    <td class="px-4 py-2">Master Key UAT</td>
+                    <td class="px-4 py-2">15-05-2025 02:44:31</td>
+                    <td class="px-4 py-2">15-05-2025 02:44:31</td>
+                    <td class="px-4 py-2 text-center">
+                        <button class="bg-orange-400 hover:bg-orange-500 text-white px-3 py-1 rounded mr-1">✎</button>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">✕</button>
+                    </td>
+                </tr>
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="px-4 py-2">CLEAR_KEY</td>
+                    <td class="px-4 py-2">CLEAR KEY ITM HSM</td>
+                    <td class="px-4 py-2">14-05-2025 02:30:16</td>
+                    <td class="px-4 py-2">14-05-2025 03:21:58</td>
+                    <td class="px-4 py-2 text-center">
+                        <button class="bg-orange-400 hover:bg-orange-500 text-white px-3 py-1 rounded mr-1">✎</button>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">✕</button>
+                    </td>
+                </tr>
+                <!-- Tambahkan baris lain sesuai kebutuhan -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex items-center justify-between mt-4 text-sm">
+        <p>Showing 1 to 5 of 5 entries</p>
+        <div class="flex items-center gap-2">
+            <button class="px-3 py-1 border rounded text-gray-500 hover:bg-gray-100">Previous</button>
+            <button class="px-3 py-1 border rounded bg-blue-500 text-white">1</button>
+            <button class="px-3 py-1 border rounded text-gray-500 hover:bg-gray-100">Next</button>
+        </div>
+    </div>
+</div>

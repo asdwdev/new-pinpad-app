@@ -1,0 +1,422 @@
+<div class="max-w-2xl mx-auto">
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-lg text-gray-600">
+                Over-the-air (OTA) / Create
+            </h1>
+        </div>
+
+        <!-- Form Card -->
+        <div class="bg-white rounded-lg shadow-sm p-8">
+            <form id="otaForm">
+                <!-- PILIH OTA FILE Field -->
+                <div class="mb-6">
+                    <div class="flex items-start">
+                        <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 mt-2 text-right pr-4">
+                            PILIH OTA FILE:
+                        </label>
+                        <div class="flex items-center gap-3 flex-1">
+                            <button 
+                                type="button" 
+                                class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded border text-sm"
+                            >
+                                Browse...
+                            </button>
+                            <span class="text-gray-600 text-sm">BTN-PINPad v1.0.1-uat.apk</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DESKRIPSI Field -->
+                <div class="mb-6">
+                    <div class="flex items-center">
+                        <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4">
+                            DESKRIPSI:
+                        </label>
+                        <div class="flex-1">
+                            <input 
+                                type="text" 
+                                id="deskripsi" 
+                                name="deskripsi"
+                                value="OTA BTN 19052025"
+                                class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
+                                placeholder="Enter description"
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- REGIONAL Field -->
+                <div class="mb-6">
+                    <div class="flex">
+                        <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4 mt-2">
+                            REGIONAL:
+                        </label>
+                        <div class="flex-1">
+                            <div class="border border-gray-300 rounded p-3 min-h-12 bg-white">
+                                <!-- Regional Tags Container -->
+                                <div id="regionalTagsContainer" class="flex flex-wrap gap-2 mb-2">
+                                    <!-- Regional tags will be populated by JavaScript -->
+                                </div>
+                                
+                                <!-- Add new regional input -->
+                                <div class="flex gap-2 relative">
+                                    <input 
+                                        type="text" 
+                                        id="newRegional" 
+                                        placeholder="Type to search regional..."
+                                        class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-400"
+                                        autocomplete="off"
+                                    >
+                                    <div id="regionalDropdown" class="absolute top-8 left-0 right-16 z-10 bg-white border border-gray-300 rounded shadow-lg hidden max-h-32 overflow-y-auto">
+                                        <!-- Dropdown options will be populated by JavaScript -->
+                                    </div>
+                                    <button 
+                                        type="button" 
+                                        id="addRegionalBtn"
+                                        class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm"
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CABANG/GRUP Field -->
+                <div class="mb-6">
+                    <div class="flex">
+                        <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4 mt-2">
+                            CABANG/GRUP:
+                        </label>
+                        <div class="flex-1">
+                            <div class="border border-gray-300 rounded p-3 min-h-12 bg-white">
+                                <!-- Cabang Tags Container -->
+                                <div id="cabangTagsContainer" class="flex flex-wrap gap-2 mb-2">
+                                    <!-- Cabang tags will be populated by JavaScript -->
+                                </div>
+                                
+                                <!-- Add new cabang input -->
+                                <div class="flex gap-2 relative">
+                                    <input 
+                                        type="text" 
+                                        id="newCabang" 
+                                        placeholder="Type to search cabang/grup..."
+                                        class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-400"
+                                        autocomplete="off"
+                                    >
+                                    <div id="cabangDropdown" class="absolute top-8 left-0 right-16 z-10 bg-white border border-gray-300 rounded shadow-lg hidden max-h-32 overflow-y-auto">
+                                        <!-- Dropdown options will be populated by JavaScript -->
+                                    </div>
+                                    <button 
+                                        type="button" 
+                                        id="addCabangBtn"
+                                        class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm"
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OUTLET Field -->
+                <div class="mb-8">
+                    <div class="flex">
+                        <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4 mt-2">
+                            OUTLET:
+                        </label>
+                        <div class="flex-1">
+                            <div class="border border-gray-300 rounded p-3 min-h-24 bg-white">
+                                <!-- Tags Container -->
+                                <div id="tagsContainer" class="flex flex-wrap gap-2 mb-3">
+                                    <!-- Existing tags will be populated by JavaScript -->
+                                </div>
+                                
+                                <!-- Add new outlet input -->
+                                <div class="flex gap-2">
+                                    <input 
+                                        type="text" 
+                                        id="newOutlet" 
+                                        placeholder="Type outlet code and name..."
+                                        class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-400"
+                                    >
+                                    <button 
+                                        type="button" 
+                                        id="addOutletBtn"
+                                        class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm"
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end gap-3">
+                    <button 
+                        type="button" 
+                        id="cancelBtn"
+                        class="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded text-sm transition-colors"
+                    >
+                        Cancel
+                    </button>
+                    <button 
+                        type="submit" 
+                        id="createBtn"
+                        class="px-5 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded text-sm transition-colors"
+                    >
+                        Create
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data for autocomplete
+        const regionalData = [
+            '10130 - Kantor Pusat',
+            '10131 - Jakarta Utara',
+            '10132 - Jakarta Selatan',
+            '10133 - Jakarta Timur',
+            '10134 - Jakarta Barat',
+            '10135 - Bogor',
+            '10136 - Depok',
+            '10137 - Tangerang',
+            '10138 - Bekasi'
+        ];
+
+        const cabangData = [
+            '00999 - KANTOR PUSAT',
+            '00001 - Cabang Jakarta',
+            '00002 - Cabang Surabaya',
+            '00003 - Cabang Bandung',
+            '00004 - Cabang Medan',
+            '00005 - Cabang Semarang',
+            '00006 - Cabang Makassar',
+            '00007 - Cabang Palembang'
+        ];
+
+        // Initialize arrays for selected items
+        let selectedRegional = ['10130 - Kantor Pusat'];
+        let selectedCabang = ['00999 - KANTOR PUSAT'];
+        let outlets = [
+            '00999 - KANTOR PUSAT > 99990 - KCP UAT 1',
+            '99991 - KCP UAT 2',
+            '99998 - Cabang Testing TPC'
+        ];
+
+        // Generic tag system
+        function setupTagSystem(inputId, dropdownId, tagContainerId, addBtnId, data, selectedArray, renderFunction) {
+            const input = document.getElementById(inputId);
+            const dropdown = document.getElementById(dropdownId);
+            const addBtn = document.getElementById(addBtnId);
+
+            // Show dropdown with filtered options
+            function showDropdown() {
+                const value = input.value.toLowerCase();
+                const filtered = data.filter(item => 
+                    item.toLowerCase().includes(value) && !selectedArray.includes(item)
+                );
+
+                if (filtered.length > 0) {
+                    dropdown.innerHTML = '';
+                    filtered.forEach(item => {
+                        const option = document.createElement('div');
+                        option.className = 'px-3 py-2 hover:bg-blue-100 cursor-pointer text-sm';
+                        option.textContent = item;
+                        option.addEventListener('click', function() {
+                            selectedArray.push(item);
+                            renderFunction();
+                            input.value = '';
+                            dropdown.classList.add('hidden');
+                        });
+                        dropdown.appendChild(option);
+                    });
+                    dropdown.classList.remove('hidden');
+                } else {
+                    dropdown.classList.add('hidden');
+                }
+            }
+
+            // Add item function
+            function addItem() {
+                const value = input.value.trim();
+                if (value && !selectedArray.includes(value)) {
+                    selectedArray.push(value);
+                    renderFunction();
+                    input.value = '';
+                    dropdown.classList.add('hidden');
+                }
+            }
+
+            input.addEventListener('input', showDropdown);
+            input.addEventListener('focus', showDropdown);
+            input.addEventListener('blur', function() {
+                setTimeout(() => dropdown.classList.add('hidden'), 200);
+            });
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    addItem();
+                }
+            });
+
+            addBtn.addEventListener('click', addItem);
+        }
+
+        // Render functions
+        function renderRegionalTags() {
+            const container = document.getElementById('regionalTagsContainer');
+            container.innerHTML = '';
+            
+            selectedRegional.forEach((item, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'flex items-center gap-1 bg-green-100 text-green-800 px-2 py-1 rounded text-sm';
+                tag.innerHTML = `
+                    <span>${item}</span>
+                    <button type="button" class="text-green-600 hover:text-red-600 font-bold text-xs" onclick="removeRegionalTag(${index})">×</button>
+                `;
+                container.appendChild(tag);
+            });
+        }
+
+        function renderCabangTags() {
+            const container = document.getElementById('cabangTagsContainer');
+            container.innerHTML = '';
+            
+            selectedCabang.forEach((item, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'flex items-center gap-1 bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm';
+                tag.innerHTML = `
+                    <span>${item}</span>
+                    <button type="button" class="text-purple-600 hover:text-red-600 font-bold text-xs" onclick="removeCabangTag(${index})">×</button>
+                `;
+                container.appendChild(tag);
+            });
+        }
+
+        function renderOutletTags() {
+            const container = document.getElementById('tagsContainer');
+            container.innerHTML = '';
+            
+            outlets.forEach((outlet, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm';
+                tag.innerHTML = `
+                    <span>${outlet}</span>
+                    <button type="button" class="text-blue-600 hover:text-red-600 font-bold text-xs" onclick="removeOutletTag(${index})">×</button>
+                `;
+                container.appendChild(tag);
+            });
+        }
+
+        // Remove functions
+        function removeRegionalTag(index) {
+            selectedRegional.splice(index, 1);
+            renderRegionalTags();
+        }
+
+        function removeCabangTag(index) {
+            selectedCabang.splice(index, 1);
+            renderCabangTags();
+        }
+
+        function removeOutletTag(index) {
+            outlets.splice(index, 1);
+            renderOutletTags();
+        }
+
+        // Setup tag systems
+        setupTagSystem('newRegional', 'regionalDropdown', 'regionalTagsContainer', 'addRegionalBtn', regionalData, selectedRegional, renderRegionalTags);
+        setupTagSystem('newCabang', 'cabangDropdown', 'cabangTagsContainer', 'addCabangBtn', cabangData, selectedCabang, renderCabangTags);
+
+        // Outlet functionality
+        function addOutlet() {
+            const input = document.getElementById('newOutlet');
+            const value = input.value.trim();
+            
+            if (value && !outlets.includes(value)) {
+                outlets.push(value);
+                renderOutletTags();
+                input.value = '';
+            }
+        }
+
+        // Initialize all tags
+        renderRegionalTags();
+        renderCabangTags();
+        renderOutletTags();
+
+        // Add outlet button
+        document.getElementById('addOutletBtn').addEventListener('click', addOutlet);
+
+        // Add outlet on Enter key
+        document.getElementById('newOutlet').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addOutlet();
+            }
+        });
+
+        // File browse simulation
+        document.querySelector('button[type="button"]:first-child').addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.apk';
+            input.onchange = function(e) {
+                if (e.target.files[0]) {
+                    const fileName = e.target.files[0].name;
+                    document.querySelector('span.text-gray-600').textContent = fileName;
+                }
+            };
+            input.click();
+        });
+
+        // Form handling
+        document.getElementById('otaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                deskripsi: document.getElementById('deskripsi').value,
+                regional: selectedRegional,
+                cabangGrup: selectedCabang,
+                outlets: outlets
+            };
+            
+            console.log('Form Data:', formData);
+            alert(`OTA created successfully!\nRegional: ${selectedRegional.length}\nCabang: ${selectedCabang.length}\nOutlets: ${outlets.length}`);
+        });
+
+        // Cancel button
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            if (confirm('Are you sure you want to cancel? All changes will be lost.')) {
+                // Reset form
+                document.getElementById('otaForm').reset();
+                selectedRegional = ['10130 - Kantor Pusat'];
+                selectedCabang = ['00999 - KANTOR PUSAT'];
+                outlets = [
+                    '00999 - KANTOR PUSAT > 99990 - KCP UAT 1',
+                    '99991 - KCP UAT 2',
+                    '99998 - Cabang Testing TPC'
+                ];
+                renderRegionalTags();
+                renderCabangTags();
+                renderOutletTags();
+            }
+        });
+
+        // Input focus effects for description field only
+        document.getElementById('deskripsi').addEventListener('focus', function() {
+            this.style.borderColor = '#60a5fa';
+        });
+        
+        document.getElementById('deskripsi').addEventListener('blur', function() {
+            this.style.borderColor = '#d1d5db';
+        });
+    </script>

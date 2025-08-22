@@ -1,0 +1,101 @@
+
+
+<div class="max-w-3xl mx-auto p-6">
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-lg text-gray-600">
+            Master Key / Edit
+        </h1>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <form id="editMasterKeyForm" class="space-y-6" method="post" action="@Url.Action("Edit", "MasterKey")">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="1" />
+            
+            <!-- CODE -->
+            <div class="flex items-center">
+                <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-32 text-right pr-4">
+                    CODE:
+                </label>
+                <input type="text" 
+                       name="Code"
+                       value="MK001" 
+                       placeholder="Code"
+                       class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
+                       required>
+            </div>
+            
+            <!-- KEY NUMBER -->
+            <div class="flex items-center">
+                <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-32 text-right pr-4">
+                    KEY NUMBER:
+                </label>
+                <input type="text" 
+                       name="KeyNumber"
+                       value="12345" 
+                       placeholder="Key Number"
+                       class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
+                       required>
+            </div>
+            
+            <!-- KETERANGAN -->
+            <div class="flex items-center">
+                <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-32 text-right pr-4">
+                    KETERANGAN:
+                </label>
+                <input type="text" 
+                       name="Keterangan"
+                       value="Kunci untuk server" 
+                       placeholder="Keterangan"
+                       class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
+                       required>
+            </div>
+
+            <hr class="my-6 border-gray-200">
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end gap-3">
+                <button type="button"
+                        onclick="window.history.back()"
+                        class="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded text-sm transition-colors">
+                    Cancel
+                </button>
+                <button type="submit"
+                        class="px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded text-sm transition-colors">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.getElementById('editMasterKeyForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch(this.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Master Key updated successfully!');
+            window.location.href = '@Url.Action("Index", "MasterKey")';
+        } else {
+            alert('Error updating Master Key: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while updating the Master Key.');
+    });
+});
+</script>

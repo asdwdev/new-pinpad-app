@@ -1,0 +1,133 @@
+<div class="max-w-2xl mx-auto">
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-lg text-gray-600">
+            Over-the-air (OTA) / Edit
+        </h1>
+    </div>
+
+    <!-- Form Card -->
+    <div class="bg-white rounded-lg shadow-sm p-8">
+        <form id="otaEditForm">
+            <!-- FILE OTA -->
+            <div class="mb-6">
+                <div class="flex items-start">
+                    <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 mt-2 text-right pr-4">
+                        PILIH OTA FILE:
+                    </label>
+                    <div class="flex items-center gap-3 flex-1">
+                        <button type="button" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded border text-sm">
+                            Browse...
+                        </button>
+                        <span class="text-gray-600 text-sm">BTN-PINPad v1.0.1-uat.apk</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DESKRIPSI -->
+            <div class="mb-6">
+                <div class="flex items-center">
+                    <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4">
+                        DESKRIPSI:
+                    </label>
+                    <div class="flex-1">
+                        <input type="text" id="deskripsiEdit" name="deskripsi"
+                            value="OTA BTN 19052025"
+                            class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
+                            placeholder="Enter description">
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGIONAL -->
+            <div class="mb-6">
+                <div class="flex">
+                    <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4 mt-2">
+                        REGIONAL:
+                    </label>
+                    <div class="flex-1">
+                        <div class="border border-gray-300 rounded p-3 min-h-12 bg-white">
+                            <div id="regionalTagsContainerEdit" class="flex flex-wrap gap-2 mb-2">
+                                <div class="flex items-center gap-1 bg-green-100 text-green-800 px-2 py-1 rounded text-sm">
+                                    <span>10130 - Kantor Pusat</span>
+                                    <button type="button" class="text-green-600 hover:text-red-600 font-bold text-xs">×</button>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 relative">
+                                <input type="text" placeholder="Type to search regional..."
+                                    class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-400">
+                                <button type="button" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CABANG/GRUP -->
+            <div class="mb-6">
+                <div class="flex">
+                    <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4 mt-2">
+                        CABANG/GRUP:
+                    </label>
+                    <div class="flex-1">
+                        <div class="border border-gray-300 rounded p-3 min-h-12 bg-white">
+                            <div id="cabangTagsContainerEdit" class="flex flex-wrap gap-2 mb-2">
+                                <div class="flex items-center gap-1 bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">
+                                    <span>00999 - KANTOR PUSAT</span>
+                                    <button type="button" class="text-purple-600 hover:text-red-600 font-bold text-xs">×</button>
+                                </div>
+                            </div>
+                            <div class="flex gap-2 relative">
+                                <input type="text" placeholder="Type to search cabang/grup..."
+                                    class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-400">
+                                <button type="button" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OUTLET -->
+            <div class="mb-8">
+                <div class="flex">
+                    <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-24 text-right pr-4 mt-2">
+                        OUTLET:
+                    </label>
+                    <div class="flex-1">
+                        <div class="border border-gray-300 rounded p-3 min-h-24 bg-white">
+                            <div id="tagsContainerEdit" class="flex flex-wrap gap-2 mb-3">
+                                <div class="flex items-center gap-1 bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
+                                    <span>00999 - KANTOR PUSAT > 99990 - KCP UAT 1</span>
+                                    <button type="button" class="text-blue-600 hover:text-red-600 font-bold text-xs">×</button>
+                                </div>
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="Type outlet code and name..."
+                                    class="flex-1 px-2 py-1 border border-gray-300 rounded text-sm focus:outline-none focus:border-blue-400">
+                                <button type="button" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-sm">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex justify-end gap-3">
+                <button type="button" id="cancelBtnEdit"
+                    class="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded text-sm transition-colors">
+                    Cancel
+                </button>
+                <button type="submit" id="updateBtn"
+                    class="px-5 py-2 bg-green-500 hover:bg-green-600 text-white rounded text-sm transition-colors">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

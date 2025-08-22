@@ -1,0 +1,196 @@
+@{
+    ViewData["Title"] = "Edit Device API Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-6">
+    <!-- Page Header -->
+    <div class="mb-6">
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-gray-800">Edit Device API Log</h1>
+            <a href="@Url.Action("Index", "DeviceAPILog")" 
+               class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors duration-200">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to List
+            </a>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+        <form method="post">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Process Type -->
+                <div>
+                    <label for="ProcessType" class="block text-sm font-medium text-gray-700 mb-2">Process Type</label>
+                    <select id="ProcessType" name="ProcessType" 
+                            class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="">Select Process Type</option>
+                        <option value="Auth" selected>Authentication</option>
+                        <option value="CreatePIN">Create PIN</option>
+                        <option value="ChangePIN">Change PIN</option>
+                        <option value="GetOTAFile">Get OTA File</option>
+                        <option value="RegisterBale">Register Bale</option>
+                        <option value="Transaction">Transaction</option>
+                    </select>
+                </div>
+
+                <!-- Request By -->
+                <div>
+                    <label for="RequestBy" class="block text-sm font-medium text-gray-700 mb-2">Request By</label>
+                    <input type="text" id="RequestBy" name="RequestBy" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="ITPD-ICP.Nugroho"
+                           placeholder="Enter requester ID or name">
+                </div>
+
+                <!-- Response Code -->
+                <div>
+                    <label for="ResponseCode" class="block text-sm font-medium text-gray-700 mb-2">Response Code</label>
+                    <input type="text" id="ResponseCode" name="ResponseCode" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="200"
+                           placeholder="e.g., 200, 404, 500">
+                </div>
+
+                <!-- Response Description -->
+                <div>
+                    <label for="ResponseDescription" class="block text-sm font-medium text-gray-700 mb-2">Response Description</label>
+                    <input type="text" id="ResponseDescription" name="ResponseDescription" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="Successful Authentication"
+                           placeholder="e.g., Success, Error, Not Found">
+                </div>
+
+                <!-- Timestamp -->
+                <div>
+                    <label for="Timestamp" class="block text-sm font-medium text-gray-700 mb-2">Timestamp</label>
+                    <input type="datetime-local" id="Timestamp" name="Timestamp" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="2025-05-19T10:30">
+                </div>
+
+                <!-- Device ID -->
+                <div>
+                    <label for="DeviceId" class="block text-sm font-medium text-gray-700 mb-2">Device ID</label>
+                    <input type="text" id="DeviceId" name="DeviceId" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="PINPAD-001"
+                           placeholder="Enter device identifier">
+                </div>
+
+                <!-- IP Address -->
+                <div>
+                    <label for="IpAddress" class="block text-sm font-medium text-gray-700 mb-2">IP Address</label>
+                    <input type="text" id="IpAddress" name="IpAddress" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="192.168.1.100"
+                           placeholder="e.g., 192.168.1.100">
+                </div>
+
+                <!-- User Agent -->
+                <div>
+                    <label for="UserAgent" class="block text-sm font-medium text-gray-700 mb-2">User Agent</label>
+                    <input type="text" id="UserAgent" name="UserAgent" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="BTN-PINPad v1.0.14"
+                           placeholder="Browser or application identifier">
+                </div>
+
+                <!-- Session ID -->
+                <div>
+                    <label for="SessionId" class="block text-sm font-medium text-gray-700 mb-2">Session ID</label>
+                    <input type="text" id="SessionId" name="SessionId" 
+                           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                           value="SESS-2025-001"
+                           placeholder="Session identifier">
+                </div>
+
+                <!-- Request Data -->
+                <div class="md:col-span-2">
+                    <label for="RequestData" class="block text-sm font-medium text-gray-700 mb-2">Request Data (JSON)</label>
+                    <textarea id="RequestData" name="RequestData" rows="4"
+                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder='{"key": "value", "data": "example"}'>{"username": "ITPD-ICP.Nugroho", "branch": "ICP", "timestamp": "2025-05-19T10:30:00Z"}</textarea>
+                </div>
+
+                <!-- Response Data -->
+                <div class="md:col-span-2">
+                    <label for="ResponseData" class="block text-sm font-medium text-gray-700 mb-2">Response Data (JSON)</label>
+                    <textarea id="ResponseData" name="ResponseData" rows="4"
+                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder='{"codeResult": 200, "rspdesc": "Success", "data": {...}}'>{'codeResult': 200, 'rspdesc': 'Successful Authentication', 'data': {'user_id': 'ITPD-ICP.Nugroho', 'branch': 'ICP', 'permissions': ['read', 'write']}}</textarea>
+                </div>
+
+                <!-- Notes -->
+                <div class="md:col-span-2">
+                    <label for="Notes" class="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+                    <textarea id="Notes" name="Notes" rows="3"
+                              class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                              placeholder="Additional notes or comments">Authentication successful for ICP branch user. All permissions granted.</textarea>
+                </div>
+            </div>
+
+            <!-- Form Actions -->
+            <div class="flex justify-end space-x-3 mt-8 pt-6 border-t border-gray-200">
+                <button type="button" onclick="history.back()" 
+                        class="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+                    Cancel
+                </button>
+                <button type="submit" 
+                        class="px-6 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors duration-200">
+                    <i class="fas fa-save mr-2"></i>
+                    Update Log
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Success Notification -->
+<div id="successNotification" class="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+    <div class="flex items-center">
+        <i class="fas fa-check-circle mr-2"></i>
+        <span>Device API Log updated successfully!</span>
+    </div>
+</div>
+
+<script>
+    // Form validation and submission
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const processType = document.getElementById('ProcessType').value;
+            const responseCode = document.getElementById('ResponseCode').value;
+            
+            if (!processType) {
+                alert('Please select a Process Type');
+                return;
+            }
+            
+            if (!responseCode) {
+                alert('Please enter a Response Code');
+                return;
+            }
+            
+            // Show success notification
+            showSuccessNotification();
+            
+            // In a real application, you would submit the form here
+            // form.submit();
+        });
+    });
+
+    function showSuccessNotification() {
+        const notification = document.getElementById('successNotification');
+        notification.classList.remove('translate-x-full');
+        
+        setTimeout(() => {
+            notification.classList.add('translate-x-full');
+        }, 3000);
+    }
+</script>

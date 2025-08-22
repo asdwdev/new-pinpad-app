@@ -28,6 +28,10 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/AuditLog/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXVkaXRMb2dcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Auth/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,6 +52,30 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXGluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/DeviceAPILog/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2aWNlQVBJTG9nXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/DeviceAPILog/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2aWNlQVBJTG9nXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/DeviceAPILog/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGV2aWNlQVBJTG9nXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/MasterKey/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFzdGVyS2V5XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/MasterKey/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFzdGVyS2V5XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/MasterKey/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFzdGVyS2V5XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Monitoring/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uaXRvcmluZ1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -58,6 +86,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Monitoring/TransactionLog.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTW9uaXRvcmluZ1xUcmFuc2FjdGlvbkxvZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/OTA/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT1RBXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/OTA/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT1RBXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/OTA/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT1RBXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Outlet/Create.cshtml]
@@ -98,6 +138,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Regional/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVnaW9uYWxcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/ResponseLog/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzcG9uc2VMb2dcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/ResponseLog/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzcG9uc2VMb2dcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/ResponseLog/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVzcG9uc2VMb2dcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/RoleAkses/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFrc2VzXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/RoleAkses/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFrc2VzXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/RoleAkses/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUm9sZUFrc2VzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Farhanfahrezyy/Documents/Projects/new-pinpad-app/Views/Shared/Error.cshtml]
