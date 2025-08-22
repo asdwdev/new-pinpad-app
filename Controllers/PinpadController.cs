@@ -30,7 +30,7 @@ public class PinpadController : Controller
 
     public IActionResult Edit(int id)
     {
-        ViewBag.Id = id;            // atau pakai model strongly-typed
+        ViewBag.Id = id;
         return View();
     }
 

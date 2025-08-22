@@ -1,216 +1,186 @@
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Pinpad Logistik - Edit";
-}
+<form id="editForm" class="max-w-2xl mx-auto bg-white rounded-xl border border-gray-200 shadow-sm">
+    <!-- Card header -->
+    <div class="px-6 py-4 border-b border-gray-100">
+        <h2 class="text-base font-semibold text-gray-800">Edit Pinpad</h2>
+    </div>
 
-<div class="mb-4 text-sm px-4 sm:px-0">
-    <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Pinpad Logistik</a> /
-    <span class="text-gray-500">Edit</span>
-</div>
+    <!-- Card body -->
+    <div class="px-6 py-6">
+        <div class="hidden text-red-600 mb-4" id="formErrors"></div>
 
-<!-- Form -->
-<div class="bg-white p-4 sm:p-6 rounded-lg shadow max-w-6xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-        <!-- Left Section - Pinpad Details -->
-        <div class="space-y-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-4">Pinpad Details</h3>
-
+        <div class="grid grid-cols-1 gap-6">
             <!-- Serial Number -->
             <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2">SERIAL NUMBER:</label>
-                <input id="serialNumber" type="text" disabled
-                    class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
+                <label for="serialNumber" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    SERIAL NUMBER <span class="text-red-500">*</span>
+                </label>
+                <input id="serialNumber" name="serialNumber" maxlength="20" required autocomplete="off"
+                    placeholder="e.g. 0200640050298720" class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800 placeholder-gray-400
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
             </div>
 
-            <!-- Regional -->
+            <!-- Branch Code -->
             <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2">REGIONAL:</label>
-                <select disabled id="regional"
-                    class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
-                    <option>Kanwil Jakarta I</option>
+                <label for="branchCode" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    BRANCH CODE <span class="text-red-500">*</span>
+                </label>
+                <select id="branchCode" name="branchCode" required class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                    <option value="">Select Branch</option>
                 </select>
             </div>
 
-            <!-- Cabang Induk -->
+            <!-- Status -->
             <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2">CABANG INDUK:</label>
-                <select disabled id="cabangInduk"
-                    class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
-                    <option>00701 - KCS JAKARTA HARMONI</option>
+                <label for="status" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    STATUS <span class="text-red-500">*</span>
+                </label>
+                <select id="status" name="status" required class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                    <option value="">Select Status</option>
+                    <option value="Main">Main</option>
+                    <option value="Active">Active</option>
+                    <option value="InActive">InActive</option>
+                    <option value="Ready">Ready</option>
+                    <option value="NotReady">NotReady</option>
                 </select>
             </div>
 
-            <!-- Outlet -->
+            <!-- Repair Status -->
             <div>
-                <label class="block text-gray-700 text-sm font-medium mb-2">OUTLET:</label>
-                <select disabled id="outlet"
-                    class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
-                    <option>00727 - KCPS Jakarta Tanah Abang</option>
+                <label for="repairStatus" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    REPAIR STATUS
+                </label>
+                <select id="repairStatus" name="repairStatus" class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                    <option value="">Select Repair Status</option>
                 </select>
             </div>
 
-            <!-- IP Low and IP High side by side -->
-            <div class="grid grid-cols-2 gap-4">
-                <!-- IP Low -->
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">IP LOW:</label>
-                    <input type="text" id="ipLow" disabled
-                        class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
-                </div>
+            <!-- Terminal ID -->
+            <div>
+                <label for="terminalId" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    TERMINAL ID <span class="text-red-500">*</span>
+                </label>
+                <input id="terminalId" name="terminalId" maxlength="20" required autocomplete="off"
+                    placeholder="e.g. TID12345" class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800 placeholder-gray-400
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
+            </div>
 
-                <!-- IP High -->
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">IP HIGH:</label>
-                    <input type="text" id="ipHigh" disabled
-                        class="w-full border border-gray-300 rounded-lg p-3 bg-gray-100 cursor-not-allowed focus:ring-2 focus:ring-gray-400 focus:border-transparent transition-all">
-                </div>
+            <!-- Flag -->
+            <div>
+                <label for="flag" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    FLAG <span class="text-red-500">*</span>
+                </label>
+                <select id="flag" name="flag" required class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                    <option value="">Select Flag</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                </select>
+            </div>
+
+            <!-- Created Date -->
+            <div>
+                <label for="createdDate" class="block text-[11px] font-semibold tracking-wider text-gray-600 mb-1">
+                    CREATED DATE <span class="text-red-500">*</span>
+                </label>
+                <input type="date" id="createdDate" name="createdDate" required class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
+                 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
             </div>
         </div>
-
-        <!-- Right Section - Damage/Malfunction Information -->
-        <div class="flex flex-col justify-between space-y-4">
-            <div>
-                <h3 class="text-lg font-semibold text-gray-800 mb-4">Damage/Malfunction Information</h3>
-
-                <!-- Kerusakan -->
-                <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">KERUSAKAN:</label>
-                    <select id="kerusakanSelect"
-                        class="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                        <option value="">--Select Kerusakan Pinpad--</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="flex justify-end gap-3">
-                <button id="btnCancel" type="button"
-                    class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                    Cancel
-                </button>
-                <button id="btnUpdate" type="button"
-                    class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-medium transition-colors">
-                    Update
-                </button>
-            </div>
-        </div>
-
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Card footer (actions) -->
+    <div class="px-6 py-4 border-t border-gray-100 flex items-center justify-end gap-3">
+        <a asp-controller="Pinpad" asp-action="Index"
+            class="px-5 py-2.5 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200">Cancel</a>
+        <button type="submit" class="px-5 py-2.5 rounded-md bg-teal-600 hover:bg-teal-700 text-white">Save
+            Changes</button>
+    </div>
+</form>
+
 <script>
-    $(async function () {
-        const id = @ViewBag.Id;
-        try {
-            // Ambil data pinpad
-            const res = await fetch(`http://localhost:5125/api/pinpads/${id}`);
-            if (!res.ok) throw new Error('Not found');
-            const d = await res.json();
+    document.addEventListener("DOMContentLoaded", async () => {
+        const branchSelect = document.getElementById("branchCode");
+        const repairSelect = document.getElementById("repairStatus");
+        const form = document.getElementById("editForm");
+        const formErrors = document.getElementById("formErrors");
 
-            $('#serialNumber').val(d.serialNumber || '');
-            $('#regional').html(`<option>${d.regional || ''}</option>`);
-            $('#cabangInduk').html(`<option>${d.cabangInduk || ''}</option>`);
-            $('#outlet').html(`<option>${d.outletCode} - ${d.outletName}</option>`);
-            $('#ipLow').val(d.ipLow || '');
-            $('#ipHigh').val(d.ipHigh || '');
+        // ambil ID pinpad langsung dari ViewBag
+        const pinpadId = '@ViewBag.Id';
 
-            // Simpan selected awal
-            const selectedCode = d.statusRepairCode || '';
-            const selectedDesc = d.statusRepairDesc || '';
-
-            // Ambil semua opsi StatusRepair
-            const res2 = await fetch(`http://localhost:5125/api/pinpads/status-repairs`);
-            const list = await res2.json();
-
-            // Kosongkan select dulu
-            $('#kerusakanSelect').empty();
-            $('#kerusakanSelect').append('<option value="">--Select Kerusakan Pinpad--</option>');
-
-            // Loop semua opsi
-            list.forEach(item => {
-                const isSelected = (item.code === selectedCode) ? 'selected' : '';
-                $('#kerusakanSelect').append(
-                    `<option value="${item.code}" ${isSelected}>${item.code} - ${item.description}</option>`
-                );
-            });
-
-        } catch (e) {
-            alert('Data tidak ditemukan');
-            window.location.href = '/Pinpad';
-        }
-    });
-</script>
-<script>
-    // Tombol Update
-    $('#btnUpdate').on('click', async function () {
-        const id = @ViewBag.Id;
-        const selectedCode = $('#kerusakanSelect').val();
-
-        if (!selectedCode) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Oops...',
-                text: 'Silakan pilih kerusakan terlebih dahulu',
-            });
-            return;
-        }
-
-        const confirmResult = await Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Yakin ingin update status repair?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Update',
-            cancelButtonText: 'Batal',
-            reverseButtons: true
+        // === Load Branch Codes ===
+        const branchRes = await fetch("http://localhost:5125/api/pinpads/branches");
+        const branches = await branchRes.json();
+        branches.forEach(b => {
+            const opt = document.createElement("option");
+            opt.value = b.code;
+            opt.textContent = `${b.code} - ${b.name}`;
+            branchSelect.appendChild(opt);
         });
 
-        if (!confirmResult.isConfirmed) return;
+        // === Load Repair Status ===
+        const repairRes = await fetch("http://localhost:5125/api/pinpads/status-repairs");
+        const repairs = await repairRes.json();
+        repairs.forEach(r => {
+            const opt = document.createElement("option");
+            opt.value = r.code;
+            opt.textContent = `${r.code} - ${r.description}`;
+            repairSelect.appendChild(opt);
+        });
 
-        try {
-            const res = await fetch(`http://localhost:5125/api/pinpads/${id}/maintenance`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    statusRepair: selectedCode
-                })
-            });
-
-            const result = await res.json();
-
-            if (res.ok && result.success) {
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Berhasil',
-                    text: 'Status repair berhasil diperbarui',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
-                window.location.href = '/Pinpad/Index';
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Gagal',
-                    text: result.message || 'Gagal memperbarui status',
-                });
+        // === Load Pinpad detail ===
+        const detailRes = await fetch(`http://localhost:5125/api/pinpads/${pinpadId}`);
+        if (detailRes.ok) {
+            const pinpad = await detailRes.json();
+            document.getElementById("serialNumber").value = pinpad.serialNumber;
+            document.getElementById("branchCode").value = pinpad.branchCode;
+            document.getElementById("status").value =
+                (pinpad.status || "").charAt(0).toUpperCase() + (pinpad.status || "").slice(1).toLowerCase();
+            document.getElementById("repairStatus").value = pinpad.repairStatus || "";
+            document.getElementById("terminalId").value = pinpad.terminalId;
+            document.getElementById("flag").value = pinpad.flag;
+            if (pinpad.createdDate) {
+                document.getElementById("createdDate").value = pinpad.createdDate.split("T")[0];
             }
-        } catch (err) {
-            console.error(err);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Terjadi kesalahan saat mengupdate',
-            });
         }
-    });
 
-    // Tombol Cancel
-    $('#btnCancel').on('click', function () {
-        window.location.href = '/Pinpad/Index';
+        // === Handle Form Submit ===
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            formErrors.classList.add("hidden");
+            formErrors.textContent = "";
+
+            const data = {
+                id: pinpadId,
+                serialNumber: document.getElementById("serialNumber").value,
+                branchCode: document.getElementById("branchCode").value,
+                status: document.getElementById("status").value,
+                repairStatus: document.getElementById("repairStatus").value || null,
+                terminalId: document.getElementById("terminalId").value,
+                flag: document.getElementById("flag").value,
+                createdDate: document.getElementById("createdDate").value
+            };
+
+            try {
+                const res = await fetch(`http://localhost:5125/api/pinpads/${pinpadId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    formErrors.textContent = err.message || "Gagal menyimpan perubahan.";
+                    formErrors.classList.remove("hidden");
+                } else {
+                    window.location.href = "/Pinpad/Index";
+                }
+            } catch (error) {
+                formErrors.textContent = "Terjadi kesalahan koneksi ke server.";
+                formErrors.classList.remove("hidden");
+            }
+        });
     });
 </script>

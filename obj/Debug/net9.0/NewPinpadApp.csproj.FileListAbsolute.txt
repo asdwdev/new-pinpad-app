@@ -230,7 +230,6 @@ C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\refint\NewPi
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\NewPinpadApp.pdb
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\NewPinpadApp.genruntimeconfig.cache
 C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\ref\NewPinpadApp.dll
-C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-fszmvxr44j.gz
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\bin\Debug\net9.0\appsettings.json
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\bin\Debug\net9.0\package-lock.json
@@ -464,3 +463,4 @@ C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\refin
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\NewPinpadApp.pdb
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\NewPinpadApp.genruntimeconfig.cache
 C:\Users\Farhanfahrezyy\Documents\Projects\new-pinpad-app\obj\Debug\net9.0\ref\NewPinpadApp.dll
+C:\Users\Arya\Desktop\dotnet-projects\NewPinpadApp\obj\Debug\net9.0\compressed\pg8basznnk-8ucj4aed2q.gz
