@@ -60,8 +60,8 @@
                 <a id="menu-dashboard" asp-controller="Dashboard" asp-action="Index"
                     class="hidden flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard"
-                                                                                                                                                                         ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                         : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                     ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                     : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa fa-home text-lg"></i>
                     </div>
@@ -87,8 +87,8 @@
                         <a id="menu-pinpad-list" asp-controller="Monitoring" asp-action="Index"
                             class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
                             @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "Index"
-                                                                                                                                                                                                                    ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                    : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                                                                                        ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                                                                                        : "hover:bg-white hover:bg-opacity-10")">
                             <div class="w-6 h-6 flex items-center justify-center">
                                 <i class="fa-solid fa-tablet-screen-button"></i>
                             </div>
@@ -98,8 +98,8 @@
                         <a id="menu-pinpad-log" asp-controller="Monitoring" asp-action="PinpadLog"
                             class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
                             @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "PinpadLog"
-                                                                                                                                                                                                                       ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                       : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
                             <div class="w-6 h-6 flex items-center justify-center">
                                 <i class="fa-solid fa-file-lines"></i>
                             </div>
@@ -109,8 +109,8 @@
                         <a id="menu-transaction-log" asp-controller="Monitoring" asp-action="TransactionLog"
                             class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
                             @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "TransactionLog"
-                                                                                                                                                                                                                                 ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                 : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                                                                                                     ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                                                                                                     : "hover:bg-white hover:bg-opacity-10")">
                             <div class="w-6 h-6 flex items-center justify-center">
                                 <i class="fa-solid fa-receipt"></i>
                             </div>
@@ -122,11 +122,11 @@
                 <!-- Divider -->
                 <div id="line-top" class="hidden border-t border-white border-opacity-20 my-4"></div>
 
-                <a id="menu-ota" asp-controller="OTA" asp-action="Index"
+                <a id="menu-ota-file" asp-controller="OtaFile" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "OTA"
-                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-user text-lg"></i>
                     </div>
@@ -136,8 +136,8 @@
                 <a id="menu-masterkey" asp-controller="MasterKey" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "MasterKey"
-                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-key text-lg"></i>
                     </div>
@@ -148,8 +148,8 @@
                 <a id="menu-pinpad" asp-controller="Pinpad" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pinpad"
-                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-credit-card text-lg"></i>
                     </div>
@@ -163,8 +163,8 @@
                 <a id="menu-user" asp-controller="User" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "User"
-                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-users text-lg"></i>
                     </div>
@@ -175,8 +175,8 @@
                 <a id="menu-branch" asp-controller="Branch" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "Branch"
-                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-building text-lg"></i>
                     </div>
@@ -187,8 +187,8 @@
                 <a id="menu-regional" asp-controller="Regional" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "Regional"
-                                                                                                                                                                       ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                       : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-map text-lg"></i>
                     </div>
@@ -199,8 +199,8 @@
                 <a id="menu-roleAkses" asp-controller="RoleAkses" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "RoleAkses"
-                                                                                                                                                                    ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                    : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fas fa-user-cog text-lg"></i>
                     </div>
@@ -211,8 +211,8 @@
                 <a id="menu-responselog" asp-controller="ResponseLog" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "ResponseLog"
-                                                                                                                                                                       ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                       : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="far fa-comments text-lg"></i>
                     </div>
@@ -223,8 +223,8 @@
                 <a id="menu-deviceapilog" asp-controller="DeviceAPILog" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "DeviceAPILog"
-                                                                                                                                                                       ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                       : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fas fa-tasks text-lg"></i>
                     </div>
@@ -235,8 +235,8 @@
                 <a id="menu-auditlog" asp-controller="AuditLog" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "AuditLog"
-                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa fa-history text-lg"></i>
                     </div>
@@ -247,8 +247,8 @@
                 <a id="menu-outlet" asp-controller="Outlet" asp-action="Index"
                     class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
                     @(ViewContext.RouteData.Values["controller"]?.ToString() == "Outlet"
-                                                                                                                                                                   ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                   : "hover:bg-white hover:bg-opacity-10")">
+                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
+                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
                     <div class="w-8 h-8 flex items-center justify-center">
                         <i class="fa-solid fa-landmark text-lg"></i>
                     </div>
@@ -357,7 +357,7 @@
                         $("#pinpad-label").text("Pinpad");
                     } else if (role === "Customer Service") {
                         $("#menu-dashboard, #menu-user, #menu-regional").removeClass("hidden");
-                        $("#menu-monitoring-toggle, #menu-pinpad-list, #menu-pinpad-log, #menu-transaction-log, #menu-pinpad, #menu-branch, #menu-roleAkses, #menu-responselog, #menu-transactionlog, #menu-deviceapilog, #menu-auditlog, #menu-ota, #menu-masterkey").removeClass("hidden");
+                        $("#menu-monitoring-toggle, #menu-pinpad-list, #menu-pinpad-log, #menu-transaction-log, #menu-pinpad, #menu-branch, #menu-roleAkses, #menu-responselog, #menu-transactionlog, #menu-deviceapilog, #menu-auditlog, #menu-ota-file, #menu-masterkey").removeClass("hidden");
                         $("#pinpad-label").text("Pinpad");
                         $("#line-top, #line-bottom").removeClass("hidden");
                     } else {

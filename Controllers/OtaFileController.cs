@@ -3,7 +3,7 @@ using NewPinpadApp.Attributes;
 
 namespace NewPinpadApp.Controllers
 {
-  public class OTAController : Controller
+  public class OtaFileController : Controller
   {
     [RequireApiSession]
     public IActionResult Index()

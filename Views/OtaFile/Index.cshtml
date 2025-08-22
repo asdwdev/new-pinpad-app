@@ -1,0 +1,193 @@
+<div class="max-w-7xl mx-auto">
+  <!-- Header -->
+  <div class="mb-6">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-2">Over-the-air (OTA) / Inquiry</h1>
+    <div class="flex items-center gap-4 mb-4">
+      <a href="/OtaFile/Create"
+        class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2">
+        <span class="text-lg">+</span>
+        Tambah OTA
+      </a>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+    <div class="flex justify-between items-center mb-4">
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">Show</span>
+        <select id="entries-per-page" class="border border-gray-300 rounded px-3 py-1 text-sm">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+        <span class="text-gray-600">entries</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-gray-600">Search:</span>
+        <input type="text" id="search-input" class="border border-gray-300 rounded px-3 py-1 text-sm w-64"
+          placeholder="">
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class="w-full table-auto">
+        <thead>
+          <tr class="border-b border-gray-200">
+            <th class="text-left py-3 px-4 font-medium text-gray-600">No</th>
+            <th class="text-left py-3 px-4 font-medium text-gray-600">OTA Name</th>
+            <th class="text-left py-3 px-4 font-medium text-gray-600">OTA Filename</th>
+            <th class="text-left py-3 px-4 font-medium text-gray-600">Register Date</th>
+            <th class="text-left py-3 px-4 font-medium text-gray-600">Action</th>
+          </tr>
+        </thead>
+        <tbody id="ota-table-body"></tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
+      <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
+        Showing 0 to 0 of 0 entries
+      </div>
+      <div class="flex space-x-1" id="paginationButtons">
+        <button id="prevBtn"
+          class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
+          disabled>
+          ← Previous
+        </button>
+        <span id="pageNumbers" class="flex space-x-1"></span>
+        <button id="nextBtn"
+          class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
+          disabled>
+          Next →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  let allData = [];
+  let currentPage = 1;
+  let rowsPerPage = 10;
+
+  async function loadOtaFiles() {
+    try {
+      const response = await fetch("http://localhost:5125/api/otafiles");
+      const data = await response.json();
+      allData = data;
+      displayPaginatedData();
+    } catch (err) {
+      console.error("Failed to load OTA files:", err);
+    }
+  }
+
+  function displayPaginatedData() {
+    const tbody = $('#ota-table-body');
+    tbody.empty();
+
+    const filteredData = filterData(allData);
+    const totalItems = filteredData.length;
+    const totalPages = Math.ceil(totalItems / rowsPerPage);
+    if (currentPage > totalPages) currentPage = totalPages || 1;
+
+    const startIndex = (currentPage - 1) * rowsPerPage;
+    const endIndex = Math.min(startIndex + rowsPerPage, totalItems);
+    const pageData = filteredData.slice(startIndex, endIndex);
+
+    pageData.forEach((ota, i) => {
+      tbody.append(`
+      <tr class="border-b border-gray-100 hover:bg-gray-50">
+        <td class="py-3 px-4 text-gray-600">${startIndex + i + 1}</td>
+        <td class="py-3 px-4 text-gray-800">${ota.otaName}</td>
+        <td class="py-3 px-4 text-gray-600">${ota.otaFilename}</td>
+        <td class="py-3 px-4 text-gray-600">${formatDate(ota.registerDate)}</td>
+        <td class="py-3 px-4">
+          <div class="flex gap-2">
+            <button class="bg-orange-400 hover:bg-orange-500 text-white px-3 py-1 rounded text-sm">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center gap-1">
+              <i class="fas fa-star"></i> Disable
+            </button>
+          </div>
+        </td>
+      </tr>
+    `);
+    });
+
+    updatePaginationInfo(startIndex, endIndex, totalItems);
+    updatePaginationControls(totalPages);
+  }
+
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleString("id-ID");
+  }
+
+  function filterData(data) {
+    const query = $('#search-input').val().toLowerCase();
+    if (!query) return data;
+    return data.filter(item =>
+      item.otaName.toLowerCase().includes(query) ||
+      item.otaFilename.toLowerCase().includes(query)
+    );
+  }
+
+  function updatePaginationInfo(start, end, total) {
+    const displayStart = total === 0 ? 0 : start + 1;
+    const displayEnd = end;
+    $('#tableInfo').text(`Showing ${displayStart} to ${displayEnd} of ${total} entries`);
+  }
+
+  function updatePaginationControls(totalPages) {
+    $('#prevBtn').prop('disabled', currentPage <= 1);
+    $('#nextBtn').prop('disabled', currentPage >= totalPages);
+
+    const pageNumbers = $('#pageNumbers');
+    pageNumbers.empty();
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = $(`<button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-white text-gray-700'}">${i}</button>`);
+      btn.on('click', () => {
+        currentPage = i;
+        displayPaginatedData();
+      });
+      pageNumbers.append(btn);
+    }
+  }
+
+  // Previous / Next button handlers
+  $('#prevBtn').on('click', function () {
+    if (currentPage > 1) {
+      currentPage--;
+      displayPaginatedData();
+    }
+  });
+  $('#nextBtn').on('click', function () {
+    const totalPages = Math.ceil(filterData(allData).length / rowsPerPage);
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayPaginatedData();
+    }
+  });
+
+  // Search realtime
+  $('#search-input').on('input', () => {
+    currentPage = 1;
+    displayPaginatedData();
+  });
+
+  // Change entries per page
+  $('#entries-per-page').on('change', function () {
+    rowsPerPage = parseInt($(this).val());
+    currentPage = 1;
+    displayPaginatedData();
+  });
+
+  // Load data on page load
+  loadOtaFiles();
+</script>
