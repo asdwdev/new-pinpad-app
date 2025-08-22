@@ -137,7 +137,7 @@
     </div>
   </div>
 
-  
+
 
   <!-- Table Container -->
   <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
@@ -168,91 +168,22 @@
 
     <!-- Table Responsive Wrapper -->
     <div class="overflow-x-auto">
-      <table id="transactionTable" class="min-w-full text-left border-collapse">
+      <table id="pinpadLogTable" class="min-w-full text-left border-collapse">
         <thead>
           <tr class="bg-gray-100 text-gray-700 text-sm">
-            <!-- Regional -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Regional</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Cabang Induk -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Cabang Induk</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Kode Outlet -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Kode Outlet</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Create Date -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Create Date</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Username -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Username</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Serial Number -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Serial Number</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Response Status -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Response Status</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
-            <!-- Response Code -->
-            <th
-              class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200">
-              <div class="flex items-center justify-between">
-                <span>Response Code</span>
-                <i class="fa fa-sort text-gray-400 ml-2"></i>
-              </div>
-            </th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">No</th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">Date</th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">Username</th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">Action</th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">Key Values</th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">Old Values</th>
+            <th class="px-4 py-3 font-semibold border-b border-gray-200">New Values</th>
           </tr>
         </thead>
         <tbody id="tableBody" class="text-sm">
-          <!-- Data akan masuk di sini -->
-          <tr class="hover:bg-gray-50">
-            <td class="px-4 py-3 border-b border-gray-200">Kanwil Jakarta I</td>
-            <td class="px-4 py-3 border-b border-gray-200">KC Jakarta Harmoni</td>
-            <td class="px-4 py-3 border-b border-gray-200">00014</td>
-            <td class="px-4 py-3 border-b border-gray-200">2025-08-20</td>
-            <td class="px-4 py-3 border-b border-gray-200">johndoe</td>
-            <td class="px-4 py-3 border-b border-gray-200">SN123456</td>
-            <td class="px-4 py-3 border-b border-gray-200 text-green-600 font-medium">Success</td>
-            <td class="px-4 py-3 border-b border-gray-200">00</td>
-          </tr>
+          <!-- Data API akan ditambahkan di sini -->
         </tbody>
       </table>
-
-
     </div>
 
     <!-- Pagination -->
@@ -278,3 +209,150 @@
     </div>
   </div>
 </div>
+
+@section Scripts {
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    let allLogs = [];
+    let currentPage = 1;
+    let pageSize = 10;
+    let searchTerm = "";
+
+    async function loadPinpadLogs() {
+      try {
+        const res = await fetch("http://localhost:5125/api/audit/pinpads");
+        if (!res.ok) {
+          console.error("Gagal fetch log Pinpad:", res.statusText);
+          return;
+        }
+
+        allLogs = await res.json();
+        renderTable();
+      } catch (err) {
+        console.error("Error load logs:", err);
+      }
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById("tableBody");
+      tbody.innerHTML = "";
+
+      // Filter data sesuai search
+      const filteredLogs = allLogs.filter(log => {
+        const values = Object.values(log).join(" ").toLowerCase();
+        return values.includes(searchTerm.toLowerCase());
+      });
+
+      const totalEntries = filteredLogs.length;
+
+      if (totalEntries === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Data tidak ditemukan</td></tr>`;
+        document.getElementById("tableInfo").innerText = "Showing 0 to 0 of 0 entries";
+        renderPagination(0, 0, 0);
+        return;
+      }
+
+      // Pagination
+      const start = (currentPage - 1) * pageSize;
+      const end = Math.min(start + pageSize, totalEntries);
+      const pagedLogs = filteredLogs.slice(start, end);
+
+      pagedLogs.forEach((log, index) => {
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-gray-50";
+
+        // Badge warna sesuai action
+        let badge = `<span class="px-2 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-700">${log.actionType}</span>`;
+        if (log.actionType === "Created") {
+          badge = `<span class="px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700">Created</span>`;
+        } else if (log.actionType === "Updated") {
+          badge = `<span class="px-2 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700">Updated</span>`;
+        } else if (log.actionType === "Deleted") {
+          badge = `<span class="px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">Deleted</span>`;
+        }
+
+        tr.innerHTML = `
+            <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
+            <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
+            <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
+            <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
+            <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
+            <td class="px-4 py-3 border-b border-gray-200 align-top">
+                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
+            </td>
+            <td class="px-4 py-3 border-b border-gray-200 align-top">
+                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
+            </td>
+          `;
+
+        tbody.appendChild(tr);
+      });
+
+      // Update table info
+      document.getElementById("tableInfo").innerText =
+        `Showing ${start + 1} to ${end} of ${totalEntries} entries`;
+
+      // Render pagination
+      renderPagination(totalEntries, start, end);
+    }
+
+    function renderPagination(totalEntries, start, end) {
+      const totalPages = Math.ceil(totalEntries / pageSize);
+      const pageNumbersContainer = document.getElementById("pageNumbers");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      pageNumbersContainer.innerHTML = "";
+
+      // Buat nomor halaman
+      for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement("button");
+        btn.innerText = i;
+        btn.className = `px-3 py-1 border rounded text-sm transition-colors ${i === currentPage
+            ? "bg-teal-500 text-white border-teal-500"
+            : "bg-white border-gray-300 hover:bg-gray-100"
+          }`;
+        btn.addEventListener("click", () => {
+          currentPage = i;
+          renderTable();
+        });
+        pageNumbersContainer.appendChild(btn);
+      }
+
+      // Previous & Next button
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+
+      prevBtn.onclick = () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderTable();
+        }
+      };
+
+      nextBtn.onclick = () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderTable();
+        }
+      };
+    }
+
+    // Event listener untuk dropdown Show entries
+    $(document).on("change", "#pageSizeSelect", function () {
+      pageSize = parseInt($(this).val());
+      currentPage = 1; // reset ke halaman pertama
+      renderTable();
+    });
+
+    // Event listener untuk search real-time
+    $(document).on("input", "#searchInput", function () {
+      searchTerm = $(this).val();
+      currentPage = 1; // reset ke halaman pertama
+      renderTable();
+    });
+
+    // Auto load saat halaman ready
+    $(document).ready(loadPinpadLogs);
+  </script>
+}
