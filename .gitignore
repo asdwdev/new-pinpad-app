@@ -1,2 +1,17 @@
+<<<<<<< HEAD
 bin/
 obj/
+=======
+## Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+>>>>>>> 886b574 (feat: update dashboard dan fix bug di halaman edit pinpad)

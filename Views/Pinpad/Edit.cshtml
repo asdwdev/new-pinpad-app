@@ -136,8 +136,7 @@
             const pinpad = await detailRes.json();
             document.getElementById("serialNumber").value = pinpad.serialNumber;
             document.getElementById("branchCode").value = pinpad.branchCode;
-            document.getElementById("status").value =
-                (pinpad.status || "").charAt(0).toUpperCase() + (pinpad.status || "").slice(1).toLowerCase();
+            document.getElementById("status").value = pinpad.status || "";
             document.getElementById("repairStatus").value = pinpad.repairStatus || "";
             document.getElementById("terminalId").value = pinpad.terminalId;
             document.getElementById("flag").value = pinpad.flag;
