@@ -16,8 +16,9 @@ namespace NewPinpadApp.Controllers
             return View();
         }
 
-        public IActionResult Edit()
+        public IActionResult Edit(int id)
         {
+            ViewBag.Id = id;
             return View();
         }
     }

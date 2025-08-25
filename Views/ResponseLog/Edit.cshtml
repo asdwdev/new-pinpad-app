@@ -1,65 +1,54 @@
 @{
-    ViewData["Title"] = "Response Code / Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit SysResponseCode";
 }
 
-<div class="p-6">
-    <!-- Page Header -->
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Response Code / Edit</h1>
-    </div>
+<div class="p-6 flex justify-center">
+    <div class="w-full max-w-2xl">
+        <!-- Breadcrumb -->
+        <div class="mb-4 text-sm">
+            <a href="/SysResponseCode"
+                class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">SysResponseCode</a> /
+            <span class="text-gray-500">Edit</span>
+        </div>
 
-    <!-- Form -->
-    <div class="max-w-2xl">
-        <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <form method="post" action="@Url.Action("Edit", "ResponseLog")">
-                <!-- Response Type Field -->
-                <div class="mb-6">
-                    <label for="responseType" class="block text-sm font-medium text-gray-700 mb-2">
-                        RESPONSE TYPE
-                    </label>
-                    <div class="relative">
-                        <select id="responseType" name="responseType" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 appearance-none bg-white">
-                            <option value="Device Log" selected>Device Log</option>
-                            <option value="Transaction Log">Transaction Log</option>
-                            <option value="Error Log">Error Log</option>
-                            <option value="System Log">System Log</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                            <i class="fas fa-chevron-down text-gray-400"></i>
-                        </div>
-                    </div>
+        <!-- Card Form -->
+        <div class="bg-white shadow rounded-lg border border-gray-200 p-6">
+            <h2 class="text-lg font-semibold text-gray-800 mb-4">Edit SysResponseCode</h2>
+
+            <form id="editSysResponseCodeForm" class="space-y-4">
+                <input type="hidden" id="RescodeId" />
+
+                <!-- RescodeType -->
+                <div>
+                    <label for="RescodeType" class="block text-sm font-medium text-gray-700 mb-1">Tipe</label>
+                    <input type="text" id="RescodeType" name="RescodeType" required
+                        class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500">
                 </div>
 
-                <!-- Code Field -->
-                <div class="mb-6">
-                    <label for="code" class="block text-sm font-medium text-gray-700 mb-2">
-                        CODE
-                    </label>
-                    <input type="text" id="code" name="code" value="CP"
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                           placeholder="Enter response code">
+                <!-- RescodeCode -->
+                <div>
+                    <label for="RescodeCode" class="block text-sm font-medium text-gray-700 mb-1">Kode</label>
+                    <input type="text" id="RescodeCode" name="RescodeCode" required readonly
+                        class="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 cursor-not-allowed">
+                    <p class="text-xs text-gray-500 mt-1">Kode tidak bisa diubah setelah dibuat</p>
                 </div>
 
-                <!-- Code Description Field -->
-                <div class="mb-8">
-                    <label for="codeDescription" class="block text-sm font-medium text-gray-700 mb-2">
-                        CODE DESCRIPTION
-                    </label>
-                    <input type="text" id="codeDescription" name="codeDescription" value="Enter Create PIN Menu"
-                           class="w-full px-4 py-3 border border-teal-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                           placeholder="Enter code description">
+                <!-- RescodeDesc -->
+                <div>
+                    <label for="RescodeDesc" class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                    <textarea id="RescodeDesc" name="RescodeDesc" rows="3" required
+                        class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500"></textarea>
                 </div>
 
-                <!-- Form Actions -->
-                <div class="flex justify-end space-x-4">
-                    <a href="@Url.Action("Index", "ResponseLog")" 
-                       class="px-6 py-3 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors duration-200">
+                <!-- Buttons -->
+                <div class="flex justify-end space-x-2 pt-4">
+                    <button type="button" id="btnCancel"
+                        class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md shadow text-sm font-medium transition-colors">
                         Cancel
-                    </a>
-                    <button type="submit" 
-                            class="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors duration-200">
+                    </button>
+                    <button type="submit" id="btnUpdate"
+                        class="px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-md shadow text-sm font-medium transition-colors">
                         Update
                     </button>
                 </div>
@@ -68,37 +57,95 @@
     </div>
 </div>
 
-<script>
-    // Form submission handling
-    document.querySelector('form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const responseType = formData.get('responseType');
-        const code = formData.get('code');
-        const codeDescription = formData.get('codeDescription');
-        
-        // Basic validation
-        if (!code || !codeDescription) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
-        // Simulate form submission (in real app, this would submit to server)
-        console.log('Form submitted:', {
-            responseType,
-            code,
-            codeDescription
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Ambil ID dari URL (contoh: /SysResponseCode/Edit/5)
+            const id = window.location.pathname.split('/').pop();
+
+            // Load data existing
+            fetch(`http://localhost:5125/api/sysresponsecodes/${id}`)
+                .then(res => res.json())
+                .then(data => {
+                    $('#RescodeId').val(data.rescodeId);
+                    $('#RescodeType').val(data.rescodeType);
+                    $('#RescodeCode').val(data.rescodeCode);
+                    $('#RescodeDesc').val(data.rescodeDesc);
+                })
+                .catch(err => {
+                    console.error(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Gagal memuat data SysResponseCode'
+                    });
+                });
+
+            // Update data
+            $('#editSysResponseCodeForm').on('submit', async function (e) {
+                e.preventDefault();
+
+                const id = $('#RescodeId').val();
+                const rescodeType = $('#RescodeType').val().trim();
+                const rescodeCode = $('#RescodeCode').val().trim(); // ✅ jangan lupa ini
+                const rescodeDesc = $('#RescodeDesc').val().trim();
+
+                if (!rescodeType || !rescodeCode || !rescodeDesc) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Semua field wajib diisi',
+                    });
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`http://localhost:5125/api/sysresponsecodes/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            RescodeType: rescodeType,
+                            RescodeCode: rescodeCode,
+                            RescodeDesc: rescodeDesc
+                        })
+                    });
+
+                    const result = await res.json();
+
+                    if (res.ok) {
+                        await Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil',
+                            text: 'SysResponseCode berhasil diperbarui',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                        window.location.href = '/ResponseCode/Index';
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: result.message || 'Gagal memperbarui SysResponseCode',
+                        });
+                    }
+                } catch (err) {
+                    console.error(err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Terjadi kesalahan saat memperbarui SysResponseCode',
+                    });
+                }
+            });
+
+            // Cancel
+            $('#btnCancel').on('click', function () {
+                window.location.href = '/ResponseCode/Index';
+            });
         });
-        
-        // Show success message and redirect
-        alert('Response Code updated successfully!');
-        window.location.href = '@Url.Action("Index", "ResponseLog")';
-    });
-    
-    // Auto-focus on code description field
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('codeDescription').focus();
-    });
-</script>
+    </script>
+}

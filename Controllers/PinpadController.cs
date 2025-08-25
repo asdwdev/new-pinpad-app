@@ -6,7 +6,7 @@ using NewPinpadApp.Models;
 
 namespace NewPinpadApp.Controllers;
 
-
+    
 public class PinpadController : Controller
 {
     public IActionResult Index()
