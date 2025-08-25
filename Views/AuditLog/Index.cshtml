@@ -1,206 +1,465 @@
 @{
-    ViewData["Title"] = "Audit Log";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Audit Log";
 }
 
-<div class="p-6">
-    <!-- Page Header -->
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Audit Log</h1>
+<div class="p-4 md:p-6">
+    <!-- Breadcrumb -->
+    <div class="mb-6 text-sm">
+        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Audit Log</a> /
+        <span class="text-gray-500">Audit Log</span>
     </div>
 
-    <!-- Search/Filter Section -->
-    <div class="mb-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
-        <div class="flex flex-col sm:flex-row gap-4 items-end">
-            <div class="flex-1">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Username:</label>
-                <input type="text" 
-                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                       placeholder="Please enter your Username">
+    <!-- Filter Form -->
+    <div class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md mt-10 mb-10">
+        <h3 class="text-lg font-semibold text-gray-800 mb-6">Search & Filter</h3>
+
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+            <!-- Kolom Kiri -->
+            <div class="space-y-4">
+                <!-- Date -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Date:</label>
+                    <div class="flex space-x-2">
+                        <input type="date" id="startDate"
+                            class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        <input type="date" id="endDate"
+                            class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Username:</label>
+                    <input type="text" id="filterUsername" placeholder="Enter Username"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+
+                <!-- Action Type -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Action Type:</label>
+                    <select id="filterAction"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        <option value="">-- Select Action --</option>
+                        <option value="Created">Created</option>
+                        <option value="Updated">Updated</option>
+                        <option value="Deleted">Deleted</option>
+                    </select>
+                </div>
             </div>
-            <div class="flex-1">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Activity:</label>
-                <input type="text" 
-                       class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-                       placeholder="Please enter your Activity">
+
+            <!-- Kolom Kanan -->
+            <div class="space-y-4">
+                <!-- Key Values -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Key Values:</label>
+                    <input type="text" id="filterKey" placeholder="Enter Key Values"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+
+                <!-- Old Values -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Old Values:</label>
+                    <input type="text" id="filterOld" placeholder="Search Old Values"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+
+                <!-- New Values -->
+                <div>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">New Values:</label>
+                    <input type="text" id="filterNew" placeholder="Search New Values"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
             </div>
-            <div>
-                <button class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
-                    Search
+        </div>
+
+        <!-- Tombol Action -->
+        <div class="flex justify-end mt-6">
+            <button id="filterBtn"
+                class="bg-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-teal-700 transition">
+                Apply Filter
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Export Buttons (Hidden by default) -->
+    <div id="exportSection" class="hidden my-6">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
+            <div class="flex flex-wrap gap-3">
+                <!-- Export PDF -->
+                <button id="exportPdf"
+                    style="background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#dc2626'"
+                    onmouseout="this.style.backgroundColor='#ef4444'">
+                    PDF
+                </button>
+
+                <!-- Export XLSX -->
+                <button id="exportXlsx"
+                    style="background-color:rgb(31, 199, 39); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#2563eb'"
+                    onmouseout="this.style.backgroundColor='#3b82f6'">
+                    XLSX
+                </button>
+
+                <button id="exportCsv"
+                    style="background-color:rgb(101, 101, 101); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#10b981'"
+                    onmouseout="this.style.backgroundColor='#10b981'">
+                    CSV
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- Export Options -->
-    <div class="mb-6">
-        <div class="flex gap-3">
-            <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-200">
-                Export Excel
-            </button>
-            <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-200">
-                Export PDF
-            </button>
-            <button class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition-colors duration-200">
-                Export CSV
-            </button>
+    <!-- Loading Overlay for Export -->
+    <div id="exportLoading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+            <div class="flex items-center space-x-3">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <div>
+                    <p class="text-gray-800 font-medium">Exporting...</p>
+                    <p class="text-gray-600 text-sm">Please wait while we prepare your file</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Data Table -->
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <!-- Table Container -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden mt-5">
+        <!-- Table Header with Search -->
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center mt-2 md:mt-0">
+                    <label class="text-sm text-gray-700 mr-3">Show:</label>
+                    <select id="pageSizeSelect"
+                        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="text-sm text-gray-700 ml-2">entries</span>
+                </div>
+                <!-- Search Box -->
+                <div class="flex items-center gap-2">
+                    <label class="text-sm font-medium text-gray-700">Search:</label>
+                    <input type="text" id="searchInput" placeholder="Search in all columns..."
+                        class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-w-[250px]">
+                </div>
+            </div>
+        </div>
+
+        <!-- Table Responsive Wrapper -->
         <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DateTime</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Username</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Activity</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Key Value</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+            <table id="pinpadLogTable" class="min-w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-700 text-sm">
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">No</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Date</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Username</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Action</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Key Values</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Old Values</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">New Values</th>
                     </tr>
                 </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:34:00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Audit Log - Inquiry</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:45</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">OTA</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:30</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Upload OTA File - Update</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">Perubahan field Serial Number: diubah ke 277114</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:15</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad - Inquiry</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:33:00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">
-                            <div class="space-y-1">
-                                <div>Perubahan field Regional: diubah ke Kanwil Jakarta I</div>
-                                <div>Perubahan field Cabang Induk: diubah ke 00014 - KC JAKARTA HARMONI</div>
-                                <div>Perubahan field Outlet: diubah ke KCP Sawah Besar</div>
-                                <div>Perubahan field IP Low: diubah ke 10.6.47.1</div>
-                                <div>Perubahan field IP High: diubah ke 10.6.47.254</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:45</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">
-                            <div class="space-y-1">
-                                <div>Perubahan field Outlet: diubah ke KCP Sawah Besar</div>
-                                <div>Perubahan field IP Low: diubah ke 10.6.47.1</div>
-                                <div>Perubahan field IP High: diubah ke 10.6.47.254</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:30</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">User</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:15</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Serial Number: 277114</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">
-                            <div class="space-y-1">
-                                <div>Perubahan field Outlet: dari KCP Merdeka ke KCP Sawah Besar</div>
-                                <div>Perubahan field IP Low: dari 10.5.10.1 ke 10.6.47.1</div>
-                                <div>Perubahan field IP High: dari 10.5.10.254 ke 10.6.47.254</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:32:00</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad - Inquiry</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:31:45</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Audit Log - Inquiry</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">20/05/2025 10:31:30</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">ITPD-ICP.Julio</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Pinpad - Inquiry</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">-</td>
-                        <td class="px-6 py-4 text-sm text-gray-900">-</td>
-                    </tr>
+                <tbody id="tableBody" class="text-sm">
+                    <!-- Data API akan ditambahkan di sini -->
                 </tbody>
             </table>
         </div>
 
         <!-- Pagination -->
-        <div class="px-6 py-3 border-t border-gray-200 flex items-center justify-between">
-            <div class="text-sm text-gray-700">
-                Showing 1 to 10 of 99 entries
-            </div>
-            <div class="flex items-center space-x-2">
-                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-50">Previous</button>
-                <span class="px-3 py-1 text-sm bg-teal-600 text-white rounded">1</span>
-                <button class="px-3 py-1 text-sm text-gray-500 bg-white border border-gray-300 rounded hover:bg-gray-50">Next</button>
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-sm text-gray-600" id="tableInfo">
+                    Showing 0 to 0 of 0 entries
+                </div>
+                <div class="flex items-center space-x-2" id="paginationContainer">
+                    <button id="prevBtn"
+                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                        disabled>
+                        Previous
+                    </button>
+                    <div id="pageNumbers" class="flex space-x-1"></div>
+                    <button id="nextBtn"
+                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                        disabled>
+                        Next
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<script>
-    // Search functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchBtn = document.querySelector('button:contains("Search")');
-        const usernameInput = document.querySelector('input[placeholder*="Username"]');
-        const activityInput = document.querySelector('input[placeholder*="Activity"]');
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let allLogs = [];
+        let currentPage = 1;
+        let pageSize = 10;
+        let searchTerm = "";
 
-        if (searchBtn) {
-            searchBtn.addEventListener('click', function() {
-                // Add search logic here
-                console.log('Searching for:', {
-                    username: usernameInput?.value,
-                    activity: activityInput?.value
-                });
-            });
+        // Fungsi Apply Filter ke API
+        async function applyFilter() {
+            const username = $("#filterUsername").val();
+            const actionType = $("#filterAction").val();
+            const keyValues = $("#filterKey").val();
+            const oldValues = $("#filterOld").val();
+            const newValues = $("#filterNew").val();
+            const startDate = $("#startDate").val();
+            const endDate = $("#endDate").val();
+
+            // Buat query string dinamis
+            const params = new URLSearchParams();
+            if (username) params.append("username", username);
+            if (actionType) params.append("actionType", actionType);
+            if (keyValues) params.append("keyValues", keyValues);
+            if (oldValues) params.append("oldValues", oldValues);
+            if (newValues) params.append("newValues", newValues);
+            if (startDate) params.append("startDate", startDate);
+            if (endDate) params.append("endDate", endDate);
+
+            try {
+                const res = await fetch(`http://localhost:5125/api/audit?${params.toString()}`);
+                const data = await res.json();
+
+                if (data.message) {
+                    allLogs = [];
+                    $("#exportSection").addClass("hidden"); // ❌ Hide kalau data kosong
+                } else {
+                    allLogs = data;
+                    $("#exportSection").removeClass("hidden"); // ✅ Show kalau ada data
+                }
+
+                currentPage = 1; // reset ke halaman pertama
+                renderTable();
+            } catch (err) {
+                console.error("Error filter logs:", err);
+                $("#exportSection").addClass("hidden"); // ❌ Hide kalau error
+            }
         }
 
-        // Export functionality
-        const exportButtons = document.querySelectorAll('button:contains("Export")');
-        exportButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const exportType = this.textContent.trim();
-                console.log('Exporting as:', exportType);
-                // Add export logic here
+        function renderTable() {
+            const tbody = document.getElementById("tableBody");
+            tbody.innerHTML = "";
+
+            // kalau belum ada data sama sekali (belum apply filter)
+            if (allLogs.length === 0 && searchTerm === "") {
+                tbody.innerHTML = `<tr>
+                                                                                <td colspan="13" class="text-center py-12 text-gray-500">
+                                                                                  <div class="flex flex-col items-center space-y-3">
+                                                                                    <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                                                                    <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                                                                  </div>
+                                                                                </td>
+                                                                              </tr>`;
+                document.getElementById("tableInfo").innerText = "Showing 0 to 0 of 0 entries";
+                renderPagination(0, 0, 0); ~
+
+                    $("#exportSection").addClass("hidden"); // ❌ Pastikan hidden kalau belum filter
+                return;
+            }
+
+            // Filter tambahan dari search input global
+            const filteredLogs = allLogs.filter(log => {
+                const values = Object.values(log).join(" ").toLowerCase();
+                return values.includes(searchTerm.toLowerCase());
             });
+
+            const totalEntries = filteredLogs.length;
+
+            if (totalEntries === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Data tidak ditemukan</td></tr>`;
+                document.getElementById("tableInfo").innerText = "Showing 0 to 0 of 0 entries";
+                renderPagination(0, 0, 0);
+
+                return;
+            }
+
+            // Pagination
+            const start = (currentPage - 1) * pageSize;
+            const end = Math.min(start + pageSize, totalEntries);
+            const pagedLogs = filteredLogs.slice(start, end);
+
+            pagedLogs.forEach((log, index) => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-gray-50";
+
+                // Tentukan warna badge sesuai action
+                let bgColor = "bg-gray-200 text-gray-700";
+                if (log.actionType === "Created") {
+                    bgColor = "bg-green-100 text-green-700";
+                } else if (log.actionType === "Updated") {
+                    bgColor = "bg-yellow-100 text-yellow-700";
+                } else if (log.actionType === "Deleted") {
+                    bgColor = "bg-red-100 text-red-700";
+                }
+
+                // Badge gabungan actionType + tableName
+                const badge = `
+                            <span class="px-2 py-1 rounded-full text-xs font-semibold ${bgColor}">
+                                ${log.actionType} - ${log.tableName || "-"}
+                            </span>
+                        `;
+
+                tr.innerHTML = `
+                            <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
+                            <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
+                            <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
+                            <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
+                            <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
+                            <td class="px-4 py-3 border-b border-gray-200 align-top">
+                                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
+                            </td>
+                            <td class="px-4 py-3 border-b border-gray-200 align-top">
+                                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
+                            </td>
+                        `;
+
+                tbody.appendChild(tr);
+            });
+
+
+            // Update table info
+            document.getElementById("tableInfo").innerText =
+                `Showing ${start + 1} to ${end} of ${totalEntries} entries`;
+
+            // Render pagination
+            renderPagination(totalEntries, start, end);
+        }
+
+        function renderPagination(totalEntries, start, end) {
+            const totalPages = Math.ceil(totalEntries / pageSize);
+            const pageNumbersContainer = document.getElementById("pageNumbers");
+            const prevBtn = document.getElementById("prevBtn");
+            const nextBtn = document.getElementById("nextBtn");
+
+            pageNumbersContainer.innerHTML = "";
+
+            // Buat nomor halaman
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement("button");
+                btn.innerText = i;
+                btn.className = `px-3 py-1 border rounded text-sm transition-colors ${i === currentPage
+                    ? "bg-teal-500 text-white border-teal-500"
+                    : "bg-white border-gray-300 hover:bg-gray-100"
+                    }`;
+                btn.addEventListener("click", () => {
+                    currentPage = i;
+                    renderTable();
+                });
+                pageNumbersContainer.appendChild(btn);
+            }
+
+            // Previous & Next button
+            prevBtn.disabled = currentPage === 1;
+            nextBtn.disabled = currentPage === totalPages;
+
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderTable();
+                }
+            };
+
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderTable();
+                }
+            };
+        }
+
+        // === Fungsi Export ===
+        async function exportAudit(format) {
+            const username = $("#filterUsername").val();
+            const actionType = $("#filterAction").val();
+            const keyValues = $("#filterKey").val();
+            const oldValues = $("#filterOld").val();
+            const newValues = $("#filterNew").val();
+            const startDate = $("#startDate").val();
+            const endDate = $("#endDate").val();
+
+            const params = new URLSearchParams();
+            if (username) params.append("username", username);
+            if (actionType) params.append("actionType", actionType);
+            if (keyValues) params.append("keyValues", keyValues);
+            if (oldValues) params.append("oldValues", oldValues);
+            if (newValues) params.append("newValues", newValues);
+            if (startDate) params.append("startDate", startDate);
+            if (endDate) params.append("endDate", endDate);
+
+            $("#exportLoading").removeClass("hidden"); // tampilkan overlay
+
+            try {
+                const res = await fetch(`http://localhost:5125/api/audit/export?format=${format}&${params.toString()}`, {
+                    method: "GET"
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    alert(`Export gagal: ${err.message || "Unknown error"}`);
+                    return;
+                }
+
+                const blob = await res.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `AuditExport.${format}`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+            } catch (e) {
+                console.error("Error export:", e);
+                alert("Terjadi kesalahan saat export data.");
+            } finally {
+                $("#exportLoading").addClass("hidden"); // sembunyikan overlay
+            }
+        }
+
+        // Event listener untuk dropdown Show entries
+        $(document).on("change", "#pageSizeSelect", function () {
+            pageSize = parseInt($(this).val());
+            currentPage = 1;
+            renderTable();
         });
-    });
-</script>
+
+        // Event listener untuk search real-time
+        $(document).on("input", "#searchInput", function () {
+            searchTerm = $(this).val();
+            currentPage = 1;
+            renderTable();
+        });
+
+        // Event listener untuk Apply Filter
+        $(document).on("click", "#filterBtn", function () {
+            applyFilter();
+        });
+
+        // === Event listener tombol export ===
+        $(document).on("click", "#exportXlsx", function () {
+            exportAudit("xlsx");
+        });
+
+        $(document).on("click", "#exportPdf", function () {
+            exportAudit("pdf");
+        });
+
+        $(document).on("click", "#exportCsv", function () {
+            exportAudit("csv");
+        });
+
+        // Jangan auto-load di awal → cukup render kosong
+        $(document).ready(renderTable);
+    </script>
+}
