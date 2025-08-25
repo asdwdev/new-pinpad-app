@@ -100,6 +100,8 @@
     </div>
 </form>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     document.addEventListener("DOMContentLoaded", async () => {
         const branchSelect = document.getElementById("branchCode");
@@ -148,8 +150,6 @@
         // === Handle Form Submit ===
         form.addEventListener("submit", async (e) => {
             e.preventDefault();
-            formErrors.classList.add("hidden");
-            formErrors.textContent = "";
 
             const data = {
                 id: pinpadId,
@@ -163,6 +163,16 @@
             };
 
             try {
+                // tampilkan loading alert
+                Swal.fire({
+                    title: 'Menyimpan...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
                 const res = await fetch(`http://localhost:5125/api/pinpads/${pinpadId}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -171,14 +181,27 @@
 
                 if (!res.ok) {
                     const err = await res.json();
-                    formErrors.textContent = err.message || "Gagal menyimpan perubahan.";
-                    formErrors.classList.remove("hidden");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Gagal",
+                        text: err.message || "Gagal menyimpan perubahan."
+                    });
                 } else {
-                    window.location.href = "/Pinpad/Index";
+                    Swal.fire({
+                        icon: "success",
+                        title: "Berhasil",
+                        text: "Data berhasil diperbarui.",
+                        confirmButtonText: "OK"
+                    }).then(() => {
+                        window.location.href = "/Pinpad/Index";
+                    });
                 }
             } catch (error) {
-                formErrors.textContent = "Terjadi kesalahan koneksi ke server.";
-                formErrors.classList.remove("hidden");
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: "Terjadi kesalahan koneksi ke server."
+                });
             }
         });
     });

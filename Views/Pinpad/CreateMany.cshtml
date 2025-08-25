@@ -4,104 +4,112 @@
 
 <div style="min-height: 100vh; background-color: #f9fafb; padding: 32px 0;">
     <div style="max-width: 896px; margin: 0 auto; padding: 0 16px;">
-        
-        <!-- Breadcrumb Navigation -->
+
+        <!-- Breadcrumb -->
         <nav style="margin-bottom: 32px;" aria-label="Breadcrumb">
-            <a href="#" style="color: #0d9488; text-decoration: none; font-size: 14px;">Penpad</a>
+            <a href="#" style="color: #0d9488; text-decoration: none; font-size: 14px;">Pinpad</a>
             <span style="margin: 0 8px; color: #9ca3af;">/</span>
-            <span style="color: #6b7280; font-size: 14px;">Tambah Banyak Pnpad</span>
+            <span style="color: #6b7280; font-size: 14px;">Tambah Banyak Pinpad</span>
         </nav>
 
-        <!-- Main Upload Form -->
-        <div style="background-color: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; padding: 32px;">
-            <form asp-action="UploadFile" enctype="multipart/form-data" method="post" id="uploadForm">
-                
-                <!-- Upload File Section -->
+        <!-- Upload Box -->
+        <div
+            style="background-color: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; padding: 32px;">
+            <form id="uploadForm" enctype="multipart/form-data" method="post">
+                <!-- Upload File -->
                 <div style="margin-bottom: 32px;">
-                    <label style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 16px;">
+                    <label
+                        style="display: block; font-size: 14px; font-weight: 500; color: #374151; margin-bottom: 16px;">
                         UPLOAD FILE
                     </label>
-                    
-                    <!-- File Input Area -->
+
                     <div style="position: relative;">
-                        <input 
-                            type="file" 
-                            name="uploadFile" 
-                            id="fileInput" 
+                        <input type="file" name="file" id="fileInput"
                             style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;"
-                            accept=".csv,.xlsx,.xls"
-                            onchange="updateFileName()"
-                        />
+                            accept=".xlsx" onchange="updateFileName()" />
                         <div style="display: flex; align-items: center;">
-                            <button 
-                                type="button" 
+                            <button type="button"
                                 style="background-color: #e5e7eb; color: #374151; padding: 8px 16px; border: 1px solid #d1d5db; border-radius: 6px 0 0 6px; cursor: pointer;"
-                                onclick="document.getElementById('fileInput').click()"
-                            >
+                                onclick="document.getElementById('fileInput').click()">
                                 Browse...
                             </button>
-                            <div style="flex: 1; padding: 8px 16px; background-color: white; border-top: 1px solid #d1d5db; border-bottom: 1px solid #d1d5db; border-right: 1px solid #d1d5db; border-radius: 0 6px 6px 0; color: #6b7280;" id="fileName">
+                            <div id="fileName"
+                                style="flex: 1; padding: 8px 16px; background-color: white; border-top: 1px solid #d1d5db; border-bottom: 1px solid #d1d5db; border-right: 1px solid #d1d5db; border-radius: 0 6px 6px 0; color: #6b7280;">
                                 No file selected
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Download Template Button -->
+                <!-- Download Template -->
                 <div style="margin-bottom: 32px;">
-                    <a 
-                        href="@Url.Action("DownloadTemplate")" 
-                        style="display: inline-block; background-color: #f97316; color: white; font-weight: 500; padding: 8px 24px; border-radius: 6px; text-decoration: none;"
-                    >
+                    <a href="@Url.Action("DownloadTemplate")"
+                        style="display: inline-block; background-color: #f97316; color: white; font-weight: 500; padding: 8px 24px; border-radius: 6px; text-decoration: none;">
                         Download Template Upload File
                     </a>
                 </div>
 
                 <!-- Action Buttons -->
                 <div style="display: flex; justify-content: flex-end; gap: 12px;">
-                    <button 
-                        type="button" 
+                    <button type="button"
                         style="background-color: #f97316; color: white; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: none; cursor: pointer;"
-                        onclick="window.history.back()"
-                    >
+                        onclick="window.history.back()">
                         Cancel
                     </button>
-                    <button 
-                        type="submit" 
+                    <button type="submit"
                         style="background-color: #0d9488; color: white; font-weight: 500; padding: 8px 24px; border-radius: 6px; border: none; cursor: pointer;"
-                        id="uploadButton"
-                        disabled
-                    >
-                        Upload
+                        id="uploadButton" disabled>
+                        Upload & Preview
                     </button>
                 </div>
             </form>
         </div>
-    </div>
-</div>
 
-<!-- Loading Overlay -->
-<div id="loadingOverlay" style="position: fixed; inset: 0; background-color: rgba(75,85,99,0.5); display: none; z-index: 50;">
-    <div style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
-        <div style="background-color: white; padding: 24px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
-            <div style="display: flex; align-items: center;">
-                <div style="width: 32px; height: 32px; border: 2px solid #0d9488; border-top: 2px solid transparent; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 12px;"></div>
-                <span style="color: #374151;">Uploading file...</span>
+        <!-- Preview Table -->
+        <div id="previewContainer" style="margin-top:32px; display:none;">
+            <h3 style="font-weight:600; font-size:16px; color:#374151; margin-bottom:16px;">Preview Data</h3>
+            <table style="width:100%; border-collapse: collapse; background:white; border:1px solid #e5e7eb;">
+                <thead style="background:#f3f4f6;">
+                    <tr>
+                        <th style="padding:8px; border:1px solid #e5e7eb;">Regional</th>
+                        <th style="padding:8px; border:1px solid #e5e7eb;">Cabang Induk</th>
+                        <th style="padding:8px; border:1px solid #e5e7eb;">Cabang Outlet</th>
+                        <th style="padding:8px; border:1px solid #e5e7eb;">Serial Number</th>
+                        <th style="padding:8px; border:1px solid #e5e7eb;">Status</th>
+                        <th style="padding:8px; border:1px solid #e5e7eb;">Remark</th>
+                    </tr>
+                </thead>
+                <tbody id="previewBody"></tbody>
+            </table>
+
+            <div style="margin-top:20px; text-align:right;">
+                <button id="submitToDb"
+                    style="display:none; background:#0d9488; color:white; padding:8px 24px; border-radius:6px; border:none; cursor:pointer;">
+                    Simpan ke Database
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-<style>
-   
-</style>
+<!-- Loading Overlay -->
+<div id="loadingOverlay" 
+     class="fixed inset-0 bg-gray-700/50 hidden z-50 flex items-center justify-center">
+  <div class="bg-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3">
+    <!-- Spinner -->
+    <div class="w-8 h-8 border-2 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+    <span class="text-gray-700 font-medium">Uploading file...</span>
+  </div>
+</div>
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function updateFileName() {
         const fileInput = document.getElementById('fileInput');
         const fileName = document.getElementById('fileName');
         const uploadButton = document.getElementById('uploadButton');
-        
         if (fileInput.files.length > 0) {
             fileName.textContent = fileInput.files[0].name;
             fileName.style.color = '#111827';
@@ -113,13 +121,136 @@
         }
     }
 
-    // Show loading overlay on form submission
-    document.getElementById('uploadForm').addEventListener('submit', function() {
+    document.getElementById('uploadForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const fileInput = document.getElementById('fileInput');
+        if (fileInput.files.length === 0) return;
+
         document.getElementById('loadingOverlay').style.display = 'block';
+
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+
+        try {
+            const res = await fetch("http://localhost:5125/api/PinpadPreview/preview", {
+                method: "POST",
+                body: formData
+            });
+            const data = await res.json();
+
+            document.getElementById('loadingOverlay').style.display = 'none';
+
+            if (!data.ok) {
+                alert(data.message);
+                return;
+            }
+
+            // Tampilkan preview
+            const tbody = document.getElementById('previewBody');
+            tbody.innerHTML = "";
+            data.rows.forEach(r => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="padding:6px; border:1px solid #e5e7eb;">${r.regional}</td>
+                        <td style="padding:6px; border:1px solid #e5e7eb;">${r.cabangInduk}</td>
+                        <td style="padding:6px; border:1px solid #e5e7eb;">${r.cabangOutlet}</td>
+                        <td style="padding:6px; border:1px solid #e5e7eb;">${r.serialNumber}</td>
+                        <td style="padding:6px; border:1px solid #e5e7eb;">${r.status}</td>
+                        <td style="padding:6px; border:1px solid #e5e7eb;">${r.remarkRaw}</td>
+                    </tr>`;
+            });
+
+            document.getElementById('previewContainer').style.display = 'block';
+            document.getElementById('submitToDb').style.display = 'inline-block';
+
+        } catch (err) {
+            console.error(err);
+            alert("Error saat upload file.");
+            document.getElementById('loadingOverlay').style.display = 'none';
+        }
     });
 
-    // Initialize button state
-    document.addEventListener('DOMContentLoaded', function() {
-        updateFileName();
+
+
+
+    document.getElementById('submitToDb').addEventListener('click', async function () {
+        const tbody = document.getElementById('previewBody');
+        const rows = [];
+
+        // ambil data dari tabel preview
+        for (let tr of tbody.querySelectorAll("tr")) {
+            const tds = tr.querySelectorAll("td");
+            rows.push({
+                Regional: tds[0].innerText,
+                CabangInduk: tds[1].innerText,
+                CabangOutlet: tds[2].innerText,
+                SerialNumber: tds[3].innerText,
+                Status: tds[4].innerText,
+                RemarkRaw: tds[5].innerText
+            });
+        }
+
+        if (rows.length === 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "Tidak ada data",
+                text: "Tidak ada data untuk disimpan"
+            });
+            return;
+        }
+
+        // 🔥 konfirmasi dulu
+        const confirm = await Swal.fire({
+            title: "Yakin simpan data?",
+            text: "Data akan disimpan ke database",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Ya, simpan",
+            cancelButtonText: "Batal"
+        });
+
+        if (!confirm.isConfirmed) return; // batal
+
+        document.getElementById('loadingOverlay').style.display = 'block';
+
+        try {
+            const res = await fetch("http://localhost:5125/api/PinpadPreview/save", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(rows)
+            });
+
+            const data = await res.json();
+            document.getElementById('loadingOverlay').style.display = 'none';
+
+            if (data.ok) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Berhasil",
+                    text: data.message,
+                    confirmButtonText: "OK"
+                }).then(() => {
+                    // redirect kalau perlu
+                    window.location.href = "/Pinpad/Index";
+                });
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal",
+                    text: data.message
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            document.getElementById('loadingOverlay').style.display = 'none';
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error saat simpan ke database."
+            });
+        }
     });
+
+
+
 </script>
