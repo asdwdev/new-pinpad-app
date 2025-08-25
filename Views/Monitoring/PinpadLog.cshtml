@@ -86,7 +86,7 @@
 
 
   <!-- Export Buttons (Hidden by default) -->
-  <div id="exportSection" class="hidden mb-6">
+  <div id="exportSection" class="hidden my-6">
     <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
       <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
       <div class="flex flex-wrap gap-3">
@@ -126,8 +126,6 @@
     </div>
   </div>
 
-
-
   <!-- Table Container -->
   <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
     <!-- Table Header with Search -->
@@ -152,8 +150,6 @@
         </div>
       </div>
     </div>
-
-
 
     <!-- Table Responsive Wrapper -->
     <div class="overflow-x-auto">
@@ -233,14 +229,17 @@
 
         if (data.message) {
           allLogs = [];
+          $("#exportSection").addClass("hidden"); // ❌ Hide kalau data kosong
         } else {
           allLogs = data;
+          $("#exportSection").removeClass("hidden"); // ✅ Show kalau ada data
         }
 
         currentPage = 1; // reset ke halaman pertama
         renderTable();
       } catch (err) {
         console.error("Error filter logs:", err);
+        $("#exportSection").addClass("hidden"); // ❌ Hide kalau error
       }
     }
 
@@ -251,15 +250,17 @@
       // kalau belum ada data sama sekali (belum apply filter)
       if (allLogs.length === 0 && searchTerm === "") {
         tbody.innerHTML = `<tr>
-                                       <td colspan="13" class="text-center py-12 text-gray-500 min-h-[200px]">
-              <div class="flex flex-col items-center space-y-3">
-                  <p class="text-xl font-medium text-gray-600">No data to display</p>
-                  <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-              </div>
-          </td>
-                                      </tr>`;
+                                            <td colspan="13" class="text-center py-12 text-gray-500">
+                                              <div class="flex flex-col items-center space-y-3">
+                                                <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                                <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                              </div>
+                                            </td>
+                                          </tr>`;
         document.getElementById("tableInfo").innerText = "Showing 0 to 0 of 0 entries";
-        renderPagination(0, 0, 0);
+        renderPagination(0, 0, 0); ~
+
+          $("#exportSection").addClass("hidden"); // ❌ Pastikan hidden kalau belum filter
         return;
       }
 
@@ -275,6 +276,7 @@
         tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Data tidak ditemukan</td></tr>`;
         document.getElementById("tableInfo").innerText = "Showing 0 to 0 of 0 entries";
         renderPagination(0, 0, 0);
+
         return;
       }
 
@@ -298,18 +300,18 @@
         }
 
         tr.innerHTML = `
-                                    <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
-                                    <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
-                                    <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
-                                    <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
-                                    <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
-                                    <td class="px-4 py-3 border-b border-gray-200 align-top">
-                                        <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
-                                    </td>
-                                    <td class="px-4 py-3 border-b border-gray-200 align-top">
-                                        <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
-                                    </td>
-                                  `;
+                                        <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
+                                        <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
+                                        <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
+                                        <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
+                                        <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
+                                        <td class="px-4 py-3 border-b border-gray-200 align-top">
+                                          <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
+                                        </td>
+                                        <td class="px-4 py-3 border-b border-gray-200 align-top">
+                                          <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
+                                        </td>
+                                      `;
 
         tbody.appendChild(tr);
       });
@@ -364,6 +366,56 @@
       };
     }
 
+    // === Fungsi Export ===
+    async function exportAudit(format) {
+      const username = $("#filterUsername").val();
+      const actionType = $("#filterAction").val();
+      const keyValues = $("#filterKey").val();
+      const oldValues = $("#filterOld").val();
+      const newValues = $("#filterNew").val();
+      const startDate = $("#startDate").val();
+      const endDate = $("#endDate").val();
+
+      const params = new URLSearchParams();
+      if (username) params.append("username", username);
+      if (actionType) params.append("actionType", actionType);
+      if (keyValues) params.append("keyValues", keyValues);
+      if (oldValues) params.append("oldValues", oldValues);
+      if (newValues) params.append("newValues", newValues);
+      if (startDate) params.append("startDate", startDate);
+      if (endDate) params.append("endDate", endDate);
+
+      $("#exportLoading").removeClass("hidden"); // tampilkan overlay
+
+      try {
+        const res = await fetch(`http://localhost:5125/api/audit/export?format=${format}&${params.toString()}`, {
+          method: "GET"
+        });
+
+        if (!res.ok) {
+          const err = await res.json();
+          alert(`Export gagal: ${err.message || "Unknown error"}`);
+          return;
+        }
+
+        const blob = await res.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `AuditExport.${format}`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+
+      } catch (e) {
+        console.error("Error export:", e);
+        alert("Terjadi kesalahan saat export data.");
+      } finally {
+        $("#exportLoading").addClass("hidden"); // sembunyikan overlay
+      }
+    }
+
     // Event listener untuk dropdown Show entries
     $(document).on("change", "#pageSizeSelect", function () {
       pageSize = parseInt($(this).val());
@@ -381,6 +433,19 @@
     // Event listener untuk Apply Filter
     $(document).on("click", "#filterBtn", function () {
       applyFilter();
+    });
+
+    // === Event listener tombol export ===
+    $(document).on("click", "#exportXlsx", function () {
+      exportAudit("xlsx");
+    });
+
+    $(document).on("click", "#exportPdf", function () {
+      exportAudit("pdf");
+    });
+
+    $(document).on("click", "#exportCsv", function () {
+      exportAudit("csv");
     });
 
     // Jangan auto-load di awal → cukup render kosong
