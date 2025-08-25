@@ -70,6 +70,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   let allData = [];
   let currentPage = 1;
@@ -108,11 +109,13 @@
         <td class="py-3 px-4 text-gray-600">${formatDate(ota.registerDate)}</td>
         <td class="py-3 px-4">
           <div class="flex gap-2">
-            <button class="bg-orange-400 hover:bg-orange-500 text-white px-3 py-1 rounded text-sm">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm flex items-center gap-1">
-              <i class="fas fa-star"></i> Disable
+            <a href="/OtaFile/Edit/${ota.id}"
+              class="bg-orange-500 text-white w-8 h-8 rounded hover:bg-orange-600 transition-colors flex items-center justify-center">
+                <i class="fa fa-edit"></i>
+            </a>
+            <button onclick="deleteOtaFile('${ota.id}', '${ota.otaFilename}')"
+                class="deleteBtn cs-only bg-red-500 text-white w-8 h-8 rounded hover:bg-red-600 transition-colors flex items-center justify-center">
+                <i class="fa fa-times"></i>
             </button>
           </div>
         </td>
@@ -123,6 +126,47 @@
     updatePaginationInfo(startIndex, endIndex, totalItems);
     updatePaginationControls(totalPages);
   }
+
+  window.deleteOtaFile = function (id, filename) {
+    Swal.fire({
+      title: 'Konfirmasi',
+      text: `Yakin ingin menghapus OTA File: ${filename}?`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Ya, Hapus',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+
+      $.ajax({
+        url: `http://localhost:5125/api/otafiles/${id}`,
+        type: 'DELETE',
+        success: function (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: response.message || `OTA File ${filename} berhasil dihapus`,
+            timer: 2000,
+            showConfirmButton: false
+          });
+
+          // update data di frontend tanpa reload full page
+          allData = allData.filter(item => String(item.id) !== String(id));
+          displayPaginatedData();
+        },
+        error: function (xhr) {
+          const res = xhr.responseJSON;
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal',
+            text: res?.message || 'Terjadi kesalahan saat menghapus data'
+          });
+        }
+      });
+    });
+  };
 
   function formatDate(dateStr) {
     const date = new Date(dateStr);
