@@ -1,284 +1,79 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Tambah Role";
+    ViewData["Title"] = "Create System Level";
 }
 
-<div class="flex h-screen bg-gray-100">
-    <!-- Left Sidebar - Modules & Permissions -->
-    <div class="w-80 bg-white shadow-lg border-r border-gray-200 overflow-y-auto">
-        <div class="p-6 border-b border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-800">Modules & Permissions</h3>
-            <p class="text-sm text-gray-600 mt-1">Select permissions for this role</p>
-        </div>
-        
-        <div class="p-4 space-y-4">
-            <!-- Control Buttons -->
-            <div class="flex flex-wrap gap-2 mb-4">
-                <button id="btnCollapsed" class="px-3 py-2 bg-teal-500 hover:bg-teal-600 text-white text-sm rounded transition-colors">
-                    Collapsed
-                </button>
-                <button id="btnExpanded" class="px-3 py-2 bg-teal-500 hover:bg-teal-600 text-white text-sm rounded transition-colors">
-                    Expanded
-                </button>
-                <button id="btnCheckAll" class="px-3 py-2 bg-teal-500 hover:bg-teal-600 text-white text-sm rounded transition-colors">
-                    Checked All
-                </button>
-                <button id="btnUncheckAll" class="px-3 py-2 bg-teal-500 hover:bg-teal-600 text-white text-sm rounded transition-colors">
-                    Uncheck All
-                </button>
-            </div>
+<div class="max-w-2xl mx-auto bg-white shadow-md rounded-xl p-6">
+    <h2 class="text-xl font-semibold mb-6">Create System Level</h2>
 
-            <!-- Modules List -->
-            <div class="space-y-3">
-                <!-- Dashboard -->
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-dashboard" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-dashboard" class="ml-3 text-sm font-medium text-gray-700">DASHBOARD</label>
-                </div>
-
-                <!-- Monitoring -->
-                <div class="space-y-2">
-                    <div class="flex items-center">
-                        <input type="checkbox" id="module-monitoring" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                        <label for="module-monitoring" class="ml-3 text-sm font-medium text-gray-700">MONITORING</label>
-                    </div>
-                    <div class="ml-6 space-y-2">
-                        <div class="flex items-center">
-                            <input type="checkbox" id="module-pinpad-list" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                            <label for="module-pinpad-list" class="ml-3 text-sm text-gray-600">PINPAD LIST</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" id="module-pinpad-log" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                            <label for="module-pinpad-log" class="ml-3 text-sm text-gray-600">PINPAD LOG</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input type="checkbox" id="module-transaction-log" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                            <label for="module-transaction-log" class="ml-3 text-sm text-gray-600">TRANSACTION LOG</label>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Other Modules -->
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-pinpad" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-pinpad" class="ml-3 text-sm font-medium text-gray-700">PINPAD</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-branch" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-branch" class="ml-3 text-sm font-medium text-gray-700">BRANCH</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-regional" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-regional" class="ml-3 text-sm font-medium text-gray-700">REGIONAL</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-role-akses" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500" checked>
-                    <label for="module-role-akses" class="ml-3 text-sm font-medium text-gray-700">ROLE AKSES</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-response-code" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-response-code" class="ml-3 text-sm font-medium text-gray-700">RESPONSE CODE</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-device-api-log" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-device-api-log" class="ml-3 text-sm font-medium text-gray-700">DEVICE API LOG</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-audit-log" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-audit-log" class="ml-3 text-sm font-medium text-gray-700">AUDIT LOG</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-users" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-users" class="ml-3 text-sm font-medium text-gray-700">USERS</label>
-                </div>
-
-                <div class="flex items-center">
-                    <input type="checkbox" id="module-pinpad-admin-logistik" class="rounded border-gray-300 text-teal-600 focus:ring-teal-500">
-                    <label for="module-pinpad-admin-logistik" class="ml-3 text-sm font-medium text-gray-700">PINPAD (ADMIN LOGISTIK)</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col">
-        <!-- Header -->
-        <div class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-2xl font-bold text-gray-900">Role / Create</h1>
-                    <p class="text-sm text-gray-600 mt-1">Create a new role with specific permissions</p>
-                </div>
-            </div>
+    <form id="createSysLevelForm" class="space-y-4">
+        <!-- Name -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" name="name" required
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                placeholder="Enter system level name">
         </div>
 
-        <!-- Form Content -->
-        <div class="flex-1 p-6">
-            <div class="max-w-2xl">
-                <div class="bg-white shadow rounded-lg border border-gray-200">
-                    <div class="px-6 py-4 border-b border-gray-200">
-                        <h2 class="text-xl font-semibold text-gray-800">Role Information</h2>
-                        <p class="text-sm text-gray-600 mt-1">Fill in the basic information for this role</p>
-                    </div>
-
-                    <form id="createRoleForm" class="p-6 space-y-6">
-                        <!-- NAMA Role -->
-                        <div>
-                            <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">
-                                NAMA <span class="text-red-500">*</span>
-                            </label>
-                            <input type="text" 
-                                   id="nama" 
-                                   name="nama" 
-                                   required
-                                   value="UAT"
-                                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors"
-                                   placeholder="Masukkan nama role">
-                            <div id="namaError" class="hidden text-red-500 text-sm mt-1"></div>
-                        </div>
-
-                        <!-- KETERANGAN -->
-                        <div>
-                            <label for="keterangan" class="block text-sm font-medium text-gray-700 mb-2">
-                                KETERANGAN <span class="text-red-500">*</span>
-                            </label>
-                            <textarea id="keterangan" 
-                                      name="keterangan" 
-                                      required
-                                      rows="3"
-                                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition-colors resize-none"
-                                      placeholder="Masukkan keterangan role">Role Akses UAT</textarea>
-                            <div id="keteranganError" class="hidden text-red-500 text-sm mt-1"></div>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
-                            <button type="button" id="btnCancel"
-                                    class="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-md transition-colors">
-                                Cancel
-                            </button>
-                            <button type="submit" 
-                                    class="px-6 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-md transition-colors">
-                                Create
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <!-- Description -->
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Description</label>
+            <textarea name="description" rows="3"
+                class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none"
+                placeholder="Enter description"></textarea>
         </div>
-    </div>
+
+        <!-- Save & Cancel -->
+        <div class="flex justify-end space-x-3 pt-4">
+            <a href="/SysLevel/Index"
+                class="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100">
+                Cancel
+            </a>
+            <button type="submit" class="px-4 py-2 rounded-lg bg-teal-600 text-white hover:bg-teal-700">
+                Save
+            </button>
+        </div>
+    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function() {
-        // Control button functionality
-        $('#btnCollapsed').on('click', function() {
-            $('.ml-6').hide();
-            $(this).addClass('bg-teal-600').siblings().removeClass('bg-teal-600');
-        });
-
-        $('#btnExpanded').on('click', function() {
-            $('.ml-6').show();
-            $(this).addClass('bg-teal-600').siblings().removeClass('bg-teal-600');
-        });
-
-        $('#btnCheckAll').on('click', function() {
-            $('input[type="checkbox"]').prop('checked', true);
-        });
-
-        $('#btnUncheckAll').on('click', function() {
-            $('input[type="checkbox"]').prop('checked', false);
-        });
-
-        // Form submission
-        $('#createRoleForm').on('submit', function(e) {
+    $(document).ready(function () {
+        // Handle create system level
+        $("#createSysLevelForm").on("submit", function (e) {
             e.preventDefault();
-            
-            // Reset error messages
-            $('.error-message').addClass('hidden');
-            
-            // Get form data
+
             const formData = {
-                nama: $('#nama').val().trim(),
-                keterangan: $('#keterangan').val().trim(),
-                permissions: getSelectedPermissions()
+                name: $("input[name='name']").val(),
+                description: $("textarea[name='description']").val()
             };
-            
-            // Validation
-            let isValid = true;
-            
-            if (!formData.nama) {
-                $('#namaError').text('Nama role harus diisi').removeClass('hidden');
-                isValid = false;
-            }
-            
-            if (!formData.keterangan) {
-                $('#keteranganError').text('Keterangan harus diisi').removeClass('hidden');
-                isValid = false;
-            }
-            
-            if (!isValid) {
-                return;
-            }
-            
-            // Show loading state
-            const submitBtn = $(this).find('button[type="submit"]');
-            const originalText = submitBtn.text();
-            submitBtn.prop('disabled', true).text('Creating...');
-            
-            // Simulate API call (replace with actual API call)
-            setTimeout(() => {
-                // Success response
-                Swal.fire({
-                    title: 'Successfully!',
-                    text: 'Role has been created successfully',
-                    icon: 'success',
-                    confirmButtonColor: '#10b981',
-                    confirmButtonText: 'OK'
-                }).then(() => {
-                    // Redirect to index page
-                    window.location.href = '/RoleAkses';
-                });
-            }, 1000);
-        });
 
-        // Cancel button
-        $('#btnCancel').on('click', function() {
-            window.location.href = '/RoleAkses';
-        });
-
-        // Real-time validation
-        $('#nama').on('input', function() {
-            if ($(this).val().trim()) {
-                $('#namaError').addClass('hidden');
-            }
-        });
-        
-        $('#keterangan').on('input', function() {
-            if ($(this).val().trim()) {
-                $('#keteranganError').addClass('hidden');
-            }
-        });
-
-        // Get selected permissions
-        function getSelectedPermissions() {
-            const permissions = {};
-            $('input[type="checkbox"]:checked').each(function() {
-                permissions[$(this).attr('id')] = true;
+            $.ajax({
+                url: "http://localhost:5125/api/syslevels",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(formData),
+                success: function (res) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: res.message || 'System Level has been created successfully!',
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        window.location.href = "/RoleAkses/Index"; // redirect ke list
+                    });
+                },
+                error: function (xhr) {
+                    const res = xhr.responseJSON;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: res?.message || 'Failed to create system level'
+                    });
+                }
             });
-            return permissions;
-        }
-
-        // Initialize with expanded view
-        $('#btnExpanded').click();
+        });
     });
 </script>

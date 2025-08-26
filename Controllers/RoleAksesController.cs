@@ -18,14 +18,10 @@ namespace NewPinpadApp.Controllers
     }
 
 
-    public IActionResult Edit()
+    public IActionResult Edit(int id)
     {
+      ViewBag.Id = id;
       return View();
     }
-
-
-
-
-
   }
 }
