@@ -55,10 +55,7 @@
             <label class="block text-sm font-medium text-gray-700">Access Level</label>
             <select name="accessLevel" id="accessLevel" required
                 class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
-                <option value="1">Logistics Admin</option>
-                <option value="2">Branch Office Admin</option>
-                <option value="3">Customer Service</option>
-                <option value="99">Super Admin</option>
+                <option value="">-- Select Access Level --</option>
             </select>
         </div>
 
@@ -101,7 +98,8 @@
 <script>
     $(document).ready(function () {
         const userId = window.location.pathname.split("/").pop();
-        let currentBranch = ""; // simpan branch dari user
+        let currentBranch = "";  // simpan branch dari user
+        let currentAccessLevel = ""; // simpan access level dari user
 
         // Load user data
         $.ajax({
@@ -113,15 +111,15 @@
                 $("#fullName").val(user.fullName);
                 $("#email").val(user.email);
                 $("#type").val(user.type);
-                $("#accessLevel").val(user.accessLevel);
                 $("#nip").val(user.nip);
                 $("#isLocked").prop("checked", user.isLocked);
 
-                // simpan branch dari user
                 currentBranch = user.branch;
+                currentAccessLevel = user.accessLevel;
 
-                // setelah user data didapat, load branch types
+                // setelah user data didapat, load dropdowns
                 loadBranchTypes();
+                loadSysLevels();
             },
             error: function () {
                 Swal.fire({
@@ -159,6 +157,31 @@
             });
         }
 
+        // Load sys levels dari API
+        function loadSysLevels() {
+            $.ajax({
+                url: "http://localhost:5125/api/syslevels/dropdown",
+                method: "GET",
+                success: function (res) {
+                    if (Array.isArray(res)) {
+                        res.forEach(level => {
+                            const selected = level.id == currentAccessLevel ? "selected" : "";
+                            $("#accessLevel").append(
+                                `<option value="${level.id}" ${selected}>${level.name}</option>`
+                            );
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to load access levels'
+                    });
+                }
+            });
+        }
+
         // Handle update
         $("#editUserForm").on("submit", function (e) {
             e.preventDefault();
@@ -170,8 +193,8 @@
                 fullName: $("#fullName").val(),
                 email: $("#email").val(),
                 type: $("#type").val(),
-                accessLevel: $("#accessLevel").val(),
-                branch: $("#branchSelect").val(), // pakai select
+                accessLevel: $("#accessLevel").val(), // dari API
+                branch: $("#branchSelect").val(),
                 nip: $("#nip").val(),
                 isLocked: $("#isLocked").is(":checked")
             };

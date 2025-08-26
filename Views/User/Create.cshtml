@@ -53,15 +53,12 @@
         <!-- Access Level -->
         <div>
             <label class="block text-sm font-medium text-gray-700">Access Level</label>
-            <select name="accessLevel" required
+            <select id="accessLevelSelect" name="accessLevel" required
                 class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                 <option value="">-- Select Access Level --</option>
-                <option value="1">Logistics Admin</option>
-                <option value="2">Branch Office Admin</option>
-                <option value="3">Customer Service</option>
-                <option value="4">Super Admin</option>
             </select>
         </div>
+
 
         <!-- Branch -->
         <div>
@@ -102,8 +99,11 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     $(document).ready(function () {
-        // Load branch types dari API
+        // Load branch types
         loadBranchTypes();
+
+        // Load sys levels for dropdown
+        loadSysLevels();
 
         function loadBranchTypes() {
             $.ajax({
@@ -128,7 +128,30 @@
             });
         }
 
-        // Handle create
+        function loadSysLevels() {
+            $.ajax({
+                url: "http://localhost:5125/api/syslevels/dropdown",
+                method: "GET",
+                success: function (res) {
+                    if (Array.isArray(res)) {
+                        res.forEach(level => {
+                            $("#accessLevelSelect").append(
+                                `<option value="${level.id}">${level.name}</option>`
+                            );
+                        });
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Failed to load access levels'
+                    });
+                }
+            });
+        }
+
+        // Handle create user
         $("#createUserForm").on("submit", function (e) {
             e.preventDefault();
 
@@ -138,7 +161,7 @@
                 fullName: $("input[name='fullName']").val(),
                 email: $("input[name='email']").val(),
                 type: $("select[name='type']").val(),
-                accessLevel: $("select[name='accessLevel']").val(),
+                accessLevel: $("#accessLevelSelect").val(), // ambil dari API dropdown
                 branch: $("#branchSelect").val(),
                 nip: $("input[name='nip']").val(),
                 isLocked: $("#isLocked").is(":checked")
@@ -157,7 +180,7 @@
                         timer: 2000,
                         showConfirmButton: false
                     }).then(() => {
-                        window.location.href = "/User/Index"; // redirect to user list
+                        window.location.href = "/User/Index";
                     });
                 },
                 error: function (xhr) {
