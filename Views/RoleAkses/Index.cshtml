@@ -1,92 +1,78 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Role Akses";
+    ViewData["Title"] = "System Levels";
 }
 
-<div class="p-6">
-    <!-- Breadcrumb -->
-    <div class="mb-4 text-sm">
-        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Role Akses</a> /
-        <span class="text-gray-500">Inquiry</span>
-    </div>
-
-    <!-- Baris 1: Tambah Role -->
+<div class="p-4 md:p-6">
     <div class="mb-4">
-        <a href="/RoleAkses/Create"
+        <a href="/SysLevel/Create"
             class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md shadow text-sm font-medium transition-colors inline-flex items-center">
-            <span class="mr-1 font-bold text-lg">+</span> Tambah Role
+            <span class="mr-1 font-bold text-lg">+</span> Tambah SysLevel
         </a>
     </div>
 
-    <!-- Baris 2: Show Entries (kiri) dan Search (kanan) -->
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-        <!-- Show Entries -->
-        <div class="flex items-center space-x-2 mb-3 md:mb-0">
-            <label for="entriesSelect" class="text-sm text-gray-700">Show</label>
-            <select id="entriesSelect"
-                class="border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-teal-500">
-                <option value="10" selected>10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-            <span class="text-sm text-gray-700">entries</span>
-        </div>
-
-        <!-- Search -->
-        <div>
-            <div class="flex items-center">
-                <label for="searchInput" class="text-sm text-gray-700 mr-2">Search:</label>
-                <input type="text" id="searchInput" placeholder="Search..."
-                    class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-teal-500 text-sm min-w-[220px]">
+    <!-- Table Container -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+        <!-- Table Header with Search -->
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center mt-2 md:mt-0">
+                    <label class="text-sm text-gray-700 mr-3">Show:</label>
+                    <select id="pageSizeSelect"
+                        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="text-sm text-gray-700 ml-2">entries</span>
+                </div>
+                <!-- Search Box -->
+                <div class="flex items-center gap-2">
+                    <label class="text-sm font-medium text-gray-700">Search:</label>
+                    <input type="text" id="searchInput" placeholder="Search system levels..."
+                        class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-w-[250px]">
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Table -->
-    <div class="bg-white shadow rounded-lg border border-gray-200 overflow-hidden">
-        <table class="w-full text-left border-collapse">
-            <thead class="bg-gray-100 text-gray-700 text-sm">
-                <tr>
-                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200" onclick="sortTable('nama')">
-                        Nama
-                        <i class="fas fa-sort ml-1 text-gray-400"></i>
-                    </th>
-                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200" onclick="sortTable('catatan')">
-                        Catatan
-                        <i class="fas fa-sort ml-1 text-gray-400"></i>
-                    </th>
-                    <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 text-center" onclick="sortTable('action')">
-                        Action
-                        <i class="fas fa-sort ml-1 text-gray-400"></i>
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="tableBody" class="text-sm">
-                <!-- Data akan diisi melalui JavaScript -->
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Pagination -->
-    <div class="flex flex-col md:flex-row justify-between items-center mt-4">
-        <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
-            Showing 1 to 8 of 8 entries
+        <!-- Table Responsive Wrapper -->
+        <div class="overflow-x-auto">
+            <table id="sysLevelTable" class="min-w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-700 text-sm">
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">No</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Name</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Description</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Created At</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Updated At</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="text-sm"></tbody>
+            </table>
         </div>
-        <div class="flex space-x-1" id="paginationButtons">
-            <button id="prevBtn"
-                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
-                disabled>
-                ← Previous
-            </button>
-            <span id="pageNumbers" class="flex space-x-1">
-                <button class="px-3 py-1 border border-blue-500 bg-blue-500 text-white rounded-md text-sm">1</button>
-            </span>
-            <button id="nextBtn"
-                class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
-                disabled>
-                Next →
-            </button>
+
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-sm text-gray-600" id="tableInfo">
+                    Showing 0 to 0 of 0 entries
+                </div>
+                <div class="flex items-center space-x-2" id="paginationContainer">
+                    <button id="prevBtn"
+                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                        disabled>
+                        Previous
+                    </button>
+                    <div id="pageNumbers" class="flex space-x-1"></div>
+                    <button id="nextBtn"
+                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
+                        disabled>
+                        Next
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -94,226 +80,166 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function () {
-        // Global variables
-        let allData = [];
-        let filteredData = [];
-        let currentPage = 1;
-        let pageSize = 10;
-        let currentSort = { column: null, direction: 'asc' };
-        let searchTerm = '';
+    let allLevels = [];
+    let filteredLevels = [];
+    let currentPage = 1;
+    let pageSize = 10;
 
-        // Sample data - dalam implementasi nyata akan diambil dari API
-        const sampleRoles = [
-            {
-                id: 1,
-                nama: "Access Management Administrator - CEOD",
-                catatan: "KANTOR PUSAT - CEOD",
-                canDelete: true
-            },
-            {
-                id: 2,
-                nama: "Admin Logistik",
-                catatan: "Acces Logistik",
-                canDelete: true
-            },
-            {
-                id: 3,
-                nama: "Customer Services",
-                catatan: "Kantor Cabang",
-                canDelete: true
-            },
-            {
-                id: 4,
-                nama: "Device Management - DGOD",
-                catatan: "KANTOR PUSAT-DGOD",
-                canDelete: true
-            },
-            {
-                id: 5,
-                nama: "Digital & Services Application Administrator - CEOD",
-                catatan: "KANTOR PUSAT-CEOD",
-                canDelete: true
-            },
-            {
-                id: 6,
-                nama: "Super Admin",
-                catatan: "Super Admin",
-                canDelete: false
-            },
-            {
-                id: 7,
-                nama: "Teller Services",
-                catatan: "Kantor Cabang",
-                canDelete: true
-            },
-            {
-                id: 8,
-                nama: "UAT",
-                catatan: "Role Akses UAT",
-                canDelete: false
-            }
-        ];
+    function renderTable() {
+        const start = (currentPage - 1) * pageSize;
+        const end = start + pageSize;
+        const paginatedData = filteredLevels.slice(start, end);
 
-        // Initialize
-        allData = sampleRoles;
-        filteredData = [...allData];
-        renderTable();
-        updatePagination();
-
-        // Event listeners
-        $('#searchInput').on('input', function() {
-            searchTerm = $(this).val().toLowerCase();
-            filterData();
+        let rows = "";
+        paginatedData.forEach((level, index) => {
+            rows += `
+                <tr class="border-b">
+                    <td class="px-4 py-2">${start + index + 1}</td>
+                    <td class="px-4 py-2">${level.name}</td>
+                    <td class="px-4 py-2">${level.description || "-"}</td>
+                    <td class="px-4 py-2">${level.createdAt ? new Date(level.createdAt).toLocaleDateString() : "-"}</td>
+                    <td class="px-4 py-2">${level.updatedAt ? new Date(level.updatedAt).toLocaleDateString() : "-"}</td>
+                    <td class="px-4 py-2 flex space-x-2">
+                        <a href="/SysLevel/Edit/${level.id}"
+                            class="bg-orange-500 text-white w-8 h-8 rounded hover:bg-orange-600 transition-colors flex items-center justify-center">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <button onclick="deleteLevel(${level.id})" 
+                            class="bg-red-500 text-white w-8 h-8 rounded hover:bg-red-600 transition-colors flex items-center justify-center">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </td>
+                </tr>`;
         });
 
-        $('#entriesSelect').on('change', function() {
+        $("#tableBody").html(rows || `
+            <tr>
+                <td colspan="6" class="text-center text-gray-500 py-3">No data available</td>
+            </tr>
+        `);
+
+        // Info
+        const total = filteredLevels.length;
+        const showingFrom = total === 0 ? 0 : start + 1;
+        const showingTo = Math.min(end, total);
+        $("#tableInfo").text(`Showing ${showingFrom} to ${showingTo} of ${total} entries`);
+
+        renderPagination(total);
+    }
+
+    function renderPagination(total) {
+        const totalPages = Math.ceil(total / pageSize);
+        $("#prevBtn").prop("disabled", currentPage === 1);
+        $("#nextBtn").prop("disabled", currentPage === totalPages || totalPages === 0);
+
+        let buttons = "";
+        for (let i = 1; i <= totalPages; i++) {
+            buttons += `
+                <button class="px-3 py-1 border rounded ${i === currentPage ? "bg-teal-500 text-white" : "bg-white"}"
+                        onclick="goToPage(${i})">${i}</button>`;
+        }
+        $("#pageNumbers").html(buttons);
+    }
+
+    function goToPage(page) {
+        currentPage = page;
+        renderTable();
+    }
+
+    function filterLevels() {
+        const searchText = $("#searchInput").val().toLowerCase();
+        filteredLevels = allLevels.filter(level =>
+            (level.name || "").toLowerCase().includes(searchText) ||
+            (level.description || "").toLowerCase().includes(searchText)
+        );
+        currentPage = 1;
+        renderTable();
+    }
+
+    // Load all syslevels
+    function loadLevels() {
+        $.ajax({
+            url: "http://localhost:5125/api/syslevels",
+            method: "GET",
+            success: function (res) {
+                if (Array.isArray(res)) {
+                    allLevels = res;
+                    filteredLevels = res;
+                    renderTable();
+                } else {
+                    $("#tableBody").html(`<tr><td colspan="6" class="text-center text-red-500 py-3">Unexpected API response</td></tr>`);
+                }
+            },
+            error: function () {
+                $("#tableBody").html(`<tr><td colspan="6" class="text-center text-red-500 py-3">Failed to load system level data</td></tr>`);
+            }
+        });
+    }
+
+    // Delete syslevel
+    function deleteLevel(id) {
+        Swal.fire({
+            title: 'Confirmation',
+            text: 'Are you sure you want to delete this system level?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, Delete',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            $.ajax({
+                url: `http://localhost:5125/api/syslevels/${id}`,
+                type: "DELETE",
+                success: function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: response.message || 'System level has been deleted successfully',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                    loadLevels();
+                },
+                error: function (xhr) {
+                    const res = xhr.responseJSON;
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Failed',
+                        text: res?.message || 'An error occurred while deleting the system level'
+                    });
+                }
+            });
+        });
+    }
+
+    // Events
+    $(document).ready(function () {
+        loadLevels();
+
+        $("#searchInput").on("input", filterLevels);
+
+        $("#pageSizeSelect").on("change", function () {
             pageSize = parseInt($(this).val());
             currentPage = 1;
             renderTable();
-            updatePagination();
         });
 
-        // Functions
-        function filterData() {
-            filteredData = allData.filter(item => 
-                item.nama.toLowerCase().includes(searchTerm) ||
-                item.catatan.toLowerCase().includes(searchTerm)
-            );
-            currentPage = 1;
-            renderTable();
-            updatePagination();
-        }
-
-        function renderTable() {
-            const startIndex = (currentPage - 1) * pageSize;
-            const endIndex = startIndex + pageSize;
-            const pageData = filteredData.slice(startIndex, endIndex);
-
-            let tableHTML = '';
-            pageData.forEach((role, index) => {
-                const rowClass = index % 2 === 0 ? 'bg-white' : 'bg-gray-50';
-                const actionButtons = `
-                    <a href="/RoleAkses/Edit/${role.id}" 
-                       class="inline-flex items-center px-3 py-1 bg-orange-500 hover:bg-orange-600 text-white text-xs rounded transition-colors mr-2">
-                        <i class="fas fa-pencil-alt mr-1"></i> Edit
-                    </a>
-                    ${role.canDelete ? 
-                        `<button onclick="deleteRole(${role.id}, '${role.nama}')" 
-                         class="inline-flex items-center px-3 py-1 bg-red-500 hover:bg-red-600 text-white text-xs rounded transition-colors">
-                            <i class="fas fa-times mr-1"></i> Delete
-                         </button>` : 
-                        '<span class="text-gray-400 text-xs">Cannot Delete</span>'
-                    }
-                `;
-
-                tableHTML += `
-                    <tr class="${rowClass} hover:bg-gray-100 transition-colors">
-                        <td class="px-4 py-3 border-t border-gray-200">${role.nama}</td>
-                        <td class="px-4 py-3 border-t border-gray-200">${role.catatan}</td>
-                        <td class="px-4 py-3 border-t border-gray-200 text-center">${actionButtons}</td>
-                    </tr>
-                `;
-            });
-
-            $('#tableBody').html(tableHTML);
-            updateTableInfo();
-        }
-
-        function updateTableInfo() {
-            const totalEntries = filteredData.length;
-            const startEntry = totalEntries === 0 ? 0 : (currentPage - 1) * pageSize + 1;
-            const endEntry = Math.min(currentPage * pageSize, totalEntries);
-            
-            $('#tableInfo').text(`Showing ${startEntry} to ${endEntry} of ${totalEntries} entries`);
-        }
-
-        function updatePagination() {
-            const totalPages = Math.ceil(filteredData.length / pageSize);
-            
-            // Update Previous button
-            $('#prevBtn').prop('disabled', currentPage === 1);
-            
-            // Update Next button
-            $('#nextBtn').prop('disabled', currentPage === totalPages);
-            
-            // Update page numbers
-            let pageNumbersHTML = '';
-            for (let i = 1; i <= totalPages; i++) {
-                const isActive = i === currentPage;
-                pageNumbersHTML += `
-                    <button onclick="goToPage(${i})" 
-                            class="px-3 py-1 border rounded-md text-sm transition-colors ${
-                                isActive 
-                                    ? 'border-blue-500 bg-blue-500 text-white' 
-                                    : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100'
-                            }">
-                        ${i}
-                    </button>
-                `;
+        $("#prevBtn").on("click", function () {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
             }
-            $('#pageNumbers').html(pageNumbersHTML);
-        }
+        });
 
-        // Pagination functions
-        window.goToPage = function(page) {
-            currentPage = page;
-            renderTable();
-            updatePagination();
-        };
-
-        window.deleteRole = function(id, nama) {
-            Swal.fire({
-                title: 'Konfirmasi Hapus',
-                text: `Apakah Anda yakin ingin menghapus role "${nama}"?`,
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, Hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Di sini akan ada call ke API untuk delete
-                    // Untuk demo, kita hapus dari array lokal
-                    allData = allData.filter(role => role.id !== id);
-                    filteredData = filteredData.filter(role => role.id !== id);
-                    
-                    Swal.fire(
-                        'Terhapus!',
-                        `Role "${nama}" telah berhasil dihapus.`,
-                        'success'
-                    );
-                    
-                    renderTable();
-                    updatePagination();
-                }
-            });
-        };
-
-        window.sortTable = function(column) {
-            if (currentSort.column === column) {
-                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-            } else {
-                currentSort.column = column;
-                currentSort.direction = 'asc';
+        $("#nextBtn").on("click", function () {
+            const totalPages = Math.ceil(filteredLevels.length / pageSize);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable();
             }
-
-            filteredData.sort((a, b) => {
-                let aVal = a[column];
-                let bVal = b[column];
-                
-                if (column === 'action') {
-                    aVal = a.canDelete ? '1' : '0';
-                    bVal = b.canDelete ? '1' : '0';
-                }
-
-                if (aVal < bVal) return currentSort.direction === 'asc' ? -1 : 1;
-                if (aVal > bVal) return currentSort.direction === 'asc' ? 1 : -1;
-                return 0;
-            });
-
-            renderTable();
-        };
+        });
     });
 </script>
