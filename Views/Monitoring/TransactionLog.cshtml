@@ -300,7 +300,7 @@ function renderTable() {
         <td class="px-6 py-4">${log.pinpadTid || '-'}</td>
         <td class="px-6 py-4">${log.transactionTypeDesc || '-'}</td>
         <td class="px-6 py-4">${log.translogCardnum || '-'}</td>
-        <td class="px-6 py-4">${log.translogAccnum || '-'}</td>
+        <td class="px-6 py-4">${log.translogAcctnum || '-'}</td>
         <td class="px-6 py-4">${log.translogAmount ? `Rp ${parseFloat(log.translogAmount).toLocaleString('id-ID')}` : '-'}</td>
         <td class="px-6 py-4">${log.translogCreateby || '-'}</td>
         <td class="px-6 py-4">${log.translogRc || '-'}</td>
@@ -411,22 +411,22 @@ async function applyFilter() {
       params.append("trxType", trxType.trim());
     }
 
-    console.log("Filter parameters:", params.toString());
+    //console.log("Filter parameters:", params.toString());
     
     // Use relative URL for better portability
     const apiUrl = `http://localhost:5125/api/DeviceTranslog?${params.toString()}`;
-    console.log("API URL:", apiUrl);
+   // console.log("API URL:", apiUrl);
     
     const response = await fetch(apiUrl);
     
     if (!response.ok) {
       const errorText = await response.text();
-      console.error("API Error Response:", errorText);
+      //console.error("API Error Response:", errorText);
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
     
     const data = await response.json();
-    console.log("API Response:", data);
+    //console.log("API Response:", data);
 
     if (data.success && data.data && data.data.length > 0) {
       allTransactionLogs = data.data;
@@ -453,7 +453,7 @@ async function applyFilter() {
     renderTable();
     
   } catch (err) {
-    console.error("Error filtering transaction logs:", err);
+    //console.error("Error filtering transaction logs:", err);
     $("#exportSection").addClass("hidden");
     
     if (err.message.includes("HTTP")) {
@@ -498,7 +498,7 @@ async function exportTransactionLog(format) {
 
   try {
     const exportUrl = `http://localhost:5125/api/DeviceTranslog/export?${exportParams.toString()}`;
-    console.log("Export URL:", exportUrl);
+   // console.log("Export URL:", exportUrl);
     
     const response = await fetch(exportUrl);
     
@@ -523,7 +523,7 @@ async function exportTransactionLog(format) {
     showNotification(`Export ${format.toUpperCase()} berhasil!`, 'success');
 
   } catch (err) {
-    console.error("Error export:", err);
+    //console.error("Error export:", err);
     showNotification(`Export gagal: ${err.message}`, 'error');
   } finally {
     $("#exportLoading").addClass("hidden");
@@ -542,10 +542,10 @@ async function loadRegional() {
         .sort();
 
       populateDropdown('#regionalSelect', regionals, '-- Select Regional --');
-      console.log("Loaded regionals:", regionals);
+      //console.log("Loaded regionals:", regionals);
     }
   } catch (error) {
-    console.error('Error loading regional data:', error);
+    //console.error('Error loading regional data:', error);
     showNotification('Gagal memuat data regional', 'error');
   }
 }
@@ -572,10 +572,10 @@ async function loadCabangInduk(filterRegional = "") {
       branches = branches.sort();
       populateDropdown('#branchSelect', branches, '-- Select Cabang Induk --');
       resetDropdown('#outletSelect', '-- Select Outlet --');
-      console.log("Loaded cabang induk:", branches);
+      //console.log("Loaded cabang induk:", branches);
     }
   } catch (error) {
-    console.error('Error loading cabang induk data:', error);
+    //console.error('Error loading cabang induk data:', error);
     showNotification('Gagal memuat data cabang induk', 'error');
   }
 }
@@ -606,10 +606,10 @@ async function loadOutlets(filterRegional = "", filterCabangInduk = "") {
       
       outlets = outlets.sort();
       populateDropdown('#outletSelect', outlets, '-- Select Outlet --');
-      console.log("Loaded outlets:", outlets);
+      //console.log("Loaded outlets:", outlets);
     }
   } catch (error) {
-    console.error('Error loading outlet data:', error);
+    //console.error('Error loading outlet data:', error);
     showNotification('Gagal memuat data outlet', 'error');
   }
 }
@@ -623,7 +623,7 @@ async function loadTransactionTypes() {
       populateFilterOptions(data.data);
     }
   } catch (error) {
-    console.error('Error loading transaction types:', error);
+    //console.error('Error loading transaction types:', error);
     showNotification('Gagal memuat data tipe transaksi', 'error');
   }
 }
@@ -741,7 +741,7 @@ $(document).on("click", "#clearFilterBtn", clearFilters);
 
 // ========== Improved Initialization ==========
 $(document).ready(async function() {
-  console.log("Initializing TransactionLog page...");
+  //console.log("Initializing TransactionLog page...");
   
   try {
     // Setup default dates
@@ -756,11 +756,11 @@ $(document).ready(async function() {
     // Render empty table
     renderTable();
     
-    console.log("TransactionLog page initialized successfully");
+    //console.log("TransactionLog page initialized successfully");
     showNotification("Halaman berhasil dimuat. Silakan gunakan filter untuk mencari data.", 'info');
     
   } catch (error) {
-    console.error("Error initializing page:", error);
+    //console.error("Error initializing page:", error);
     showNotification("Terjadi kesalahan saat memuat halaman", 'error');
   }
 });
