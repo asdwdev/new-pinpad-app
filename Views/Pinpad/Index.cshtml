@@ -110,12 +110,12 @@
     let searchTerm = '';
 
     // Initialize
-    checkUserRole();
+    checkUserAccessLevel();
     loadPinpads();
 
     // Check user role and show/hide CS-only elements after data is loaded
     $(document).on('dataLoaded', function () {
-      checkUserRole();
+      checkUserAccessLevel();
     });
 
     // Event listeners for new buttons
@@ -158,19 +158,27 @@
 
     let isCS = false;
 
-    function checkUserRole() {
+    function checkUserAccessLevel() {
       $.ajax({
         url: "http://localhost:5125/api/auth/me",
         method: "GET",
         xhrFields: { withCredentials: true },
         crossDomain: true,
         success: function (res) {
-          if (!res || !res.success) { window.location.href = "/Auth/Login"; return; }
-          const r = String(res.role || '').trim().toLowerCase();
-          isCS = (r === 'customer service' || r === 'customerservice' || r === 'cs' || (r.includes('customer') && r.includes('service')));
+          if (!res || !res.success) {
+            window.location.href = "/Auth/Login";
+            return;
+          }
+
+          // akses langsung angka accessLevel
+          const accessLevel = parseInt(res.accessLevel, 10);
+          isCS = (accessLevel === 3);
+
           applyRoleVisibility();
         },
-        error: function () { window.location.href = "/Auth/Login"; }
+        error: function () {
+          window.location.href = "/Auth/Login";
+        }
       });
     }
 
@@ -183,8 +191,6 @@
         $('.deleteBtn, .cs-only').addClass('hidden');
       }
     }
-
-
 
     function updateSortIcons() {
       $('.sort-icon').text('↕');
