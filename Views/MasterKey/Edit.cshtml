@@ -1,101 +1,74 @@
-
-
+@{
+    ViewData["Title"] = "Edit Master Key";
+}
 <div class="max-w-3xl mx-auto p-6">
-    <!-- Header -->
-    <div class="mb-6">
-        <h1 class="text-lg text-gray-600">
-            Master Key / Edit
-        </h1>
-    </div>
+    <h1 class="text-lg text-gray-600 mb-6">Master Key / Edit</h1>
 
-    <!-- Form Card -->
     <div class="bg-white rounded-lg shadow-sm p-6">
-        <form id="editMasterKeyForm" class="space-y-6" method="post" action="@Url.Action("Edit", "MasterKey")">
-            @Html.AntiForgeryToken()
-            <input type="hidden" name="Id" value="1" />
-            
-            <!-- CODE -->
+        <form id="editMasterKeyForm" class="space-y-6">
+            <input type="hidden" id="mkeyId" />
+
             <div class="flex items-center">
-                <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-32 text-right pr-4">
-                    CODE:
-                </label>
-                <input type="text" 
-                       name="Code"
-                       value="MK001" 
-                       placeholder="Code"
-                       class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
-                       required>
-            </div>
-            
-            <!-- KEY NUMBER -->
-            <div class="flex items-center">
-                <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-32 text-right pr-4">
-                    KEY NUMBER:
-                </label>
-                <input type="text" 
-                       name="KeyNumber"
-                       value="12345" 
-                       placeholder="Key Number"
-                       class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
-                       required>
-            </div>
-            
-            <!-- KETERANGAN -->
-            <div class="flex items-center">
-                <label class="block text-gray-700 text-sm font-medium uppercase tracking-wide w-32 text-right pr-4">
-                    KETERANGAN:
-                </label>
-                <input type="text" 
-                       name="Keterangan"
-                       value="Kunci untuk server" 
-                       placeholder="Keterangan"
-                       class="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-400 transition-colors text-sm"
-                       required>
+                <label for="mkeyCode" class="w-32 text-right pr-4 text-sm text-gray-700">CODE:</label>
+                <input type="text" id="mkeyCode" class="flex-1 px-3 py-2 border rounded text-sm" required />
             </div>
 
-            <hr class="my-6 border-gray-200">
+            <div class="flex items-center">
+                <label for="mkeyNumber" class="w-32 text-right pr-4 text-sm text-gray-700">KEY NUMBER:</label>
+                <input type="text" id="mkeyNumber" class="flex-1 px-3 py-2 border rounded text-sm" />
+            </div>
 
-            <!-- Action Buttons -->
-            <div class="flex justify-end gap-3">
-                <button type="button"
-                        onclick="window.history.back()"
-                        class="px-5 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded text-sm transition-colors">
-                    Cancel
-                </button>
-                <button type="submit"
-                        class="px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded text-sm transition-colors">
-                    Update
-                </button>
+            <div class="flex items-center">
+                <label for="mkeyDesc" class="w-32 text-right pr-4 text-sm text-gray-700">KETERANGAN:</label>
+                <input type="text" id="mkeyDesc" class="flex-1 px-3 py-2 border rounded text-sm" />
+            </div>
+
+            <div class="flex justify-end gap-3 mt-6">
+                <a asp-action="Index" class="px-5 py-2 bg-orange-500 text-white rounded">Cancel</a>
+                <button type="submit" class="px-5 py-2 bg-teal-600 text-white rounded">Update</button>
             </div>
         </form>
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-document.getElementById('editMasterKeyForm').addEventListener('submit', function(e) {
+const API_BASE = "http://localhost:5125";
+
+// Ambil ID dari URL (misal /MasterKey/Edit/3)
+const id = window.location.pathname.split("/").pop();
+
+// Load detail
+$.get(`${API_BASE}/api/sysmkeys/${id}`, function(res) {
+    $("#mkeyId").val(res.mkeyId);
+    $("#mkeyCode").val(res.mkeyCode);
+    $("#mkeyNumber").val(res.mkeyNumber);
+    $("#mkeyDesc").val(res.mkeyDesc);
+});
+
+// Submit update
+$("#editMasterKeyForm").on("submit", function(e) {
     e.preventDefault();
-    
-    const formData = new FormData(this);
-    
-    fetch(this.action, {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
+    const data = {
+        mkeyId: $("#mkeyId").val(),
+        mkeyCode: $("#mkeyCode").val(),
+        mkeyNumber: $("#mkeyNumber").val(),
+        mkeyDesc: $("#mkeyDesc").val()
+    };
+
+    $.ajax({
+        url: `${API_BASE}/api/sysmkeys/${id}`,
+        method: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function() {
+            Swal.fire('Berhasil!', 'Data berhasil diupdate.', 'success')
+                .then(() => window.location.href = "/MasterKey/Index");
+        },
+        error: function(xhr) {
+            Swal.fire('Gagal!', xhr.responseJSON?.message || "Update gagal.", 'error');
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Master Key updated successfully!');
-            window.location.href = '@Url.Action("Index", "MasterKey")';
-        } else {
-            alert('Error updating Master Key: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while updating the Master Key.');
     });
 });
 </script>
