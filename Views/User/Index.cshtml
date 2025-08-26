@@ -43,6 +43,11 @@
             <table id="userListTable" class="min-w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-100 text-gray-700 text-sm">
+                        <!-- Nomor urut -->
+                        <th class="px-4 py-3 font-semibold whitespace-nowrap border-b border-gray-200">
+                            No
+                        </th>
+                        <!-- Username -->
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
                             data-column="username">
                             <div class="flex items-center justify-between">
@@ -52,6 +57,7 @@
                                 </div>
                             </div>
                         </th>
+                        <!-- Fullname -->
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
                             data-column="fullname">
                             <div class="flex items-center justify-between">
@@ -61,15 +67,7 @@
                                 </div>
                             </div>
                         </th>
-                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
-                            data-column="nama">
-                            <div class="flex items-center justify-between">
-                                <span>Nama</span>
-                                <div class="sort-indicator ml-2">
-                                    <i class="fa fa-sort text-gray-400"></i>
-                                </div>
-                            </div>
-                        </th>
+                        <!-- Email -->
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
                             data-column="email">
                             <div class="flex items-center justify-between">
@@ -79,10 +77,51 @@
                                 </div>
                             </div>
                         </th>
+                        <!-- Access Level -->
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
-                            data-column="role">
+                            data-column="accesslevel">
                             <div class="flex items-center justify-between">
-                                <span>Role</span>
+                                <span>Access Level</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <!-- NIP -->
+                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
+                            data-column="nip">
+                            <div class="flex items-center justify-between">
+                                <span>NIP</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <!-- Branch -->
+                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
+                            data-column="branch">
+                            <div class="flex items-center justify-between">
+                                <span>Branch</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <!-- Status -->
+                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
+                            data-column="islocked">
+                            <div class="flex items-center justify-between">
+                                <span>Status</span>
+                                <div class="sort-indicator ml-2">
+                                    <i class="fa fa-sort text-gray-400"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <!-- Created At -->
+                        <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
+                            data-column="createdat">
+                            <div class="flex items-center justify-between">
+                                <span>Created At</span>
                                 <div class="sort-indicator ml-2">
                                     <i class="fa fa-sort text-gray-400"></i>
                                 </div>
@@ -91,10 +130,9 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="text-sm">
-                    <!-- Data akan dimasukkan di sini -->
+                    <!-- Data dari API bakal masuk di sini -->
                 </tbody>
             </table>
-
         </div>
 
         <!-- Pagination -->
@@ -120,3 +158,49 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $.ajax({
+        url: "http://localhost:5125/api/users",
+        method: "GET",
+        success: function (res) {
+            if (Array.isArray(res)) {  // langsung cek array
+                let rows = "";
+                res.forEach((user, index) => {
+                    rows += `
+                    <tr class="border-b">
+                        <td class="px-4 py-2">${index + 1}</td>
+                        <td class="px-4 py-2">${user.username}</td>
+                        <td class="px-4 py-2">${user.fullName}</td>
+                        <td class="px-4 py-2">${user.email}</td>
+                        <td class="px-4 py-2">${user.accessLevel}</td>
+                        <td class="px-4 py-2">${user.nip || "-"}</td>
+                        <td class="px-4 py-2">${user.branch || "-"}</td>
+                        <td class="px-4 py-2">${user.isLocked ? "Locked" : "Active"}</td>
+                        <td class="px-4 py-2">${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "-"}</td>
+                    </tr>
+                `;
+                });
+                $("#tableBody").html(rows);
+            } else {
+                $("#tableBody").html(`
+                <tr>
+                    <td colspan="9" class="text-center text-red-500 py-3">
+                        Unexpected API response
+                    </td>
+                </tr>
+            `);
+            }
+        },
+        error: function () {
+            $("#tableBody").html(`
+            <tr>
+                <td colspan="9" class="text-center text-red-500 py-3">
+                    Failed to load user data
+                </td>
+            </tr>
+        `);
+        }
+    });
+</script>
