@@ -38,6 +38,7 @@
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // --- Handle form submit ---
         $("#loginForm").submit(function (e) {
             e.preventDefault();
 
@@ -53,35 +54,36 @@
                 success: function (res) {
                     if (res.success) {
                         // redirect sesuai role
-                        const role = (res.user.role || "").toLowerCase();
-                        if (role === "admin logistik") {
+                        const accessLevel = parseInt(res.user.accessLevel || "0", 10);
+
+                        if (accessLevel === 1 || accessLevel === 3) {
                             window.location.href = "/Dashboard/Index";
-                            return;
-                        }
-                        else if (role === "admin kantor cabang") {
+                        } else if (accessLevel === 2) {
                             window.location.href = "/Branch/Index";
-                            return;
+                        } else {
+                            showMessage("Invalid username or password", false);
                         }
-                        else if (role === "customer service") {
-                            window.location.href = "/Dashboard/Index";
-                            return;
-                        }
+                    } else {
+                        showMessage(res.message || "Invalid username or password", false);
                     }
-                    // kalau gagal login atau role tidak dikenali
-                    showMessage(res.message || "Invalid username or password", false);
                 },
-                error: function (xhr) {
-                    let msg = "Terjadi kesalahan saat login.";
-                    try {
-                        const err = JSON.parse(xhr.responseText);
-                        msg = err.message || msg;
-                    } catch { }
+                error: function (xhr, status, error) {
+                    let msg = "An error occurred while trying to login."; // default
+                    if (xhr.status === 0) {
+                        // server API-nya gak bisa diakses (mungkin dotnet belum jalan)
+                        msg = "Unable to connect to the server. Please make sure the backend is running.";
+                    } else {
+                        try {
+                            const err = JSON.parse(xhr.responseText);
+                            msg = err.message || msg;
+                        } catch { }
+                    }
                     showMessage(msg, false);
                 }
             });
         });
 
-        // helper biar gak nulis class toggle berkali-kali
+        // --- Helper show message ---
         function showMessage(message, isSuccess) {
             $("#message")
                 .removeClass("hidden border-green-300 bg-green-50 text-green-800 border-red-300 bg-red-50 text-red-800")
