@@ -1,12 +1,12 @@
 @{
   Layout = "~/Views/Shared/_Layout.cshtml";
-  ViewData["Title"] = "Users";
+  ViewData["Title"] = "Device Transaction Logs";
 }
 
 <div class="p-4 md:p-6">
   <!-- Breadcrumb -->
   <div class="mb-6 text-sm">
-    <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Pinpad List</a> /
+    <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Device Transaction Logs</a> /
     <span class="text-gray-500">Monitoring</span>
   </div>
 
@@ -23,9 +23,9 @@
         <div>
           <label class="block text-gray-700 text-sm font-medium mb-2">Jangka Waktu:</label>
           <div class="flex space-x-2">
-            <input type="date"
+            <input type="date" id="startDate"
               class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <input type="date"
+            <input type="date" id="endDate"
               class="w-1/2 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
           </div>
         </div>
@@ -33,28 +33,25 @@
         <!-- Regional -->
         <div>
           <label class="block text-gray-700 text-sm font-medium mb-2">Regional:</label>
-          <select
+          <select id="regionalSelect"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
             <option value="">-- Select Regional --</option>
-            <option>Kanwil Jakarta I</option>
-            <option>Kanwil Jawa Barat</option>
           </select>
         </div>
 
         <!-- Cabang Induk -->
         <div>
           <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
-          <select
+          <select id="branchSelect"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
             <option value="">-- Select Cabang Induk --</option>
-            <option>00014 - KC JAKARTA HARMONI</option>
           </select>
         </div>
 
         <!-- Outlet -->
         <div>
           <label class="block text-gray-700 text-sm font-medium mb-2">Outlet:</label>
-          <select
+          <select id="outletSelect"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
             <option value="">-- Select Outlet --</option>
           </select>
@@ -66,31 +63,34 @@
         <!-- Serial Number -->
         <div>
           <label class="block text-gray-700 text-sm font-medium mb-2">Serial Number:</label>
-          <input type="text" placeholder="Please enter your Serial Number"
+          <input type="text" id="serialNumberInput" placeholder="Please enter your Serial Number"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
         </div>
 
         <!-- Username -->
         <div>
           <label class="block text-gray-700 text-sm font-medium mb-2">Username:</label>
-          <input type="text" placeholder="Please enter your Username"
+          <input type="text" id="usernameInput" placeholder="Please enter your Username"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
         </div>
 
         <!-- Response Code -->
         <div>
-          <label class="block text-gray-700 text-sm font-medium mb-2">Response Code:</label>
-          <select
+          <label class="block text-gray-700 text-sm font-medium mb-2">Transaction Type:</label>
+          <select id="trxTypeSelect"
             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
-            <option value="">-- Select Device Transaction --</option>
+            <option value="">-- Select Transaction Type --</option>
           </select>
         </div>
       </div>
     </div>
 
     <!-- Tombol Action -->
-    <div class="flex justify-end mt-6">
-      <button class="bg-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-teal-700 transition">
+    <div class="flex justify-end mt-6 space-x-3">
+      <button id="clearFilterBtn" class="bg-gray-500 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-gray-600 transition">
+        Clear Filter
+      </button>
+      <button id="searchBtn" class="bg-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-teal-700 transition">
         Search
       </button>
     </div>
@@ -137,8 +137,6 @@
     </div>
   </div>
 
-
-
   <!-- Table Container -->
   <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
     <!-- Table Header with Search -->
@@ -164,8 +162,6 @@
       </div>
     </div>
 
-
-
     <!-- Table Responsive Wrapper -->
     <div class="overflow-x-auto">
       <table class="table-auto w-full border-collapse text-left">
@@ -175,10 +171,8 @@
             <th class="px-6 py-3 font-semibold border-b">Cabang Induk</th>
             <th class="px-6 py-3 font-semibold border-b">Outlet</th>
             <th class="px-6 py-3 font-semibold border-b">Create Date</th>
-
             <th class="px-6 py-3 font-semibold border-b">Serial Number</th>
             <th class="px-6 py-3 font-semibold border-b">Transaction Type</th>
-
             <th class="px-6 py-3 font-semibold border-b">Card Number</th>
             <th class="px-6 py-3 font-semibold border-b">Account Number</th>
             <th class="px-6 py-3 font-semibold border-b">Amount</th>
@@ -187,27 +181,10 @@
             <th class="px-6 py-3 font-semibold border-b">RRN</th>
           </tr>
         </thead>
-        <tbody class="text-sm">
-          <tr class="hover:bg-gray-50">
-            <td class="px-6 py-3 border-b">Kanwil Jakarta I</td>
-            <td class="px-6 py-3 border-b">KC Jakarta Harmoni</td>
-            <td class="px-6 py-3 border-b">00014</td>
-            <td class="px-6 py-3 border-b">2025-08-20</td>
-            <td class="px-6 py-3 border-b">SN123456</td>
-            <td class="px-6 py-3 border-b">Create PIN</td>
-            <td class="px-6 py-3 border-b">6221008200002775</td>
-            <td class="px-6 py-3 border-b">000140150064840</td>
-            <td class="px-6 py-3 border-b">100000</td>
-            <td class="px-6 py-3 border-b">ITPD-ICP.Julio</td>
-            <td class="px-6 py-3 border-b text-green-600 font-medium">00</td>
-            <td class="px-6 py-3 border-b">999980020001</td>
-          </tr>
+        <tbody id="tableBody" class="text-sm">
+          <!-- Data will be populated by JavaScript -->
         </tbody>
       </table>
-
-
-
-
     </div>
 
     <!-- Pagination -->
@@ -233,3 +210,593 @@
     </div>
   </div>
 </div>
+
+@section Scripts {
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+let allTransactionLogs = [];
+let currentPage = 1;
+let pageSize = 10;
+let searchTerm = "";
+let currentFilters = {};
+
+// ========== Helper API Response ==========
+function extractData(apiResponse) {
+  if (Array.isArray(apiResponse)) {
+    return apiResponse; // langsung array
+  }
+  if (apiResponse.success && Array.isArray(apiResponse.data)) {
+    return apiResponse.data; // format {success, data}
+  }
+  return [];
+}
+
+// ========== Utility Functions ==========
+function populateDropdown(selector, options, defaultText = '-- Select --') {
+  const dropdown = $(selector);
+  dropdown.find("option:not(:first)").remove();
+  
+  if (options && options.length > 0) {
+    options.forEach(option => {
+      dropdown.append(`<option value="${option}">${option}</option>`);
+    });
+  }
+}
+
+function resetDropdown(selector, defaultText = '-- Select --') {
+  const dropdown = $(selector);
+  dropdown.val("").find("option:not(:first)").remove();
+  dropdown.append(`<option value="">${defaultText}</option>`);
+}
+
+function setupDateDefaults() {
+  const today = new Date();
+  const lastMonth = new Date(today.getFullYear(), today.getMonth() - 1, today.getDate());
+  
+  $("#startDate").val(lastMonth.toISOString().split('T')[0]);
+  $("#endDate").val(today.toISOString().split('T')[0]);
+}
+
+function renderTable() {
+  const tbody = $("#tableBody");
+  tbody.empty();
+
+  if (!allTransactionLogs || allTransactionLogs.length === 0) {
+    tbody.html(`
+      <tr>
+        <td colspan="12" class="px-6 py-4 text-center text-gray-500">
+          Tidak ada data yang ditemukan
+        </td>
+      </tr>
+    `);
+    updatePagination();
+    return;
+  }
+
+  // Search filter
+  let filteredData = allTransactionLogs;
+  if (searchTerm && searchTerm.trim() !== "") {
+    const term = searchTerm.toLowerCase();
+    filteredData = allTransactionLogs.filter(log =>
+      Object.values(log).some(value =>
+        value && value.toString().toLowerCase().includes(term)
+      )
+    );
+  }
+
+  // Pagination
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedData = filteredData.slice(startIndex, endIndex);
+
+  // Render rows sesuai API JSON
+  paginatedData.forEach(log => {
+    const row = `
+      <tr class="border-b border-gray-200 hover:bg-gray-50">
+        <td class="px-6 py-4">${log.branchArea || '-'}</td>
+        <td class="px-6 py-4">${log.branchName || '-'}</td>
+        <td class="px-6 py-4">${log.translogSn || '-'}</td>
+        <td class="px-6 py-4">${log.translogCreatedate ? new Date(log.translogCreatedate).toLocaleDateString('id-ID') : '-'}</td>
+        <td class="px-6 py-4">${log.pinpadTid || '-'}</td>
+        <td class="px-6 py-4">${log.transactionTypeDesc || '-'}</td>
+        <td class="px-6 py-4">${log.translogCardnum || '-'}</td>
+        <td class="px-6 py-4">${log.translogAccnum || '-'}</td>
+        <td class="px-6 py-4">${log.translogAmount ? `Rp ${parseFloat(log.translogAmount).toLocaleString('id-ID')}` : '-'}</td>
+        <td class="px-6 py-4">${log.translogCreateby || '-'}</td>
+        <td class="px-6 py-4">${log.translogRc || '-'}</td>
+        <td class="px-6 py-4">${log.translogRrn || '-'}</td>
+      </tr>
+    `;
+    tbody.append(row);
+  });
+
+  updatePagination(filteredData.length);
+}
+
+
+function updatePagination(totalFiltered = 0) {
+  const totalItems = totalFiltered || allTransactionLogs.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  
+  // Update table info
+  const startItem = totalItems > 0 ? (currentPage - 1) * pageSize + 1 : 0;
+  const endItem = Math.min(currentPage * pageSize, totalItems);
+  $("#tableInfo").text(`Showing ${startItem} to ${endItem} of ${totalItems} entries`);
+  
+  // Update pagination buttons
+  $("#prevBtn").prop("disabled", currentPage <= 1);
+  $("#nextBtn").prop("disabled", currentPage >= totalPages);
+  
+  // Update page numbers
+  const pageNumbers = $("#pageNumbers");
+  pageNumbers.empty();
+  
+  const maxVisiblePages = 5;
+  let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+  let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+  
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+  
+  for (let i = startPage; i <= endPage; i++) {
+    const pageBtn = $(`
+      <button class="px-3 py-2 border border-gray-300 rounded text-sm transition-colors ${
+        i === currentPage 
+          ? 'bg-blue-500 text-white border-blue-500' 
+          : 'bg-white hover:bg-gray-100'
+      }">
+        ${i}
+      </button>
+    `);
+    
+    pageBtn.click(() => {
+      currentPage = i;
+      renderTable();
+    });
+    
+    pageNumbers.append(pageBtn);
+  }
+}
+
+// ========== Apply Filter - IMPROVED VERSION ==========
+async function applyFilter() {
+  const startDate = $("#startDate").val();
+  const endDate = $("#endDate").val();
+  const regional = $("#regionalSelect").val();
+  const branch = $("#branchSelect").val();
+  const outlet = $("#outletSelect").val();
+  const serialNumber = $("#serialNumberInput").val();
+  const username = $("#usernameInput").val();
+  const trxType = $("#trxTypeSelect").val();
+
+  // Validation
+  if (!startDate || !endDate) {
+    showNotification("Mohon isi tanggal mulai dan tanggal akhir", 'warning');
+    return;
+  }
+  
+  if (new Date(endDate) < new Date(startDate)) {
+    showNotification("Tanggal akhir tidak boleh lebih kecil dari tanggal mulai", 'warning');
+    return;
+  }
+
+  $("#searchBtn").prop("disabled", true).text("Searching...");
+
+  try {
+    // Build query parameters with proper encoding - MATCH BACKEND PARAMETERS
+    const params = new URLSearchParams();
+    
+    // Required date filters - backend expects startDate and endDate
+    params.append("startDate", startDate);
+    params.append("endDate", endDate);
+    
+    // Optional filters - use exact backend parameter names
+    if (regional && regional.trim() !== "") {
+      params.append("regional", regional.trim());
+    }
+    if (branch && branch.trim() !== "") {
+      params.append("branch", branch.trim());
+    }
+    if (outlet && outlet.trim() !== "") {
+      params.append("outlet", outlet.trim());
+    }
+    if (serialNumber && serialNumber.trim() !== "") {
+      params.append("serialNumber", serialNumber.trim());
+    }
+    if (username && username.trim() !== "") {
+      params.append("username", username.trim());
+    }
+    if (trxType && trxType.trim() !== "") {
+      params.append("trxType", trxType.trim());
+    }
+
+    console.log("Filter parameters:", params.toString());
+    
+    // Use relative URL for better portability
+    const apiUrl = `http://localhost:5125/api/DeviceTranslog?${params.toString()}`;
+    console.log("API URL:", apiUrl);
+    
+    const response = await fetch(apiUrl);
+    
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("API Error Response:", errorText);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    console.log("API Response:", data);
+
+    if (data.success && data.data && data.data.length > 0) {
+      allTransactionLogs = data.data;
+      currentFilters = {
+        startDate, endDate, regional, branch, outlet, serialNumber, username, trxType
+      };
+      $("#exportSection").removeClass("hidden");
+      
+      const totalCount = data.data.length;
+      showNotification(`Data ditemukan: ${totalCount} transaksi`, 'success');
+      
+    } else {
+      allTransactionLogs = [];
+      $("#exportSection").addClass("hidden");
+      
+      if (data.message) {
+        showNotification(`Tidak ada data: ${data.message}`, 'warning');
+      } else {
+        showNotification("Tidak ada data yang ditemukan dengan filter yang diberikan", 'warning');
+      }
+    }
+
+    currentPage = 1;
+    renderTable();
+    
+  } catch (err) {
+    console.error("Error filtering transaction logs:", err);
+    $("#exportSection").addClass("hidden");
+    
+    if (err.message.includes("HTTP")) {
+      showNotification("Gagal menghubungi server. Silakan cek koneksi dan coba lagi.", 'error');
+    } else {
+      showNotification("Terjadi kesalahan saat mengambil data. Silakan coba lagi.", 'error');
+    }
+  } finally {
+    $("#searchBtn").prop("disabled", false).text("Search");
+  }
+}
+
+// ========== Improved Export Function ==========
+async function exportTransactionLog(format) {
+  if (!allTransactionLogs || allTransactionLogs.length === 0) {
+    showNotification("Tidak ada data untuk di-export. Silakan filter data terlebih dahulu.", 'warning');
+    return;
+  }
+
+  const exportParams = new URLSearchParams();
+  
+  // Add all current filters to export parameters - MATCH BACKEND PARAMETERS
+  Object.entries(currentFilters).forEach(([key, value]) => {
+    if (value && value.trim() !== "") {
+      // Map frontend filter names to backend parameter names
+      const paramMap = {
+        'serialNumber': 'serialNumber',
+        'branch': 'branch',
+        'outlet': 'outlet',
+        'trxType': 'trxType',
+        'username': 'username'
+      };
+      
+      const paramName = paramMap[key] || key;
+      exportParams.append(paramName, value.trim());
+    }
+  });
+
+  exportParams.append("format", format);
+
+  $("#exportLoading").removeClass("hidden");
+
+  try {
+    const exportUrl = `http://localhost:5125/api/DeviceTranslog/export?${exportParams.toString()}`;
+    console.log("Export URL:", exportUrl);
+    
+    const response = await fetch(exportUrl);
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ message: "Unknown error" }));
+      throw new Error(errorData.message || `HTTP ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    
+    const timestamp = new Date().toISOString().slice(0, 10);
+    a.download = `TransactionLog_${timestamp}.${format}`;
+    
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    
+    showNotification(`Export ${format.toUpperCase()} berhasil!`, 'success');
+
+  } catch (err) {
+    console.error("Error export:", err);
+    showNotification(`Export gagal: ${err.message}`, 'error');
+  } finally {
+    $("#exportLoading").addClass("hidden");
+  }
+}
+
+// ========== Improved Filter Loading Functions ==========
+async function loadRegional() {
+  try {
+    const response = await fetch('http://localhost:5125/api/DeviceTranslog/GetAvailableFilters');
+    const data = await response.json();
+
+    if (data.success && data.data) {
+      const regionals = [...new Set(data.data.availableAreas || [])]
+        .filter(r => r && r.trim() !== "")
+        .sort();
+
+      populateDropdown('#regionalSelect', regionals, '-- Select Regional --');
+      console.log("Loaded regionals:", regionals);
+    }
+  } catch (error) {
+    console.error('Error loading regional data:', error);
+    showNotification('Gagal memuat data regional', 'error');
+  }
+}
+
+
+async function loadCabangInduk(filterRegional = "") {
+  try {
+    // Use DeviceTranslog API to get available branches
+    const response = await fetch('http://localhost:5125/api/DeviceTranslog/GetAvailableFilters');
+    const data = await response.json();
+    
+    if (data.success && data.data) {
+      let branches = [...new Set(data.data.availableBranches || [])];
+      
+      // Filter by regional if specified
+      if (filterRegional && filterRegional.trim() !== "") {
+        // This is a simplified filter - in reality you might need a more sophisticated approach
+        // For now, we'll show all branches since the backend doesn't provide regional-branch mapping
+        branches = branches.filter(b => b && b.trim() !== "");
+      } else {
+        branches = branches.filter(b => b && b.trim() !== "");
+      }
+      
+      branches = branches.sort();
+      populateDropdown('#branchSelect', branches, '-- Select Cabang Induk --');
+      resetDropdown('#outletSelect', '-- Select Outlet --');
+      console.log("Loaded cabang induk:", branches);
+    }
+  } catch (error) {
+    console.error('Error loading cabang induk data:', error);
+    showNotification('Gagal memuat data cabang induk', 'error');
+  }
+}
+
+async function loadOutlets(filterRegional = "", filterCabangInduk = "") {
+  try {
+    // For now, we'll use the same branches as outlets since the backend doesn't have separate outlet API
+    // In a real scenario, you might want to create a separate API endpoint for outlets
+    const response = await fetch('http://localhost:5125/api/DeviceTranslog/GetAvailableFilters');
+    const data = await response.json();
+    
+    if (data.success && data.data) {
+      let outlets = [...new Set(data.data.availableBranches || [])];
+      
+      // Filter by regional if specified
+      if (filterRegional && filterRegional.trim() !== "") {
+        // This is a simplified filter - in reality you might need a more sophisticated approach
+        // For now, we'll show all outlets since the backend doesn't provide regional-outlet mapping
+        outlets = outlets.filter(o => o && o.trim() !== "");
+      }
+      
+      // Filter by branch if specified
+      if (filterCabangInduk && filterCabangInduk.trim() !== "") {
+        // This is a simplified filter - in reality you might need a more sophisticated approach
+        // For now, we'll show all outlets since the backend doesn't provide branch-outlet mapping
+        outlets = outlets.filter(o => o && o.trim() !== "");
+      }
+      
+      outlets = outlets.sort();
+      populateDropdown('#outletSelect', outlets, '-- Select Outlet --');
+      console.log("Loaded outlets:", outlets);
+    }
+  } catch (error) {
+    console.error('Error loading outlet data:', error);
+    showNotification('Gagal memuat data outlet', 'error');
+  }
+}
+
+async function loadTransactionTypes() {
+  try {
+    const response = await fetch('http://localhost:5125/api/DeviceTranslog/GetAvailableFilters');
+    const data = await response.json();
+    
+    if (data.success && data.data) {
+      populateFilterOptions(data.data);
+    }
+  } catch (error) {
+    console.error('Error loading transaction types:', error);
+    showNotification('Gagal memuat data tipe transaksi', 'error');
+  }
+}
+
+function populateFilterOptions(data) {
+  const trxTypeSelect = $("#trxTypeSelect");
+  trxTypeSelect.find("option:not(:first)").remove();
+  
+  if (data && data.availableTrxTypes && data.availableTrxTypes.length > 0) {
+    data.availableTrxTypes.forEach(type => {
+      trxTypeSelect.append(`<option value="${type}">${type}</option>`);
+    });
+  }
+}
+
+function clearFilters() {
+  $("#startDate").val("");
+  $("#endDate").val("");
+  $("#regionalSelect").val("");
+  $("#branchSelect").val("");
+  $("#outletSelect").val("");
+  $("#serialNumberInput").val("");
+  $("#usernameInput").val("");
+  $("#trxTypeSelect").val("");
+  
+  // Reset dependent dropdowns
+  resetDropdown('#branchSelect', '-- Select Cabang Induk --');
+  resetDropdown('#outletSelect', '-- Select Outlet --');
+  
+  // Clear data
+  allTransactionLogs = [];
+  currentFilters = {};
+  currentPage = 1;
+  
+  // Hide export section
+  $("#exportSection").addClass("hidden");
+  
+  // Render empty table
+  renderTable();
+  
+  showNotification("Filter berhasil dibersihkan", 'info');
+}
+
+// ========== Enhanced Event Handlers ==========
+$(document).on("change", "#regionalSelect", async function () {
+  const selectedRegional = $(this).val();
+  
+  // Reset dependent dropdowns
+  resetDropdown('#branchSelect', '-- Select Cabang Induk --');
+  resetDropdown('#outletSelect', '-- Select Outlet --');
+  
+  if (selectedRegional && selectedRegional.trim() !== "") {
+    // Filter branches by regional selection
+    await loadCabangInduk(selectedRegional);
+  } else {
+    // Load all branches
+    await loadCabangInduk();
+  }
+});
+
+$(document).on("change", "#branchSelect", async function () {
+  const selectedBranch = $(this).val();
+  const selectedRegional = $("#regionalSelect").val();
+  
+  // Reset outlet dropdown
+  resetDropdown('#outletSelect', '-- Select Outlet --');
+  
+  if (selectedBranch && selectedBranch.trim() !== "") {
+    // Filter outlets by branch selection
+    await loadOutlets(selectedRegional, selectedBranch);
+  } else {
+    // Load all outlets for selected regional
+    await loadOutlets(selectedRegional);
+  }
+});
+
+// Search functionality
+$(document).on("input", "#searchInput", function() {
+  searchTerm = $(this).val();
+  currentPage = 1;
+  renderTable();
+});
+
+// Page size change
+$(document).on("change", "#pageSizeSelect", function() {
+  pageSize = parseInt($(this).val());
+  currentPage = 1;
+  renderTable();
+});
+
+// Pagination navigation
+$(document).on("click", "#prevBtn", function() {
+  if (currentPage > 1) {
+    currentPage--;
+    renderTable();
+  }
+});
+
+$(document).on("click", "#nextBtn", function() {
+  const totalPages = Math.ceil(allTransactionLogs.length / pageSize);
+  if (currentPage < totalPages) {
+    currentPage++;
+    renderTable();
+  }
+});
+
+// Export button handlers
+$(document).on("click", "#exportPdf", () => exportTransactionLog('pdf'));
+$(document).on("click", "#exportXlsx", () => exportTransactionLog('xlsx'));
+$(document).on("click", "#exportCsv", () => exportTransactionLog('csv'));
+
+// Filter and clear buttons
+$(document).on("click", "#searchBtn", applyFilter);
+$(document).on("click", "#clearFilterBtn", clearFilters);
+
+// ========== Improved Initialization ==========
+$(document).ready(async function() {
+  console.log("Initializing TransactionLog page...");
+  
+  try {
+    // Setup default dates
+    setupDateDefaults();
+    
+    // Load all filter options
+    await Promise.all([
+      loadRegional(),
+      loadTransactionTypes()
+    ]);
+    
+    // Render empty table
+    renderTable();
+    
+    console.log("TransactionLog page initialized successfully");
+    showNotification("Halaman berhasil dimuat. Silakan gunakan filter untuk mencari data.", 'info');
+    
+  } catch (error) {
+    console.error("Error initializing page:", error);
+    showNotification("Terjadi kesalahan saat memuat halaman", 'error');
+  }
+});
+
+// ========== Notification System ==========
+function showNotification(message, type = 'info') {
+  // Remove existing notifications
+  $('.notification').remove();
+  
+  const colors = {
+    'success': 'bg-green-100 border-green-400 text-green-700',
+    'error': 'bg-red-100 border-red-400 text-red-700',
+    'warning': 'bg-yellow-100 border-yellow-400 text-yellow-700',
+    'info': 'bg-blue-100 border-blue-400 text-blue-700'
+  };
+  
+  const notification = $(`
+    <div class="notification fixed top-4 right-4 z-50 p-4 border rounded-lg shadow-lg max-w-md ${colors[type]}">
+      <div class="flex justify-between items-center">
+        <span>${message}</span>
+        <button class="ml-4 text-xl font-bold hover:opacity-75">&times;</button>
+      </div>
+    </div>
+  `);
+  
+  $('body').append(notification);
+  
+  // Auto hide after 5 seconds
+  setTimeout(() => {
+    notification.fadeOut(() => notification.remove());
+  }, 5000);
+  
+  // Manual close
+  notification.find('button').click(() => {
+    notification.fadeOut(() => notification.remove());
+  });
+}
+</script>
+}
