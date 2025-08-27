@@ -5,7 +5,7 @@
 
 <div class="text-center mb-6">
     <h2 class="text-2xl font-bold text-gray-800">Login</h2>
-    <p class="text-gray-500">Silakan masuk untuk melanjutkan</p>
+    <p class="text-gray-500">Please sign in to continue</p>
 </div>
 
 <div id="message" class="hidden mb-4 rounded-lg border px-4 py-3 text-sm font-medium" role="alert">
@@ -26,7 +26,7 @@
             class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 text-gray-700 shadow-sm focus:border-purple-500 focus:ring focus:ring-purple-300 focus:ring-opacity-50" />
     </div>
 
-    <!-- Tombol Login -->
+    <!-- Login Button -->
     <div>
         <button id="btnLogin" type="submit"
             class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md flex items-center justify-center">
@@ -38,66 +38,107 @@
             </svg>
         </button>
     </div>
-
 </form>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        // Event listener buat handle submit form login
         $("#loginForm").submit(function (e) {
-            e.preventDefault();
+            e.preventDefault(); // cegah form submit default (page reload)
 
-            // --- set loading state ---
-            $("#btnLogin").prop("disabled", true);
-            $("#btnText").text("Loading...");
-            $("#btnSpinner").removeClass("hidden");
+            // --- sembunyiin pesan lama ---
+            $("#message").fadeOut(150, function () {
+                $(this).addClass("hidden").text("");
+            });
 
+            const startTime = Date.now(); // simpan waktu mulai (buat kalkulasi delay minimal)
+            let pendingMessage = null;    // pesan error/success yg bakal ditampilin nanti
+            let pendingIsSuccess = false; // flag buat nandain sukses/engga
+            let willRedirect = false;     // flag kalau bakal redirect ke dashboard
+
+            // --- ubah tombol jadi loading state ---
+            setLoading(true);
+
+            // Request AJAX ke API login
             $.ajax({
-                url: "http://localhost:5125/api/auth/login",
+                url: "http://localhost:5125/api/auth/login", // endpoint login
                 method: "POST",
                 contentType: "application/json",
-                xhrFields: { withCredentials: true },
+                xhrFields: { withCredentials: true }, // biar cookie/session ikut ke request
                 data: JSON.stringify({
                     username: $("#username").val(),
                     password: $("#password").val()
                 }),
                 success: function (res) {
+                    // Kalau login berhasil dan ada data user
                     if (res.success && res.user) {
-                        window.location.href = "/Dashboard/Index";
+                        willRedirect = true;
+                        // Kasih jeda minimal 800ms biar UX lebih smooth
+                        withDelay(startTime, 800, function () {
+                            window.location.href = "/Dashboard/Index"; // redirect ke dashboard
+                        });
                     } else {
-                        showMessage(res.message || "Invalid username or password", false);
+                        // Kalau gagal, simpan pesan error
+                        pendingMessage = res.message || "Invalid username or password";
+                        pendingIsSuccess = false;
                     }
                 },
                 error: function (xhr) {
+                    // Default pesan error
                     let msg = "An error occurred while trying to login.";
                     if (xhr.status === 0) {
                         msg = "Unable to connect to the server. Please make sure the backend is running.";
                     } else {
+                        // Kalau ada response error dari server, coba ambil pesannya
                         try {
                             const err = JSON.parse(xhr.responseText);
                             msg = err.message || msg;
                         } catch { }
                     }
-                    showMessage(msg, false);
+                    pendingMessage = msg;
+                    pendingIsSuccess = false;
                 },
                 complete: function () {
-                    // --- reset loading state ---
-                    $("#btnLogin").prop("disabled", false);
-                    $("#btnText").text("Login");
-                    $("#btnSpinner").addClass("hidden");
+                    // Kalau login sukses & redirect, skip reset state
+                    if (willRedirect) return;
+
+                    // Biar nggak langsung muncul, tetep kasih delay minimal 800ms
+                    withDelay(startTime, 800, function () {
+                        setLoading(false); // balikin tombol ke normal
+                        if (pendingMessage) {
+                            showMessage(pendingMessage, pendingIsSuccess); // tampilin pesan error
+                        }
+                    });
                 }
             });
         });
 
+        // --- Helpers ---
+        // Fungsi buat kasih delay minimal biar UI nggak terlalu "instan"
+        function withDelay(start, minDelay, callback) {
+            const elapsed = Date.now() - start;
+            const remaining = Math.max(0, minDelay - elapsed);
+            setTimeout(callback, remaining);
+        }
 
-        // --- Helper show message ---
+        // Fungsi buat ubah state tombol (loading / normal)
+        function setLoading(isLoading) {
+            $("#btnLogin").prop("disabled", isLoading);
+            $("#btnText").text(isLoading ? "Loading..." : "Login");
+            $("#btnSpinner").toggleClass("hidden", !isLoading);
+        }
+
+        // Fungsi buat nampilin pesan sukses/error
         function showMessage(message, isSuccess) {
             $("#message")
+                .hide()
                 .removeClass("hidden border-green-300 bg-green-50 text-green-800 border-red-300 bg-red-50 text-red-800")
                 .addClass(isSuccess
-                    ? "border-green-300 bg-green-50 text-green-800"
-                    : "border-red-300 bg-red-50 text-red-800")
-                .text(message);
+                    ? "border-green-300 bg-green-50 text-green-800" // style sukses
+                    : "border-red-300 bg-red-50 text-red-800")     // style error
+                .text(message)
+                .fadeIn(200);
         }
     </script>
 }
