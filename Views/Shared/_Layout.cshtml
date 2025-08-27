@@ -183,7 +183,8 @@
                                     } else {
                                         html += `
                                     <a href="${menu.urls || '#'}"
-                                       class="flex items-center p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all ml-2">
+                                       class="menu-link flex items-center p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all ml-2"
+                                       data-url="${menu.urls}">
                                         <i class="${menu.icon} w-5"></i>
                                         <span class="ml-3">${menu.name}</span>
                                     </a>`;
@@ -193,6 +194,29 @@
                             }
 
                             $("#dynamicMenu").html(renderMenu(roots));
+
+                            // --- Highlight menu aktif berdasarkan path ---
+                            setTimeout(() => {
+                                const currentPath = window.location.pathname.toLowerCase();
+
+                                const $activeLink = $(`#dynamicMenu .menu-link`).filter(function () {
+                                    const url = $(this).data("url");
+                                    return url && currentPath.startsWith(url.toLowerCase());
+                                }).first();
+
+                                if ($activeLink.length) {
+                                    $activeLink.addClass("bg-white bg-opacity-20 font-semibold text-white");
+
+                                    // kalau dia submenu, buka parent-nya
+                                    const submenu = $activeLink.closest("[id^='submenu-']");
+                                    if (submenu.length) {
+                                        submenu.show();
+                                        submenu.prev("[data-toggle='submenu']")
+                                            .find(".fa-chevron-down")
+                                            .addClass("rotate-180");
+                                    }
+                                }
+                            }, 300);
                         },
                         error: function () {
                             $("#dynamicMenu").html(`<p class="text-red-400">Failed to load menus</p>`);
@@ -256,8 +280,15 @@
                     overlay.addClass("hidden");
                 }
             });
+
+            // --- Klik menu link -> highlight langsung ---
+            $(document).on("click", ".menu-link", function () {
+                $("#dynamicMenu .menu-link").removeClass("bg-white bg-opacity-20 font-semibold text-white");
+                $(this).addClass("bg-white bg-opacity-20 font-semibold text-white");
+            });
         });
     </script>
+
 
 
 
