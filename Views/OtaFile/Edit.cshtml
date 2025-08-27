@@ -92,7 +92,7 @@
                 $('#OtaDesc').val(data.otaDesc);
                 $('#OtaFilename').val(data.otaFilename);
                 $('#OtaStatus').val(data.otaStatus ?? 1);
-            } catch (err) { 
+            } catch (err) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -101,36 +101,42 @@
             }
         }
 
-        // Simpan perubahan (PUT)
         $('#btnSave').on('click', async function (e) {
             e.preventDefault();
 
-            const otaDesc = $('#OtaDesc').val().trim();
-            const otaFilename = $('#OtaFilename').val().trim();
-            const otaStatus = parseInt($('#OtaStatus').val());
-            const fileInput = $('#OtaAttachment')[0];
-            let base64File = null;
-
-            if (!otaDesc || !otaFilename) {
-                Swal.fire({ icon: 'warning', title: 'Oops...', text: 'Deskripsi dan Nama File wajib diisi' });
-                return;
-            }
-
-            if (fileInput.files.length > 0) {
-                const file = fileInput.files[0];
-                base64File = await toBase64(file);
-            }
+            const btn = $(this);
+            btn.prop('disabled', true).text('Updating...');
 
             try {
+                const otaDesc = $('#OtaDesc').val().trim();
+                const otaFilename = $('#OtaFilename').val().trim();
+                const otaStatus = parseInt($('#OtaStatus').val());
+                const fileInput = $('#OtaAttachment')[0];
+
+                if (!otaDesc || !otaFilename) {
+                    showAlert('warning', 'Oops...', 'Deskripsi dan Nama File wajib diisi');
+                    btn.prop('disabled', false).text('Update');
+                    return;
+                }
+
+                // === Build FormData ===
+                const formData = new FormData();
+                formData.append("OtaDesc", otaDesc);
+                formData.append("OtaFilename", otaFilename);
+                formData.append("OtaStatus", otaStatus);
+
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    if (!validateFile(file)) {
+                        btn.prop('disabled', false).text('Update');
+                        return;
+                    }
+                    formData.append("OtaAttachment", file);
+                }
+
                 const res = await fetch(`http://localhost:5125/api/otafiles/${otaId}`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        OtaDesc: otaDesc,
-                        OtaFilename: otaFilename,
-                        OtaAttachment: base64File || "", // jika kosong, biar tetap valid
-                        OtaStatus: otaStatus
-                    })
+                    body: formData
                 });
 
                 const result = await res.json();
@@ -145,13 +151,40 @@
                     });
                     window.location.href = '/OtaFile/Index';
                 } else {
-                    Swal.fire({ icon: 'error', title: 'Gagal', text: result.message || 'Gagal update OTA File' });
+                    showAlert('error', 'Gagal', result.message || 'Gagal update OTA File');
                 }
             } catch (err) {
                 console.error(err);
-                Swal.fire({ icon: 'error', title: 'Error', text: 'Terjadi kesalahan saat update OTA File' });
+                showAlert('error', 'Error', 'Terjadi kesalahan saat update OTA File');
+            } finally {
+                btn.prop('disabled', false).text('Update');
             }
         });
+
+        // === Helper alert ===
+        function showAlert(icon, title, text) {
+            Swal.fire({ icon, title, text });
+        }
+
+        // === Helper validasi file ===
+        function validateFile(file) {
+            const allowedExtensions = ['.bin', '.zip', '.rar', '.pdf', '.xls', '.xlsx', '.csv'];
+            const maxSizeMB = 5;
+
+            const fileExt = file.name.toLowerCase().slice(file.name.lastIndexOf('.'));
+            if (!allowedExtensions.includes(fileExt)) {
+                showAlert('error', 'Format tidak valid', `Hanya file dengan format: ${allowedExtensions.join(', ')} yang diperbolehkan`);
+                return false;
+            }
+
+            if (file.size > maxSizeMB * 1024 * 1024) {
+                showAlert('error', 'File terlalu besar', `Ukuran maksimal file adalah ${maxSizeMB} MB`);
+                return false;
+            }
+
+            return true;
+        }
+
 
         $('#btnCancel').on('click', function () {
             window.location.href = '/OtaFile/Index';
