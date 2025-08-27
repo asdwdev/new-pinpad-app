@@ -28,19 +28,29 @@
 
     <!-- Tombol Login -->
     <div>
-        <button type="submit"
-            class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md">
-            Login
+        <button id="btnLogin" type="submit"
+            class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-200 shadow-md flex items-center justify-center">
+            <span id="btnText">Login</span>
+            <svg id="btnSpinner" class="hidden ml-2 w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
         </button>
     </div>
+
 </form>
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // --- Handle form submit ---
         $("#loginForm").submit(function (e) {
             e.preventDefault();
+
+            // --- set loading state ---
+            $("#btnLogin").prop("disabled", true);
+            $("#btnText").text("Loading...");
+            $("#btnSpinner").removeClass("hidden");
 
             $.ajax({
                 url: "http://localhost:5125/api/auth/login",
@@ -53,18 +63,13 @@
                 }),
                 success: function (res) {
                     if (res.success && res.user) {
-                        // simpan level kalau perlu
-                        const accessLevel = parseInt(res.user.accessLevel || "0", 10);
-
-                        // sekarang nggak perlu hardcode lagi
-                        // cukup arahkan ke dashboard
                         window.location.href = "/Dashboard/Index";
                     } else {
                         showMessage(res.message || "Invalid username or password", false);
                     }
                 },
-                error: function (xhr, status, error) {
-                    let msg = "An error occurred while trying to login."; // default
+                error: function (xhr) {
+                    let msg = "An error occurred while trying to login.";
                     if (xhr.status === 0) {
                         msg = "Unable to connect to the server. Please make sure the backend is running.";
                     } else {
@@ -74,9 +79,16 @@
                         } catch { }
                     }
                     showMessage(msg, false);
+                },
+                complete: function () {
+                    // --- reset loading state ---
+                    $("#btnLogin").prop("disabled", false);
+                    $("#btnText").text("Login");
+                    $("#btnSpinner").addClass("hidden");
                 }
             });
         });
+
 
         // --- Helper show message ---
         function showMessage(message, isSuccess) {
