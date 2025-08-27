@@ -250,13 +250,13 @@
       // kalau belum ada data sama sekali (belum apply filter)
       if (allLogs.length === 0 && searchTerm === "") {
         tbody.innerHTML = `<tr>
-                                                <td colspan="13" class="text-center py-12 text-gray-500">
-                                                  <div class="flex flex-col items-center space-y-3">
-                                                    <p class="text-xl font-medium text-gray-600">No data to display</p>
-                                                    <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-                                                  </div>
-                                                </td>
-                                              </tr>`;
+                                                  <td colspan="13" class="text-center py-12 text-gray-500">
+                                                    <div class="flex flex-col items-center space-y-3">
+                                                      <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                                      <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                                    </div>
+                                                  </td>
+                                                </tr>`;
         document.getElementById("tableInfo").innerText = "Showing 0 to 0 of 0 entries";
         renderPagination(0, 0, 0); ~
 
@@ -300,18 +300,18 @@
         }
 
         tr.innerHTML = `
-                                            <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
-                                            <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
-                                            <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
-                                            <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
-                                            <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
-                                            <td class="px-4 py-3 border-b border-gray-200 align-top">
-                                              <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
-                                            </td>
-                                            <td class="px-4 py-3 border-b border-gray-200 align-top">
-                                              <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
-                                            </td>
-                                          `;
+                                              <td class="px-4 py-3 border-b border-gray-200 text-center">${start + index + 1}</td>
+                                              <td class="px-4 py-3 border-b border-gray-200">${new Date(log.dateTimes).toLocaleString()}</td>
+                                              <td class="px-4 py-3 border-b border-gray-200">${log.username || "-"}</td>
+                                              <td class="px-4 py-3 border-b border-gray-200">${badge}</td>
+                                              <td class="px-4 py-3 border-b border-gray-200 break-words">${log.keyValues || ""}</td>
+                                              <td class="px-4 py-3 border-b border-gray-200 align-top">
+                                                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.oldValues || ""}</pre>
+                                              </td>
+                                              <td class="px-4 py-3 border-b border-gray-200 align-top">
+                                                <pre class="whitespace-pre-wrap break-all text-xs max-w-md overflow-x-auto">${log.newValues || ""}</pre>
+                                              </td>
+                                            `;
 
         tbody.appendChild(tr);
       });

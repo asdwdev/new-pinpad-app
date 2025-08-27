@@ -1,82 +1,180 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Users";
+    ViewData["Title"] = "User List";
 }
 
 <div class="p-4 md:p-6">
-    <div class="mb-4">
+    <!-- Breadcrumb -->
+    <div class="mb-6 text-sm">
+        <a href="/User/Index" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">
+            User Management
+        </a> /
+        <span class="text-gray-500">Search</span>
+    </div>
+
+    <!-- Header: Add User -->
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-semibold text-gray-800">User Management</h2>
         <a href="/User/Create"
             class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md shadow text-sm font-medium transition-colors inline-flex items-center">
-            <span class="mr-1 font-bold text-lg">+</span> Tambah Users
+            <span class="mr-1 font-bold text-lg">+</span> Add User
         </a>
     </div>
 
-    <!-- Table Container -->
-    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
-        <!-- Table Header with Search -->
-        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="flex items-center mt-2 md:mt-0">
-                    <label class="text-sm text-gray-700 mr-3">Show:</label>
-                    <select id="pageSizeSelect"
-                        class="border border-gray-300 px-3 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span class="text-sm text-gray-700 ml-2">entries</span>
+    <!-- Filter Form -->
+    <form id="filterForm" class="max-w-6xl mx-auto bg-white p-6 rounded-lg shadow-md mb-10">
+        <h3 class="text-lg font-semibold text-gray-800 mb-6">Search & Filter Users</h3>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column -->
+            <div class="space-y-4">
+                <div>
+                    <label for="filterUsername" class="block text-gray-700 text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="filterUsername" placeholder="Enter username"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
                 </div>
-                <!-- Search Box -->
-                <div class="flex items-center gap-2">
-                    <label class="text-sm font-medium text-gray-700">Search:</label>
-                    <input type="text" id="searchInput" placeholder="Search in all columns..."
-                        class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent min-w-[250px]">
+
+                <div>
+                    <label for="filterFullName" class="block text-gray-700 text-sm font-medium mb-2">Full Name</label>
+                    <input type="text" id="filterFullName" placeholder="Enter full name"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+
+                <div>
+                    <label for="filterEmail" class="block text-gray-700 text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="filterEmail" placeholder="Enter email"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-4">
+                <div>
+                    <label for="filterAccessLevel" class="block text-gray-700 text-sm font-medium mb-2">Access
+                        Level</label>
+                    <select id="filterAccessLevel"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        <option value="">-- Select Access Level --</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="filterBranch" class="block text-gray-700 text-sm font-medium mb-2">Branch</label>
+                    <select id="filterBranch"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        <option value="">-- Select Branch --</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="filterLocked" class="block text-gray-700 text-sm font-medium mb-2">Locked Status</label>
+                    <select id="filterLocked"
+                        class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:outline-none">
+                        <option value="">-- All --</option>
+                        <option value="true">Locked</option>
+                        <option value="false">Active</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <!-- Table Responsive Wrapper -->
+        <!-- Action Buttons -->
+        <div class="flex justify-end mt-6 space-x-3">
+            <button type="button" id="resetFilter"
+                class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition">
+                Reset
+            </button>
+            <button type="submit" id="filterBtn"
+                class="bg-teal-600 text-white px-6 py-2 rounded-lg font-medium shadow hover:bg-teal-700 transition">
+                Apply Filter
+            </button>
+        </div>
+    </form>
+
+    <!-- Export Buttons (Hidden by default) -->
+    <div id="exportSection" class="hidden my-6">
+        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 class="text-sm font-semibold text-blue-800 mb-3">Export Data</h4>
+            <div class="flex flex-wrap gap-3">
+                <!-- Export PDF -->
+                <button id="exportPdf"
+                    style="background-color: #ef4444; color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#dc2626'"
+                    onmouseout="this.style.backgroundColor='#ef4444'">
+                    PDF
+                </button>
+
+                <!-- Export XLSX -->
+                <button id="exportXlsx"
+                    style="background-color:rgb(31, 199, 39); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#2563eb'"
+                    onmouseout="this.style.backgroundColor='#3b82f6'">
+                    XLSX
+                </button>
+
+                <button id="exportCsv"
+                    style="background-color:rgb(101, 101, 101); color: white; padding: 8px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s;"
+                    onmouseover="this.style.backgroundColor='#10b981'"
+                    onmouseout="this.style.backgroundColor='#10b981'">
+                    CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay for Export -->
+    <div id="exportLoading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+            <div class="flex items-center space-x-3">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                <div>
+                    <p class="text-gray-800 font-medium">Exporting...</p>
+                    <p class="text-gray-600 text-sm">Please wait while we prepare your file</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+        <!-- Table Header -->
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+            <h4 class="font-medium text-gray-800">User List</h4>
+            <input type="text" id="searchInput" placeholder="Quick Search..."
+                class="border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+        </div>
+
+        <!-- Table Content -->
         <div class="overflow-x-auto">
-            <table id="userListTable" class="min-w-full text-left border-collapse">
+            <table id="userTable" class="min-w-full text-left border-collapse">
                 <thead>
                     <tr class="bg-gray-100 text-gray-700 text-sm">
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">No</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Username</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Fullname</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Email</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Password</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Access Level</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">NIP</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Branch</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Status</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Created At</th>
-                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Action</th>
+                        <th class="px-4 py-3 font-semibold border-b">No</th>
+                        <th class="px-4 py-3 font-semibold border-b">Full Name</th>
+                        <th class="px-4 py-3 font-semibold border-b">Username</th>
+                        <th class="px-4 py-3 font-semibold border-b">NIP</th>
+                        <th class="px-4 py-3 font-semibold border-b">Email</th>
+                        <th class="px-4 py-3 font-semibold border-b">Access Level</th>
+                        <th class="px-4 py-3 font-semibold border-b">Branch</th>
+                        <th class="px-4 py-3 font-semibold border-b">Locked</th>
+                        <th class="px-4 py-3 font-semibold border-b">Created Date</th>
+                        <th class="px-4 py-3 font-semibold border-b">Action</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody" class="text-sm"></tbody>
+                <tbody id="tableBody" class="text-sm">
+                </tbody>
             </table>
         </div>
 
-        <!-- Pagination -->
-        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-sm text-gray-600" id="tableInfo">
-                    Showing 0 to 0 of 0 entries
-                </div>
-                <div class="flex items-center space-x-2" id="paginationContainer">
-                    <button id="prevBtn"
-                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                        disabled>
-                        Previous
-                    </button>
-                    <div id="pageNumbers" class="flex space-x-1"></div>
-                    <button id="nextBtn"
-                        class="px-3 py-2 border border-gray-300 rounded hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white"
-                        disabled>
-                        Next
-                    </button>
-                </div>
+        <!-- Table Footer -->
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-between items-center">
+            <div class="text-sm text-gray-600" id="tableInfo">No data loaded</div>
+            <div class="flex items-center space-x-2" id="paginationContainer">
+                <button id="prevBtn" class="px-3 py-2 border rounded bg-white hover:bg-gray-100 text-sm"
+                    disabled>Previous</button>
+                <div id="pageNumbers" class="flex space-x-1"></div>
+                <button id="nextBtn" class="px-3 py-2 border rounded bg-white hover:bg-gray-100 text-sm"
+                    disabled>Next</button>
             </div>
         </div>
     </div>
@@ -86,55 +184,65 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     let allUsers = [];
-    let filteredUsers = [];
     let currentPage = 1;
     let pageSize = 10;
 
-    function renderTable() {
+    function renderTable(users) {
         const start = (currentPage - 1) * pageSize;
         const end = start + pageSize;
-        const paginatedData = filteredUsers.slice(start, end);
+        const paginatedData = users.slice(start, end);
 
         let rows = "";
         paginatedData.forEach((user, index) => {
             rows += `
                 <tr class="border-b">
                     <td class="px-4 py-2">${start + index + 1}</td>
-                    <td class="px-4 py-2">${user.username}</td>
                     <td class="px-4 py-2">${user.fullName}</td>
-                    <td class="px-4 py-2">${user.email}</td>
-                    <td class="px-4 py-2">******</td>
-                    <td class="px-4 py-2">${user.accessLevel}</td>
+                    <td class="px-4 py-2">${user.username}</td>
                     <td class="px-4 py-2">${user.nip || "-"}</td>
+                    <td class="px-4 py-2">${user.email}</td>
+                    <td class="px-4 py-2">${user.accessLevel}</td>
                     <td class="px-4 py-2">${user.branch || "-"}</td>
                     <td class="px-4 py-2">${user.isLocked ? "Locked" : "Active"}</td>
                     <td class="px-4 py-2">${user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "-"}</td>
                     <td class="px-4 py-2 flex space-x-2">
                         <a href="/User/Edit/${user.id}"
-                            class="bg-orange-500 text-white w-8 h-8 rounded hover:bg-orange-600 transition-colors flex items-center justify-center">
+                           class="bg-orange-500 text-white w-8 h-8 rounded hover:bg-orange-600 flex items-center justify-center">
                             <i class="fa fa-edit"></i>
                         </a>
                         <button onclick="deleteUser(${user.id})" 
-                            class="bg-red-500 text-white w-8 h-8 rounded hover:bg-red-600 transition-colors flex items-center justify-center">
+                           class="bg-red-500 text-white w-8 h-8 rounded hover:bg-red-600 flex items-center justify-center">
                             <i class="fa fa-times"></i>
                         </button>
                     </td>
                 </tr>`;
         });
 
-        $("#tableBody").html(rows || `
-            <tr>
-                <td colspan="11" class="text-center text-gray-500 py-3">No data available</td>
-            </tr>
-        `);
+        $("#tableBody").html(
+            rows || `
+                <tr>
+                    <td colspan="10" class="text-center py-12 text-gray-500">
+                        <div class="flex flex-col items-center space-y-3">
+                            <p class="text-xl font-medium text-gray-600">No data to display</p>
+                            <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                        </div>
+                    </td>
+                </tr>`
+        );
 
-        // Info
-        const total = filteredUsers.length;
+        const total = users.length;
         const showingFrom = total === 0 ? 0 : start + 1;
         const showingTo = Math.min(end, total);
         $("#tableInfo").text(`Showing ${showingFrom} to ${showingTo} of ${total} entries`);
 
         renderPagination(total);
+
+        // tampilkan/hide export section
+        if (total > 0) {
+            $("#exportSection").removeClass("hidden");
+        } else {
+            $("#exportSection").addClass("hidden");
+        }
     }
 
     function renderPagination(total) {
@@ -144,8 +252,7 @@
 
         let buttons = "";
         for (let i = 1; i <= totalPages; i++) {
-            buttons += `
-                <button class="px-3 py-1 border rounded ${i === currentPage ? "bg-teal-500 text-white" : "bg-white"}"
+            buttons += `<button class="px-3 py-1 border rounded ${i === currentPage ? "bg-teal-500 text-white" : "bg-white"}"
                         onclick="goToPage(${i})">${i}</button>`;
         }
         $("#pageNumbers").html(buttons);
@@ -153,45 +260,50 @@
 
     function goToPage(page) {
         currentPage = page;
-        renderTable();
+        renderTable(allUsers);
     }
 
-    function filterUsers() {
-        const searchText = $("#searchInput").val().toLowerCase();
-        filteredUsers = allUsers.filter(user =>
-            (user.username || "").toLowerCase().includes(searchText) ||
-            (user.fullName || "").toLowerCase().includes(searchText) ||
-            (user.email || "").toLowerCase().includes(searchText) ||
-            (user.accessLevel || "").toLowerCase().includes(searchText) ||
-            (user.nip || "").toLowerCase().includes(searchText) ||
-            (user.branch || "").toLowerCase().includes(searchText) ||
-            (user.isLocked ? "locked" : "active").includes(searchText)
-        );
-        currentPage = 1;
-        renderTable();
-    }
+    function loadUsers(filters = {}) {
+        let query = $.param(filters);
+        let url = "http://localhost:5125/api/users" + (query ? "?" + query : "");
+        console.log("[GET]", url);
 
-    // Load all users
-    function loadUsers() {
         $.ajax({
-            url: "http://localhost:5125/api/users",
+            url: url,
             method: "GET",
             success: function (res) {
-                if (Array.isArray(res)) {
-                    allUsers = res;
-                    filteredUsers = res;
-                    renderTable();
-                } else {
-                    $("#tableBody").html(`<tr><td colspan="11" class="text-center text-red-500 py-3">Unexpected API response</td></tr>`);
-                }
+                allUsers = Array.isArray(res) ? res : [];
+                currentPage = 1; // reset ke page 1 tiap filter
+                renderTable(allUsers);
             },
             error: function () {
-                $("#tableBody").html(`<tr><td colspan="11" class="text-center text-red-500 py-3">Failed to load user data</td></tr>`);
+                allUsers = [];
+                renderTable([]);
+                Swal.fire({ icon: "error", title: "Error", text: "Failed to load data" });
             }
         });
     }
 
-    // Delete user
+    function loadBranches() {
+        $.get("http://localhost:5125/api/branches/branch-types", function (res) {
+            if (Array.isArray(res)) {
+                res.forEach(branch => {
+                    $("#filterBranch").append(`<option value="${branch.code}">${branch.name}</option>`);
+                });
+            }
+        });
+    }
+
+    function loadAccessLevels() {
+        $.get("http://localhost:5125/api/syslevels/dropdown", function (res) {
+            if (Array.isArray(res)) {
+                res.forEach(level => {
+                    $("#filterAccessLevel").append(`<option value="${level.id}">${level.name}</option>`);
+                });
+            }
+        });
+    }
+
     function deleteUser(id) {
         Swal.fire({
             title: 'Confirmation',
@@ -209,52 +321,107 @@
                 url: `http://localhost:5125/api/users/${id}`,
                 type: "DELETE",
                 success: function (response) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Success',
-                        text: response.message || 'User has been deleted successfully',
-                        timer: 2000,
-                        showConfirmButton: false
-                    });
-                    loadUsers();
+                    Swal.fire({ icon: 'success', title: 'Success', text: response.message || 'User deleted', timer: 2000, showConfirmButton: false });
+                    $("#filterForm").submit(); // reload data setelah delete
                 },
                 error: function (xhr) {
                     const res = xhr.responseJSON;
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Failed',
-                        text: res?.message || 'An error occurred while deleting the user'
-                    });
+                    Swal.fire({ icon: 'error', title: 'Failed', text: res?.message || 'Error deleting user' });
                 }
             });
         });
     }
 
-    // Events
+    // === EXPORT FUNCTION ===
+    function buildExportParams() {
+        const params = {};
+        if ($("#filterUsername").val()) params.username = $("#filterUsername").val();
+        if ($("#filterFullName").val()) params.fullName = $("#filterFullName").val();
+        if ($("#filterEmail").val()) params.email = $("#filterEmail").val();
+        if ($("#filterAccessLevel").val()) params.accessLevel = $("#filterAccessLevel").val();
+        if ($("#filterBranch").val()) params.branch = $("#filterBranch").val();
+        if ($("#filterLocked").val() !== "") params.isLocked = $("#filterLocked").val();
+        return params;
+    }
+
+    async function exportUsers(format) {
+        const filters = buildExportParams();
+        let query = $.param(filters);
+        const url = `http://localhost:5125/api/users/export?format=${format}${query ? "&" + query : ""}`;
+
+        $("#exportLoading").removeClass("hidden");
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                const error = await response.json();
+                Swal.fire({ icon: "error", title: "Export Failed", text: error.message || "Failed to export" });
+                return;
+            }
+            const blob = await response.blob();
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `UserExport_${new Date().toISOString().replace(/[-:T]/g, "").slice(0, 14)}.${format}`;
+            link.click();
+        } catch (err) {
+            Swal.fire({ icon: "error", title: "Export Error", text: err.message });
+        } finally {
+            $("#exportLoading").addClass("hidden");
+        }
+    }
+
     $(document).ready(function () {
-        loadUsers();
+        loadBranches();
+        loadAccessLevels();
 
-        $("#searchInput").on("input", filterUsers);
+        // Awal: kosongkan tabel
+        renderTable([]);
 
-        $("#pageSizeSelect").on("change", function () {
-            pageSize = parseInt($(this).val());
+        $("#filterForm").on("submit", function (e) {
+            e.preventDefault();
+
+            const filters = {
+                username: $.trim($("#filterUsername").val()),
+                fullName: $.trim($("#filterFullName").val()),
+                email: $.trim($("#filterEmail").val()),
+                accessLevel: $("#filterAccessLevel").val() || undefined,
+                branch: $("#filterBranch").val() || undefined,
+                isLocked: $("#filterLocked").val() === "" ? undefined : $("#filterLocked").val()
+            };
+
+            Object.keys(filters).forEach(k => filters[k] === undefined && delete filters[k]);
+
+            loadUsers(filters);
+        });
+
+        $("#searchInput").on("input", function () {
+            const keyword = $(this).val().toLowerCase();
+            const filtered = allUsers.filter(u =>
+                u.username.toLowerCase().includes(keyword) ||
+                u.fullName.toLowerCase().includes(keyword) ||
+                (u.email || "").toLowerCase().includes(keyword)
+            );
             currentPage = 1;
-            renderTable();
+            renderTable(filtered);
+        });
+
+        $("#resetFilter").on("click", function () {
+            $("#filterForm")[0].reset();
+            allUsers = [];
+            currentPage = 1;
+            renderTable([]); // kosongkan tabel
         });
 
         $("#prevBtn").on("click", function () {
-            if (currentPage > 1) {
-                currentPage--;
-                renderTable();
-            }
+            if (currentPage > 1) { currentPage--; renderTable(allUsers); }
+        });
+        $("#nextBtn").on("click", function () {
+            const totalPages = Math.ceil(allUsers.length / pageSize);
+            if (currentPage < totalPages) { currentPage++; renderTable(allUsers); }
         });
 
-        $("#nextBtn").on("click", function () {
-            const totalPages = Math.ceil(filteredUsers.length / pageSize);
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderTable();
-            }
-        });
+        // === Export button events ===
+        $("#exportPdf").on("click", () => exportUsers("pdf"));
+        $("#exportXlsx").on("click", () => exportUsers("xlsx"));
+        $("#exportCsv").on("click", () => exportUsers("csv"));
     });
 </script>

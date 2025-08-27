@@ -56,7 +56,7 @@
                         // redirect sesuai role
                         const accessLevel = parseInt(res.user.accessLevel || "0", 10);
 
-                        if (accessLevel === 1 || accessLevel === 3) {
+                        if (accessLevel === 1 || accessLevel === 3 || accessLevel === 4) {
                             window.location.href = "/Dashboard/Index";
                         } else if (accessLevel === 2) {
                             window.location.href = "/Branch/Index";
