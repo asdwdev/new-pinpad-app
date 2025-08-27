@@ -20,7 +20,7 @@ namespace NewPinpadApp.Controllers
 
     public IActionResult Edit(int id)
     {
-      ViewBag.Id = id;
+      ViewBag.LevelId = id;
       return View();
     }
   }

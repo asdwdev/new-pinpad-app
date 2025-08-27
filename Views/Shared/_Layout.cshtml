@@ -38,8 +38,6 @@
     transition-transform duration-300 ease-in-out md:transition-none md:duration-0
     h-screen overflow-y-auto shadow-2xl will-change-transform">
 
-
-
             <!-- Sidebar Header -->
             <div class="p-6 border-b border-white border-opacity-20">
                 <div class="flex items-center gap-4">
@@ -54,209 +52,11 @@
             </div>
 
             <!-- Navigation Menu -->
-            <nav class="p-4 space-y-2">
-                <!-- Dashboard Menu -->
-                <a id="menu-dashboard" asp-controller="Dashboard" asp-action="Index"
-                    class="hidden flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa fa-home text-lg"></i>
-                    </div>
-                    <span class="font-medium">Dashboard</span>
-                </a>
-
-                <!-- Monitoring Parent Menu -->
-                <div class="space-y-1">
-                    <button type="button" id="menu-monitoring-toggle"
-                        class="w-full group flex items-center justify-between p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all duration-200">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 flex items-center justify-center">
-                                <i class="fa-solid fa-chart-column text-lg"></i>
-                            </div>
-                            <span class="font-medium">Monitoring</span>
-                        </div>
-                        <i id="monitoring-arrow"
-                            class="fa-solid fa-chevron-down text-sm transition-transform duration-200"></i>
-                    </button>
-
-                    <!-- Monitoring Submenu -->
-                    <div id="monitoring-children" class="ml-6 space-y-1 hidden">
-                        <a id="menu-pinpad-list" asp-controller="Monitoring" asp-action="Index"
-                            class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
-                            @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "Index"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            : "hover:bg-white hover:bg-opacity-10")">
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="fa-solid fa-tablet-screen-button"></i>
-                            </div>
-                            <span>Pinpad List</span>
-                        </a>
-
-                        <a id="menu-pinpad-log" asp-controller="Monitoring" asp-action="PinpadLog"
-                            class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
-                            @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "PinpadLog"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="fa-solid fa-file-lines"></i>
-                            </div>
-                            <span>Pinpad Log</span>
-                        </a>
-
-                        <a id="menu-transaction-log" asp-controller="Monitoring" asp-action="TransactionLog"
-                            class="flex items-center gap-3 p-3 rounded-xl transition-all duration-200 text-sm
-                            @(ViewContext.RouteData.Values["controller"]?.ToString() == "Monitoring" && ViewContext.RouteData.Values["action"]?.ToString() == "TransactionLog"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         : "hover:bg-white hover:bg-opacity-10")">
-                            <div class="w-6 h-6 flex items-center justify-center">
-                                <i class="fa-solid fa-receipt"></i>
-                            </div>
-                            <span>Transaction Log</span>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Divider -->
-                <div id="line-top" class="hidden border-t border-white border-opacity-20 my-4"></div>
-
-                <a id="menu-ota-file" asp-controller="OtaFile" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "OTA"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-user text-lg"></i>
-                    </div>
-                    <span class="font-medium">Over - The - Air (OTA)</span>
-                </a>
-
-                <a id="menu-masterkey" asp-controller="MasterKey" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "MasterKey"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-key text-lg"></i>
-                    </div>
-                    <span class="font-medium">Master Key</span>
-                </a>
-
-                <!-- Pinpad Menu -->
-                <a id="menu-pinpad" asp-controller="Pinpad" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pinpad"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-credit-card text-lg"></i>
-                    </div>
-                    <span id="pinpad-label" class="font-medium">Pinpad (Admin Logistik)</span>
-                </a>
-
-                <!-- Divider -->
-                <div id="line-bottom" class="hidden border-t border-white border-opacity-20 my-4"></div>
-
-                <!-- Users Menu -->
-                <a id="menu-user" asp-controller="User" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "User"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-users text-lg"></i>
-                    </div>
-                    <span class="font-medium">Users</span>
-                </a>
-
-                <!-- Branch Menu -->
-                <a id="menu-branch" asp-controller="Branch" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Branch"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-building text-lg"></i>
-                    </div>
-                    <span class="font-medium">Branch</span>
-                </a>
-
-                <!-- Regional Menu -->
-                <a id="menu-regional" asp-controller="Regional" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Regional"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-map text-lg"></i>
-                    </div>
-                    <span class="font-medium">Regional</span>
-                </a>
-
-                <!-- Hak Akses Menu -->
-                <a id="menu-roleAkses" asp-controller="RoleAkses" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "RoleAkses"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fas fa-user-cog text-lg"></i>
-                    </div>
-                    <span class="font-medium">Role Akses</span>
-                </a>
-
-                <!-- Response Log Menu -->
-                <a id="menu-responselog" asp-controller="ResponseLog" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "ResponseLog"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="far fa-comments text-lg"></i>
-                    </div>
-                    <span class="font-medium">Response Log</span>
-                </a>
-
-                <!-- Device API Log Menu -->
-                <a id="menu-deviceapilog" asp-controller="DeviceAPILog" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "DeviceAPILog"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fas fa-tasks text-lg"></i>
-                    </div>
-                    <span class="font-medium">Device API Log</span>
-                </a>
-
-                <!-- Audit Log Menu -->
-                <a id="menu-auditlog" asp-controller="AuditLog" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "AuditLog"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa fa-history text-lg"></i>
-                    </div>
-                    <span class="font-medium">Audit Log</span>
-                </a>
-
-
-                <a id="menu-outlet" asp-controller="Outlet" asp-action="Index"
-                    class="hidden group flex items-center gap-3 p-3 rounded-xl transition-all duration-200
-                    @(ViewContext.RouteData.Values["controller"]?.ToString() == "Outlet"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ? "bg-white bg-opacity-20 font-semibold border-l-4 border-white pl-4" 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           : "hover:bg-white hover:bg-opacity-10")">
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i class="fa-solid fa-landmark text-lg"></i>
-                    </div>
-                    <span class="font-medium">Outlet</span>
-                </a>
-
-
+            <nav id="dynamicMenu" class="p-4 space-y-2">
+                <!-- menu dari database akan diinject JS -->
             </nav>
         </aside>
+
 
         <!-- Main Content -->
         <main class="flex-1 flex flex-col min-w-0">
@@ -318,97 +118,109 @@
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-
     <script>
-        // --- Disable transition saat page pertama load (biar gak flicker) ---
-        document.documentElement.classList.add('no-transitions');
-        window.addEventListener('load', () => {
-            document.documentElement.classList.remove('no-transitions');
-        });
-
         $(function () {
-            // --- Inisialisasi element ---
-            const userMenuBtn = $("#userMenuButton");
-            const userMenuDropdown = $("#userMenuDropdown");
             const sidebar = $("#sidebar");
             const overlay = $("#overlay");
             const mobileMenuBtn = $("#mobileMenuBtn");
+            const userMenuBtn = $("#userMenuButton");
+            const userMenuDropdown = $("#userMenuDropdown");
 
-            // --- Cek login & role user ---
+            // ---- Ambil user login ----
             $.ajax({
                 url: "http://localhost:5125/api/auth/me",
                 method: "GET",
-                xhrFields: { withCredentials: true }, // kirim cookie session
+                xhrFields: { withCredentials: true },
                 crossDomain: true,
                 success: function (res) {
-                    // kalau belum login -> redirect ke halaman login
                     if (!res || !res.success) {
                         window.location.href = "/Auth/Login";
                         return;
                     }
 
-                    // ambil role user dari accessLevel
-                    const accessLevel = parseInt(res.accessLevel);
+                    const levelId = res.accessLevel; // pastikan API "me" return levelId
 
-                    // --- Role: AccessLevel 1 ---
-                    if (accessLevel === 1) {
-                        $("#menu-dashboard, #menu-pinpad").removeClass("hidden");
-                        $("#menu-monitoring-toggle, #menu-pinpad-list").removeClass("hidden");
-                        $("#menu-pinpad-log, #menu-transaction-log").addClass("hidden");
-                    }
-                    // --- Role: AccessLevel 2 ---
-                    else if (accessLevel === 2) {
-                        $("#menu-branch, #menu-regional, #menu-outlet").removeClass("hidden");
-                        $("#menu-monitoring-toggle").addClass("hidden");
-                        $("#pinpad-label").text("Pinpad");
-                    }
-                    // --- Role: AccessLevel 3 ---
-                    else if (accessLevel === 3) {
-                        $("#menu-dashboard, #menu-user, #menu-regional").removeClass("hidden");
-                        $("#menu-monitoring-toggle, #menu-pinpad-list, #menu-pinpad-log, #menu-transaction-log, #menu-pinpad, #menu-branch, #menu-roleAkses, #menu-responselog, #menu-transactionlog, #menu-deviceapilog, #menu-auditlog, #menu-ota-file, #menu-masterkey").removeClass("hidden");
-                        $("#pinpad-label").text("Pinpad");
-                        $("#line-top, #line-bottom").removeClass("hidden");
-                    }
+                    // ---- Ambil menu sesuai level ----
+                    $.ajax({
+                        url: `http://localhost:5125/api/levelmenus/${levelId}`,
+                        method: "GET",
+                        success: function (menus) {
+                            // build tree
+                            const menuMap = {};
+                            menus.forEach(m => {
+                                m.children = [];
+                                menuMap[m.id] = m;
+                            });
 
-                    // --- Role: AccessLevel 4 ---
-                    else if (accessLevel === 4) {
-                        // menu yang boleh diakses
-                        $("#menu-dashboard, #menu-pinpad-list, #menu-monitoring-toggle, #menu-transaction-log, #menu-pinpad-log").removeClass("hidden");
-                        $("#pinpad-label").text("Pinpad");
+                            const roots = [];
+                            menus.forEach(m => {
+                                if (m.parentId) {
+                                    menuMap[m.parentId]?.children.push(m);
+                                } else {
+                                    roots.push(m);
+                                }
+                            });
 
-                        // menu yang tidak boleh diakses
-                        $("#menu-user, #menu-branch, #menu-regional, #menu-outlet, #menu-roleAkses, #menu-responselog, #menu-deviceapilog, #menu-auditlog, #menu-ota-file, #menu-masterkey").addClass("hidden");
-                    }
+                            // render recursive
+                            function renderMenu(items) {
+                                let html = "";
+                                items.forEach(menu => {
+                                    if (menu.children.length > 0) {
+                                        html += `
+                                    <div class="mb-2">
+                                        <div class="flex items-center p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all group justify-between cursor-pointer" 
+                                             data-toggle="submenu" data-id="${menu.id}">
+                                            <div class="flex items-center">
+                                                <i class="${menu.icon} w-5"></i>
+                                                <span class="ml-3">${menu.name}</span>
+                                            </div>
+                                            <i class="fa fa-chevron-down text-xs transition-transform duration-200"></i>
+                                        </div>
+                                        <div id="submenu-${menu.id}" class="ml-6 mt-1 hidden space-y-1">
+                                            ${renderMenu(menu.children)}
+                                        </div>
+                                    </div>`;
+                                    } else {
+                                        html += `
+                                    <a href="${menu.urls || '#'}"
+                                       class="flex items-center p-3 rounded-xl hover:bg-white hover:bg-opacity-10 transition-all ml-2">
+                                        <i class="${menu.icon} w-5"></i>
+                                        <span class="ml-3">${menu.name}</span>
+                                    </a>`;
+                                    }
+                                });
+                                return html;
+                            }
 
-
+                            $("#dynamicMenu").html(renderMenu(roots));
+                        },
+                        error: function () {
+                            $("#dynamicMenu").html(`<p class="text-red-400">Failed to load menus</p>`);
+                        }
+                    });
                 },
                 error: function () {
-                    // kalau request gagal -> redirect login
                     window.location.href = "/Auth/Login";
                 }
             });
 
-            // --- Toggle dropdown Monitoring ---
-            $("#menu-monitoring-toggle").on("click", function () {
-                const children = $("#monitoring-children");
-                const arrow = $("#monitoring-arrow");
-
-                children.toggleClass("hidden");   // tampilkan / sembunyikan submenu
-                arrow.toggleClass("rotate-180");  // rotasi panah
+            // --- Submenu toggle ---
+            $(document).on("click", "[data-toggle='submenu']", function () {
+                const id = $(this).data("id");
+                $(`#submenu-${id}`).slideToggle(200);
+                $(this).find(".fa-chevron-down").toggleClass("rotate-180");
             });
 
-            // --- Logout functionality ---
+            // --- Logout ---
             $("#logoutBtn").on("click", function (e) {
                 e.preventDefault();
-
                 $.ajax({
                     url: "http://localhost:5125/api/auth/logout",
                     method: "POST",
-                    xhrFields: { withCredentials: true }, // kirim cookie session
+                    xhrFields: { withCredentials: true },
                     crossDomain: true,
                     success: function (res) {
                         if (res && res.success) {
-                            // kalau logout berhasil -> balik ke login page
                             window.location.href = "/Auth/Login";
                         }
                     }
@@ -417,11 +229,10 @@
 
             // --- User dropdown toggle ---
             userMenuBtn.on("click", function (e) {
-                e.stopPropagation(); // cegah event bubbling
-                userMenuDropdown.toggleClass("hidden"); // show/hide dropdown
+                e.stopPropagation();
+                userMenuDropdown.toggleClass("hidden");
             });
 
-            // --- Close dropdown ketika klik di luar dropdown ---
             $(document).on("click", function (e) {
                 if (!userMenuBtn[0].contains(e.target) && !userMenuDropdown[0].contains(e.target)) {
                     userMenuDropdown.addClass("hidden");
@@ -430,27 +241,25 @@
 
             // --- Mobile menu toggle ---
             mobileMenuBtn.on("click", function () {
-                sidebar.toggleClass("-translate-x-full"); // buka/tutup sidebar
-                overlay.toggleClass("hidden");            // overlay tampil/hilang
+                sidebar.toggleClass("-translate-x-full");
+                overlay.toggleClass("hidden");
             });
 
-            // --- Klik overlay untuk tutup sidebar ---
             overlay.on("click", function () {
                 sidebar.addClass("-translate-x-full");
                 overlay.addClass("hidden");
             });
 
-            // --- Handle resize layar ---
             $(window).on("resize", function () {
                 if (window.innerWidth >= 768) {
-                    sidebar.removeClass("-translate-x-full"); // tampilkan sidebar
-                    overlay.addClass("hidden");               // sembunyikan overlay
+                    sidebar.removeClass("-translate-x-full");
+                    overlay.addClass("hidden");
                 }
             });
-
-            console.log("Dashboard initialized successfully");
         });
     </script>
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

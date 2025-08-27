@@ -52,17 +52,13 @@
                     password: $("#password").val()
                 }),
                 success: function (res) {
-                    if (res.success) {
-                        // redirect sesuai role
+                    if (res.success && res.user) {
+                        // simpan level kalau perlu
                         const accessLevel = parseInt(res.user.accessLevel || "0", 10);
 
-                        if (accessLevel === 1 || accessLevel === 3 || accessLevel === 4) {
-                            window.location.href = "/Dashboard/Index";
-                        } else if (accessLevel === 2) {
-                            window.location.href = "/Branch/Index";
-                        } else {
-                            showMessage("Invalid username or password", false);
-                        }
+                        // sekarang nggak perlu hardcode lagi
+                        // cukup arahkan ke dashboard
+                        window.location.href = "/Dashboard/Index";
                     } else {
                         showMessage(res.message || "Invalid username or password", false);
                     }
@@ -70,7 +66,6 @@
                 error: function (xhr, status, error) {
                     let msg = "An error occurred while trying to login."; // default
                     if (xhr.status === 0) {
-                        // server API-nya gak bisa diakses (mungkin dotnet belum jalan)
                         msg = "Unable to connect to the server. Please make sure the backend is running.";
                     } else {
                         try {
