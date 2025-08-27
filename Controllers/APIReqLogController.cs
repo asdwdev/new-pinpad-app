@@ -3,7 +3,7 @@ using NewPinpadApp.Attributes;
 
 namespace NewPinpadApp.Controllers
 {
-    public class DeviceAPILogController : Controller
+    public class APIReqLogController : Controller
     {
         [RequireApiSession]
         public IActionResult Index()

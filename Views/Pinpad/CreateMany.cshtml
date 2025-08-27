@@ -42,12 +42,10 @@
                 </div>
 
                 <!-- Download Template -->
-                <div style="margin-bottom: 32px;">
-                    <a href="@Url.Action("DownloadTemplate")"
-                        style="display: inline-block; background-color: #f97316; color: white; font-weight: 500; padding: 8px 24px; border-radius: 6px; text-decoration: none;">
-                        Download Template Upload File
-                    </a>
-                </div>
+                <button type="button" id="btnDownloadTemplate"
+                    style="background-color:#f97316; color:white; padding:8px 24px; border:none; border-radius:6px; cursor:pointer;">
+                    Download Template Upload File
+                </button>
 
                 <!-- Action Buttons -->
                 <div style="display: flex; justify-content: flex-end; gap: 12px;">
@@ -93,17 +91,28 @@
 </div>
 
 <!-- Loading Overlay -->
-<div id="loadingOverlay" 
-     class="fixed inset-0 bg-gray-700/50 hidden z-50 flex items-center justify-center">
-  <div class="bg-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3">
-    <!-- Spinner -->
-    <div class="w-8 h-8 border-2 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
-    <span class="text-gray-700 font-medium">Uploading file...</span>
-  </div>
+<div id="loadingOverlay" class="fixed inset-0 bg-gray-700/50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white px-6 py-4 rounded-lg shadow-lg flex items-center space-x-3">
+        <!-- Spinner -->
+        <div class="w-8 h-8 border-2 border-teal-600 border-t-transparent rounded-full animate-spin"></div>
+        <span class="text-gray-700 font-medium">Uploading file...</span>
+    </div>
+</div>
+
+<div id="downloadLoading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+        <div class="flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div>
+                <p class="text-gray-800 font-medium">Downloading...</p>
+                <p class="text-gray-600 text-sm">Please wait while we prepare your file</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function updateFileName() {
@@ -250,6 +259,46 @@
             });
         }
     });
+
+
+
+    $("#btnDownloadTemplate").on("click", function () {
+        // tampilkan overlay
+        $("#downloadLoading").removeClass("hidden");
+
+        $.ajax({
+            url: "http://localhost:5125/api/PinpadPreview/download-template",
+            method: "GET",
+            xhrFields: {
+                responseType: 'blob' // supaya hasilnya Blob
+            },
+            success: function (data) {
+                const url = window.URL.createObjectURL(data);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = "Template_Multiple_Insert_Pinpad.xlsx";
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+                // kasih jeda 1.5 detik sebelum overlay ditutup
+                setTimeout(function () {
+                    $("#downloadLoading").addClass("hidden");
+                }, 1500);
+            },
+            error: function () {
+                $("#downloadLoading").addClass("hidden");
+                Swal.fire({
+                    icon: "error",
+                    title: "Gagal",
+                    text: "Tidak bisa download template"
+                });
+            }
+        });
+    });
+
+
 
 
 

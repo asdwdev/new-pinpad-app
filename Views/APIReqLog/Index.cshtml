@@ -1,0 +1,482 @@
+@{
+    ViewData["Title"] = "API Request Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="p-4 md:p-6">
+    <div class="mb-4 text-sm px-4 sm:px-0">
+        <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">API Request Log</a> /
+        <span class="text-gray-500">Inquiry</span>
+    </div>
+
+    <!-- Table Container -->
+    <div class="bg-white shadow-lg rounded-lg border border-gray-200 overflow-hidden">
+        <!-- Table Header with Search and Filters -->
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
+            <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+
+                <!-- Date Range + Search -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <label class="text-sm font-medium text-gray-700">Jangka Waktu:</label>
+                        <input type="date" id="startDate"
+                            class="border border-gray-300 px-3 py-2 rounded text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
+                        <span class="text-sm text-gray-600">s/d</span>
+                        <input type="date" id="endDate"
+                            class="border border-gray-300 px-3 py-2 rounded text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
+                    </div>
+
+                    <!-- Search Input -->
+                    <input type="text" id="searchInput" placeholder="Cari..."
+                        class="border border-gray-300 px-3 py-2 rounded text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent" />
+
+                    <button id="searchBtn"
+                        class="bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-colors text-sm font-medium flex items-center gap-2">
+                        <svg id="searchSpinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span id="searchText">Search</span>
+                    </button>
+                </div>
+
+                <!-- Export Buttons -->
+                <div class="flex items-center gap-2">
+                    <button id="btnExportPdf"
+                        class="bg-red-600 text-white px-3 py-2 rounded-md hover:bg-red-700 transition-colors text-sm font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg id="pdfSpinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span id="pdfText">Export PDF</span>
+                    </button>
+                    <button id="btnExportExcel"
+                        class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors text-sm font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg id="excelSpinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span id="excelText">Export Excel</span>
+                    </button>
+                    <button id="btnExportCsv"
+                        class="bg-gray-600 text-white px-3 py-2 rounded-md hover:bg-gray-700 transition-colors text-sm font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                        <svg id="csvSpinner" class="hidden w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span id="csvText">Export CSV</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left border-collapse">
+                <thead>
+                    <tr class="bg-gray-100 text-gray-700 text-sm">
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Proses</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">ReqBy</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">ReqDate</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">StatusCode</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">Result</th>
+                        <th class="px-4 py-3 font-semibold border-b border-gray-200">ResponseTime</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody" class="text-sm">
+                    <tr>
+                        <td colspan="6" class="text-center py-8 text-gray-500">Silakan pilih tanggal dan klik Search untuk melihat data</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <div class="flex flex-col lg:flex-row justify-between items-center gap-4">
+                <!-- Page Size Selection -->
+                <div class="flex items-center gap-2 lg:gap-3 order-1 lg:order-1">
+                    <label class="text-sm text-gray-600 hidden sm:inline">Show:</label>
+                    <select id="pageSizeSelect" class="border border-gray-300 rounded px-2 py-1 text-sm focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <span class="text-sm text-gray-600 hidden sm:inline">entries per page</span>
+                </div>
+
+                <!-- Pagination Info -->
+                <div class="text-sm text-gray-600 text-center order-2 lg:order-2" id="tableInfo">No data to display</div>
+
+                <!-- Pagination Controls -->
+                <div class="flex items-center justify-center order-3 lg:order-3 w-full lg:w-auto">
+                    <!-- Previous Button -->
+                    <button id="prevBtn" class="px-3 py-2 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center gap-1" disabled>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                        <span class="hidden sm:inline">Previous</span>
+                    </button>
+
+                    <!-- Page Numbers -->
+                    <div id="pageNumbers" class="flex items-center space-x-1 mx-2"></div>
+
+                    <!-- Next Button -->
+                    <button id="nextBtn" class="px-3 py-2 text-sm font-medium rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 disabled:border-gray-200 disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center gap-1" disabled>
+                        <span class="hidden sm:inline">Next</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Overlay -->
+<div id="exportLoading" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+        <div class="flex items-center space-x-3">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <div>
+                <p class="text-gray-800 font-medium">Exporting...</p>
+                <p class="text-gray-600 text-sm">Please wait while we prepare your file</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        let currentPage = 1;
+        let pageSize = 10;
+        let hasSearched = false;
+
+        // --- Clear table data ---
+        function clearTable() {
+            $("#tableBody").html(`<tr><td colspan="6" class="text-center py-8 text-gray-500">Silakan pilih tanggal dan klik Search untuk melihat data</td></tr>`);
+            $("#pagination").html("");
+            $("#tableInfo").text("No data to display");
+            hasSearched = false;
+        }
+
+        // --- Show loading state for search ---
+        function showSearchLoading() {
+            $("#searchSpinner").removeClass("hidden");
+            $("#searchText").text("Searching...");
+            $("#searchBtn").prop("disabled", true);
+        }
+
+        // --- Hide loading state for search ---
+        function hideSearchLoading() {
+            $("#searchSpinner").addClass("hidden");
+            $("#searchText").text("Search");
+            $("#searchBtn").prop("disabled", false);
+        }
+
+        // --- Show loading overlay for export ---
+        function showExportLoading() {
+            $("#exportLoading").removeClass("hidden");
+            $("#btnExportPdf, #btnExportExcel, #btnExportCsv").prop("disabled", true);
+        }
+
+        // --- Hide loading overlay for export ---
+        function hideExportLoading() {
+            $("#exportLoading").addClass("hidden");
+            $("#btnExportPdf, #btnExportExcel, #btnExportCsv").prop("disabled", false);
+        }
+
+        // --- Load data dari API ---
+        function loadData(page = 1) {
+            if (!hasSearched) return;
+            
+            currentPage = page;
+            const params = { page, pageSize };
+
+            const startDate = $("#startDate").val();
+            if (startDate) params.startDate = startDate;
+
+            const endDate = $("#endDate").val();
+            if (endDate) params.endDate = endDate;
+
+            const search = $("#searchInput").val();
+            if (search) params.search = search;
+
+            $.ajax({
+                url: `http://localhost:5125/api/apireqlog`,
+                method: "GET",
+                xhrFields: { withCredentials: true },
+                data: params,
+                success: function (res) {
+                    if (res.success && res.data && res.data.data.length > 0) {
+                        renderTable(res.data.data);
+                        renderPagination(res.data.pagination);
+                        updateInfo(res.data.pagination);
+                    } else {
+                        $("#tableBody").html(`<tr><td colspan="6" class="text-center py-4 text-gray-500">No data found</td></tr>`);
+                        $("#pagination").html("");
+                        $("#tableInfo").text("No data to display");
+                    }
+                },
+                error: function (xhr) {
+                    $("#tableBody").html(`<tr><td colspan="6" class="text-center py-4 text-red-500">Error: ${xhr.responseJSON?.message || "Failed to load data"}</td></tr>`);
+                    $("#pagination").html("");
+                    $("#tableInfo").text("Error loading data");
+                }
+            });
+        }
+
+        // --- Render isi tabel ---
+        function renderTable(data) {
+            let rows = "";
+            data.forEach(item => {
+                rows += `
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-4 py-3 border-b border-gray-100">${item.proses || "-"}</td>
+                            <td class="px-4 py-3 border-b border-gray-100">${item.reqBy || "-"}</td>
+                            <td class="px-4 py-3 border-b border-gray-100">${formatDate(item.reqDate)}</td>
+                            <td class="px-4 py-3 border-b border-gray-100">
+                                <span class="px-2 py-1 text-xs rounded-full ${getStatusColor(item.statusCode)}">
+                                    ${item.statusCode || "-"}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 border-b border-gray-100 max-w-xs truncate" title="${escapeHtml(item.result)}">
+                                ${escapeHtml(item.result) || "-"}
+                            </td>
+                            <td class="px-4 py-3 border-b border-gray-100">${item.responseTime ?? "-"}</td>
+                        </tr>`;
+            });
+            $("#tableBody").html(rows);
+        }
+
+                // --- Render pagination dengan smart pagination ---
+        function renderPagination(pagination) {
+            const { currentPage, totalPages, totalCount } = pagination;
+            
+            // Store pagination data for resize handling
+            window.currentPaginationData = pagination;
+            
+            // Update navigation buttons
+            $("#prevBtn").prop("disabled", currentPage <= 1);
+            $("#nextBtn").prop("disabled", currentPage >= totalPages);
+            
+            // Render page numbers
+            let pageNumbersHtml = "";
+            
+            // Check if mobile view (you can adjust this breakpoint)
+            const isMobile = window.innerWidth < 768;
+            
+            if (totalPages <= 1) {
+                // No pagination needed
+                pageNumbersHtml = "";
+            } else if (isMobile && totalPages > 5) {
+                // Mobile view: show current page + prev/next + first/last
+                if (currentPage > 1) {
+                    pageNumbersHtml += `<button class="px-2 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400" onclick="loadData(1)">1</button>`;
+                    if (currentPage > 2) {
+                        pageNumbersHtml += `<span class="px-2 py-2 text-sm text-gray-500">...</span>`;
+                    }
+                }
+                
+                pageNumbersHtml += `<button class="px-2 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer bg-teal-600 text-white border-teal-600">${currentPage}</button>`;
+                
+                if (currentPage < totalPages) {
+                    if (currentPage < totalPages - 1) {
+                        pageNumbersHtml += `<span class="px-2 py-2 text-sm text-gray-500">...</span>`;
+                    }
+                    pageNumbersHtml += `<button class="px-2 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400" onclick="loadData(${totalPages})">${totalPages}</button>`;
+                }
+            } else if (totalPages <= 7) {
+                // Show all pages if 7 or fewer
+                for (let i = 1; i <= totalPages; i++) {
+                    pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer ${i === currentPage ? 'bg-teal-600 text-white border-teal-600' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400'}" onclick="loadData(${i})">${i}</button>`;
+                }
+            } else {
+                // Smart pagination for many pages
+                if (currentPage <= 4) {
+                    // Show first 5 pages + ellipsis + last page
+                    for (let i = 1; i <= 5; i++) {
+                        pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer ${i === currentPage ? 'bg-teal-600 text-white border-teal-600' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400'}" onclick="loadData(${i})">${i}</button>`;
+                    }
+                    pageNumbersHtml += `<span class="px-3 py-2 text-sm text-gray-500">...</span>`;
+                    pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400" onclick="loadData(${totalPages})">${totalPages}</button>`;
+                } else if (currentPage >= totalPages - 3) {
+                    // Show first page + ellipsis + last 5 pages
+                    pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400" onclick="loadData(1)">1</button>`;
+                    pageNumbersHtml += `<span class="px-3 py-2 text-sm text-gray-500">...</span>`;
+                    for (let i = totalPages - 4; i <= totalPages; i++) {
+                        pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer ${i === currentPage ? 'bg-teal-600 text-white border-teal-600' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400'}" onclick="loadData(${i})">${i}</button>`;
+                    }
+                } else {
+                    // Show first page + ellipsis + current page ± 1 + ellipsis + last page
+                    pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400" onclick="loadData(1)">1</button>`;
+                    pageNumbersHtml += `<span class="px-3 py-2 text-sm text-gray-500">...</span>`;
+                    for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+                        pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer ${i === currentPage ? 'bg-teal-600 text-white border-teal-600' : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400'}" onclick="loadData(${i})">${i}</button>`;
+                    }
+                    pageNumbersHtml += `<span class="px-2 py-2 text-sm text-gray-500">...</span>`;
+                    pageNumbersHtml += `<button class="px-3 py-2 text-sm font-medium rounded-md border transition-all duration-200 cursor-pointer border-gray-300 bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-400" onclick="loadData(${totalPages})">${totalPages}</button>`;
+                }
+            }
+            
+            $("#pageNumbers").html(pageNumbersHtml);
+        }
+
+        // --- Update table info ---
+        function updateInfo(pagination) {
+            const { currentPage, pageSize, totalCount } = pagination;
+            const start = (currentPage - 1) * pageSize + 1;
+            const end = Math.min(currentPage * pageSize, totalCount);
+            $("#tableInfo").text(`Showing ${start} to ${end} of ${totalCount} entries`);
+        }
+
+        // --- Get status color ---
+        function getStatusColor(statusCode) {
+            if (!statusCode) return "bg-gray-100 text-gray-600";
+            
+            const code = parseInt(statusCode);
+            if (code >= 200 && code < 300) return "bg-green-100 text-green-800";
+            if (code >= 300 && code < 400) return "bg-blue-100 text-blue-800";
+            if (code >= 400 && code < 500) return "bg-yellow-100 text-yellow-800";
+            if (code >= 500) return "bg-red-100 text-red-800";
+            return "bg-gray-100 text-gray-600";
+        }
+
+        // --- Format date ---
+        function formatDate(dateStr) {
+            if (!dateStr) return "-";
+            const d = new Date(dateStr);
+            return d.toLocaleString('id-ID', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+
+        // --- Escape HTML (anti XSS) ---
+        function escapeHtml(text) {
+            if (!text) return "";
+            return text.replace(/[&<>"']/g, function (m) {
+                return ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                })[m];
+            });
+        }
+
+        // --- Event handlers ---
+        $("#searchBtn").on("click", function () {
+            const startDate = $("#startDate").val();
+            const endDate = $("#endDate").val();
+            
+            if (!startDate || !endDate) {
+                alert("Silakan pilih tanggal awal dan akhir terlebih dahulu");
+                return;
+            }
+            
+            clearTable();
+            showSearchLoading();
+            hasSearched = true;
+            
+            // Simulate loading delay
+            setTimeout(() => {
+                loadData(1);
+                hideSearchLoading();
+            }, 500);
+        });
+
+        $("#pageSizeSelect").on("change", function () {
+            pageSize = parseInt($(this).val());
+            if (hasSearched) {
+                loadData(1);
+            }
+        });
+
+        $("#prevBtn").on("click", function () {
+            if (currentPage > 1 && hasSearched) {
+                loadData(currentPage - 1);
+            }
+        });
+
+        $("#nextBtn").on("click", function () {
+            if (hasSearched) {
+                loadData(currentPage + 1);
+            }
+        });
+
+        // --- Export buttons dengan overlay loading ---
+        function buildExportUrl(type) {
+            const startDate = $("#startDate").val();
+            const endDate = $("#endDate").val();
+            const search = $("#searchInput").val();
+            return `http://localhost:5125/api/apireqlog/export/${type}?startDate=${startDate}&endDate=${endDate}&search=${search}`;
+        }
+
+        $("#btnExportPdf").on("click", function() {
+            if (!hasSearched) {
+                alert("Silakan search data terlebih dahulu");
+                return;
+            }
+            showExportLoading();
+            setTimeout(() => {
+                window.location = buildExportUrl("pdf");
+                hideExportLoading();
+            }, 1000);
+        });
+
+        $("#btnExportExcel").on("click", function() {
+            if (!hasSearched) {
+                alert("Silakan search data terlebih dahulu");
+                return;
+            }
+            showExportLoading();
+            setTimeout(() => {
+                window.location = buildExportUrl("excel");
+                hideExportLoading();
+            }, 1000);
+        });
+
+        $("#btnExportCsv").on("click", function() {
+            if (!hasSearched) {
+                alert("Silakan search data terlebih dahulu");
+                return;
+            }
+            showExportLoading();
+            setTimeout(() => {
+                window.location = buildExportUrl("csv");
+                hideExportLoading();
+            }, 1000);
+        });
+
+        // --- Clear data when date inputs change ---
+        $("#startDate, #endDate").on("change", function() {
+            clearTable();
+        });
+
+        // --- Handle window resize for responsive pagination ---
+        $(window).on("resize", function() {
+            // Re-render pagination if data exists
+            if (hasSearched) {
+                // This will trigger responsive pagination
+                const currentPagination = window.currentPaginationData;
+                if (currentPagination) {
+                    renderPagination(currentPagination);
+                }
+            }
+        });
+
+        // --- Load pertama kali ---
+        $(document).ready(function () {
+            clearTable();
+        });
+    </script>
+}
