@@ -10,14 +10,14 @@
   </div>
 
   <div class="flex gap-2 p-5">
-    <button id="btnCreate" class="hidden cs-only bg-teal-500 text-white px-4 py-2 rounded-md 
+    <button id="btnCreate" class="bg-teal-500 text-white px-4 py-2 rounded-md 
            hover:bg-teal-600 transition-colors flex items-center gap-2 
            text-sm font-medium">
       <i class="fa fa-plus"></i>
       <span>Tambah Pinpad</span>
     </button>
 
-    <button id="btnCreateMany" class="hidden cs-only bg-orange-500 text-white px-4 py-2 rounded-md 
+    <button id="btnCreateMany" class="bg-orange-500 text-white px-4 py-2 rounded-md 
            hover:bg-orange-600 transition-colors flex items-center gap-2 
            text-sm font-medium">
       <i class="fa fa-upload"></i>
@@ -156,42 +156,6 @@
       filterAndDisplayData();
     });
 
-    let isCS = false;
-
-    function checkUserAccessLevel() {
-      $.ajax({
-        url: "http://localhost:5125/api/auth/me",
-        method: "GET",
-        xhrFields: { withCredentials: true },
-        crossDomain: true,
-        success: function (res) {
-          if (!res || !res.success) {
-            window.location.href = "/Auth/Login";
-            return;
-          }
-
-          // akses langsung angka accessLevel
-          const accessLevel = parseInt(res.accessLevel, 10);
-          isCS = (accessLevel === 3);
-
-          applyRoleVisibility();
-        },
-        error: function () {
-          window.location.href = "/Auth/Login";
-        }
-      });
-    }
-
-    function applyRoleVisibility() {
-      if (isCS) {
-        $('#btnCreate, #btnCreateMany').removeClass('hidden');
-        $('.deleteBtn, .cs-only').removeClass('hidden');
-      } else {
-        $('#btnCreate, #btnCreateMany').addClass('hidden');
-        $('.deleteBtn, .cs-only').addClass('hidden');
-      }
-    }
-
     function updateSortIcons() {
       $('.sort-icon').text('↕');
       if (currentSort.column) {
@@ -321,6 +285,34 @@
       updatePaginationInfo(startIndex, endIndex, totalItems);
       updatePaginationControls(totalPages);
     }
+
+    function checkUserAccessLevel() {
+      $.ajax({
+        url: 'http://localhost:5125/api/auth/me', // API untuk cek user saat ini
+        type: 'GET',
+        xhrFields: { withCredentials: true },
+        success: function (res) {
+          if (res.success) {
+            const accessLevel = res.accessLevel; // ini sesuai session yg Anda set di AuthController
+
+            // Kalau Logistics Admin → sembunyiin tombol tertentu
+            if (accessLevel == 2) {
+              // hide tombol tambah pinpad & tambah banyak
+              $("#btnCreate, #btnCreateMany").hide();
+              // hide semua tombol delete
+              $(".deleteBtn").hide();
+            }
+          } else {
+            // kalau belum login
+            window.location.href = "/Auth/Login";
+          }
+        },
+        error: function () {
+          window.location.href = "/Auth/Login";
+        }
+      });
+    }
+
 
     function updatePaginationInfo(start, end, total) {
       const displayStart = total === 0 ? 0 : start + 1;
