@@ -26,7 +26,7 @@
                 <!-- OtaFilename -->
                 <div>
                     <label for="OtaFilename" class="block text-sm font-medium text-gray-700 mb-1">Nama File</label>
-                    <input type="text" id="OtaFilename" name="OtaFilename" required
+                    <input type="text" id="OtaFilename" name="OtaFilename" required disabled
                         class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500">
                 </div>
 
@@ -168,10 +168,15 @@
             return true;
         }
 
-
-
         $('#btnCancel').on('click', function () {
             window.location.href = '/OtaFile/Index';
+        });
+
+        $('#OtaAttachment').on('change', function () {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                $('#OtaFilename').val(file.name); // langsung pakai full filename
+            }
         });
     </script>
 }
