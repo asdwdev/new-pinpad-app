@@ -27,7 +27,7 @@
                 <!-- OtaFilename -->
                 <div>
                     <label for="OtaFilename" class="block text-sm font-medium text-gray-700 mb-1">Nama File</label>
-                    <input type="text" id="OtaFilename" name="OtaFilename" required
+                    <input type="text" id="OtaFilename" name="OtaFilename" required disabled
                         class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-teal-500">
                 </div>
 
@@ -116,9 +116,9 @@
             } else {
                 // ✅ Default: Download link
                 previewHtml = `
-                            <a href="${fileUrl}" target="_blank" class="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">
-                                Download File
-                            </a>`;
+                                    <a href="${fileUrl}" target="_blank" class="px-4 py-2 bg-teal-600 text-white rounded hover:bg-teal-700">
+                                        Download File
+                                    </a>`;
             }
 
             $('#filePreview').html(previewHtml);
@@ -209,6 +209,13 @@
         // Cancel button
         $('#btnCancel').on('click', function () {
             window.location.href = '/OtaFile/Index';
+        });
+
+        $('#OtaAttachment').on('change', function () {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                $('#OtaFilename').val(file.name); // langsung pakai full filename
+            }
         });
 
         // === Init ===
