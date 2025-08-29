@@ -14,14 +14,14 @@
            hover:bg-teal-600 transition-colors flex items-center gap-2 
            text-sm font-medium">
       <i class="fa fa-plus"></i>
-      <span>Tambah Pinpad</span>
+      <span>Add Pinpad</span>
     </a>
 
     <a href="/Pinpad/CreateMany" id="btnCreateMany" class="bg-orange-500 text-white px-4 py-2 rounded-md 
            hover:bg-orange-600 transition-colors flex items-center gap-2 
            text-sm font-medium">
       <i class="fa fa-upload"></i>
-      <span>Tambah Banyak Pinpad</span>
+      <span>Add Multiple Pinpads</span>
     </a>
   </div>
 
@@ -31,7 +31,7 @@
     <!-- Search field -->
     <div class="flex items-center">
       <label class="text-sm text-gray-700 mr-3">Search:</label>
-      <input type="text" id="searchInput" placeholder="Search in all columns..."
+      <input type="text" id="searchInput" placeholder="Search..."
         class="border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 text-sm min-w-[250px]">
     </div>
 
@@ -432,25 +432,29 @@
       if (!status) return 'bg-gray-100 text-gray-800';
 
       switch (status.toLowerCase()) {
-        case 'active': return 'bg-green-100 text-green-800';
-        case 'inactive': return 'bg-gray-100 text-gray-800';
-        case 'repair': return 'bg-yellow-100 text-yellow-800';
-        case 'maintenance': return 'bg-orange-100 text-orange-800';
-        case 'error': return 'bg-red-100 text-red-800';
-        default: return 'bg-gray-100 text-gray-800';
+        case 'ready':
+          return 'bg-green-100 text-green-800';
+        case 'notready':
+          return 'bg-yellow-100 text-yellow-800';
+        case 'active':
+          return 'bg-blue-100 text-blue-800';
+        case 'inactive':
+          return 'bg-gray-200 text-gray-800';
+        default:
+          return 'bg-gray-100 text-gray-800';
       }
     }
 
     window.deletePinpad = function (id, serialNumber) {
       Swal.fire({
-        title: 'Konfirmasi',
-        text: `Yakin ingin menghapus Pinpad dengan SN: ${serialNumber}?`,
+        title: 'Confirmation',
+        text: `Are you sure you want to delete the Pinpad with SN: ${serialNumber}?`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, Hapus',
-        cancelButtonText: 'Batal'
+        confirmButtonText: 'Yes, Delete',
+        cancelButtonText: 'Cancel'
       }).then((result) => {
         if (!result.isConfirmed) return;
 
@@ -460,8 +464,8 @@
           success: function (response) {
             Swal.fire({
               icon: 'success',
-              title: 'Berhasil',
-              text: response.message || `Pinpad ${serialNumber} berhasil dihapus`,
+              title: 'Success',
+              text: response.message || `Pinpad ${serialNumber} has been successfully removed`,
               timer: 2000,
               showConfirmButton: false
             });
@@ -475,8 +479,8 @@
             const res = xhr.responseJSON;
             Swal.fire({
               icon: 'error',
-              title: 'Gagal',
-              text: res?.message || 'Terjadi kesalahan saat menghapus data'
+              title: 'Failed',
+              text: res?.message || 'An error occurred while deleting the data'
             });
           }
         });

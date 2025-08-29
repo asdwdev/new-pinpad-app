@@ -38,11 +38,10 @@
         <select id="status" name="status" required class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
                  focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
           <option value="">Select Status</option>
-          <option value="Main">Main</option>
-          <option value="Active">Active</option>
-          <option value="InActive">InActive</option>
-          <option value="Ready">Ready</option>
-          <option value="NotReady">NotReady</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">InActive</option>
+          <option value="READY">Ready</option>
+          <option value="NOTREADY">NotReady</option>
         </select>
       </div>
 
@@ -151,14 +150,14 @@
 
         if (!res.ok) {
           const err = await res.json();
-          formErrors.textContent = err.message || "Gagal menyimpan data.";
+          formErrors.textContent = err.message || "Failed to save data.";
           formErrors.classList.remove("hidden");
         } else {
-          // redirect ke index page setelah sukses
+          // redirect to index page after success
           window.location.href = "/Pinpad/Index";
         }
       } catch (error) {
-        formErrors.textContent = "Terjadi kesalahan koneksi ke server.";
+        formErrors.textContent = "A server connection error occurred.";
         formErrors.classList.remove("hidden");
       }
     });

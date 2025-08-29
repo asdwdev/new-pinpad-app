@@ -31,10 +31,10 @@
 
                     <!-- Cabang Induk -->
                     <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Main Branch:</label>
                         <select id="cabangIndukSelect"
                             class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                            <option value="">--Select Cabang Induk--</option>
+                            <option value="">--Select Main Branch--</option>
                         </select>
                     </div>
 
@@ -104,7 +104,7 @@
 <div class="mb-4">
     <a href="/Branch/Create"
         class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md shadow text-sm font-medium transition-colors inline-flex items-center">
-        <span class="mr-1 font-bold text-lg">+</span> Tambah Branch
+        <span class="mr-1 font-bold text-lg">+</span> Add Branch
     </a>
 </div>
 
@@ -413,7 +413,7 @@
             if (regional) {
                 loadCabangInduk(regional);
             } else {
-                $('#cabangIndukSelect').empty().append('<option value="">--Select Cabang Induk--</option>');
+                $('#cabangIndukSelect').empty().append('<option value="">--Select Main Branch--</option>');
                 $('#outletSelect').empty().append('<option value="">--Select Outlet--</option>');
             }
         });
@@ -475,7 +475,7 @@
                     const cabangs = [...new Set(filteredBranches.map(b => b.ctrlbr).filter(Boolean))];
 
                     const $select = $('#cabangIndukSelect');
-                    $select.empty().append('<option value="">--Select Cabang Induk--</option>');
+                    $select.empty().append('<option value="">--Select Main Branch--</option>');
                     cabangs.forEach(cb => {
                         $select.append(`<option value="${cb}">${cb}</option>`);
                     });

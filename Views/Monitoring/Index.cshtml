@@ -29,10 +29,10 @@
 
                 <!-- Cabang Induk -->
                 <div>
-                    <label class="block text-gray-700 text-sm font-medium mb-2">Cabang Induk:</label>
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Main Branch:</label>
                     <select id="cabangIndukSelect"
                         class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-teal-500 focus:border-transparent transition-all">
-                        <option value="">--Select Cabang Induk--</option>
+                        <option value="">--Select Main Branch--</option>
                     </select>
                 </div>
 
@@ -181,7 +181,7 @@
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
                             data-column="cabangInduk">
                             <div class="flex items-center justify-between">
-                                <span>Cabang Induk</span>
+                                <span>Main Branch</span>
                                 <div class="sort-indicator ml-2">
                                     <i class="fa fa-sort text-gray-400"></i>
                                 </div>
@@ -190,7 +190,7 @@
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
                             data-column="kodeOutlet">
                             <div class="flex items-center justify-between">
-                                <span>Kode Outlet</span>
+                                <span>Outlet Code</span>
                                 <div class="sort-indicator ml-2">
                                     <i class="fa fa-sort text-gray-400"></i>
                                 </div>
@@ -244,7 +244,7 @@
                         <th class="px-4 py-3 font-semibold cursor-pointer hover:bg-gray-200 transition-colors whitespace-nowrap border-b border-gray-200"
                             data-column="statusPinpad">
                             <div class="flex items-center justify-between">
-                                <span>Status Pinpad</span>
+                                <span>Pinpad Status</span>
                                 <div class="sort-indicator ml-2">
                                     <i class="fa fa-sort text-gray-400"></i>
                                 </div>
@@ -575,26 +575,26 @@
 
                 data.forEach(item => {
                     const row = `
-                                                                                                                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3">
-                                                                                                                                        <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
-                                                                                                                                            ${item.statusPinpad || '-'}
-                                                                                                                                        </span>
-                                                                                                                                    </td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
-                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
-                                                                                                                                </tr>
-                                                                                                                            `;
+                                                                                                                                                                <tr class="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.regional || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.cabangInduk || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.kodeOutlet || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.location || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.registerDate ? formatDate(item.registerDate) : '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.updateDate ? formatDate(item.updateDate) : '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.serialNumber || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.tid || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3">
+                                                                                                                                                                        <span class="inline-block px-2 py-1 text-xs font-medium rounded-full ${getStatusClass(item.statusPinpad)}">
+                                                                                                                                                                            ${item.statusPinpad || '-'}
+                                                                                                                                                                        </span>
+                                                                                                                                                                    </td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.createBy || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipLow || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900 font-mono">${item.ipHigh || '-'}</td>
+                                                                                                                                                                    <td class="px-4 py-3 text-gray-900">${item.lastActivity ? formatDate(item.lastActivity) : '-'}</td>
+                                                                                                                                                                </tr>
+                                                                                                                                                            `;
                     $tbody.append(row);
                 });
             }
@@ -650,13 +650,13 @@
                 function addPageButton(page) {
                     const isActive = page === currentPage;
                     const $btn = $(`
-                                                                                                                                <button class="page-btn px-3 py-1 border rounded text-sm transition-colors ${isActive
+                                                                                                                                                                <button class="page-btn px-3 py-1 border rounded text-sm transition-colors ${isActive
                             ? 'bg-blue-500 text-white border-blue-500'
                             : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
                         }" data-page="${page}">
-                                                                                                                                    ${page}
-                                                                                                                                </button>
-                                                                                                                            `);
+                                                                                                                                                                    ${page}
+                                                                                                                                                                </button>
+                                                                                                                                                            `);
                     $pageNumbers.append($btn);
                 }
             }
@@ -680,28 +680,28 @@
 
             function showNoDataMessage() {
                 $('#tableBody').html(`
-                                                                                                                            <tr>
-                                                                                                                                <td colspan="13" class="text-center py-12 text-gray-500">
-                                                                                                                                    <div class="flex flex-col items-center space-y-3">
-                                                                                                                                        <p class="text-xl font-medium text-gray-600">No data to display</p>
-                                                                                                                                        <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
-                                                                                                                                    </div>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                        `);
+                                                                                                                                                            <tr>
+                                                                                                                                                                <td colspan="13" class="text-center py-12 text-gray-500">
+                                                                                                                                                                    <div class="flex flex-col items-center space-y-3">
+                                                                                                                                                                        <p class="text-xl font-medium text-gray-600">No data to display</p>
+                                                                                                                                                                        <p class="text-sm text-gray-500">Please use the search form above to filter and view data</p>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </td>
+                                                                                                                                                            </tr>
+                                                                                                                                                        `);
             }
 
             function showErrorMessage(message) {
                 $('#tableBody').html(`
-                                                                                                                            <tr>
-                                                                                                                                <td colspan="13" class="text-center py-8 text-red-500">
-                                                                                                                                    <div class="flex flex-col items-center space-y-2">
-                                                                                                                                        <p class="text-sm font-medium">${message}</p>
-                                                                                                                                        <p class="text-xs">Please try again later</p>
-                                                                                                                                    </div>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                        `);
+                                                                                                                                                            <tr>
+                                                                                                                                                                <td colspan="13" class="text-center py-8 text-red-500">
+                                                                                                                                                                    <div class="flex flex-col items-center space-y-2">
+                                                                                                                                                                        <p class="text-sm font-medium">${message}</p>
+                                                                                                                                                                        <p class="text-xs">Please try again later</p>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </td>
+                                                                                                                                                            </tr>
+                                                                                                                                                        `);
             }
 
             function sortData(data) {
@@ -783,16 +783,19 @@
                 if (!status) return 'bg-gray-100 text-gray-800';
 
                 switch (status.toLowerCase()) {
-                    case 'active':
                     case 'ready':
                         return 'bg-green-100 text-green-800';
-                    case 'inactive':
                     case 'notready':
-                        return 'bg-red-100 text-red-800';
+                        return 'bg-yellow-100 text-yellow-800';
+                    case 'active':
+                        return 'bg-blue-100 text-blue-800';
+                    case 'inactive':
+                        return 'bg-gray-200 text-gray-800';
                     default:
                         return 'bg-gray-100 text-gray-800';
                 }
             }
+
 
             function loadRegional() {
                 $.ajax({
@@ -916,10 +919,10 @@
             function showNotification(message, type) {
                 const bgClass = type === 'success' ? 'bg-green-500' : 'bg-red-500';
                 const notification = $(`
-                                                                                                                            <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${bgClass} text-white">
-                                                                                                                                ${message}
-                                                                                                                            </div>
-                                                                                                                        `);
+                                                                                                                                                            <div class="fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${bgClass} text-white">
+                                                                                                                                                                ${message}
+                                                                                                                                                            </div>
+                                                                                                                                                        `);
 
                 $('body').append(notification);
                 setTimeout(() => {

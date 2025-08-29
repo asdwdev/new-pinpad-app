@@ -38,11 +38,10 @@
                 <select id="status" name="status" required class="block w-full rounded-lg border border-gray-300 px-3 py-2.5 text-gray-800
                  focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent">
                     <option value="">Select Status</option>
-                    <option value="Main">Main</option>
-                    <option value="Active">Active</option>
-                    <option value="InActive">InActive</option>
-                    <option value="Ready">Ready</option>
-                    <option value="NotReady">NotReady</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="INACTIVE">InActive</option>
+                    <option value="READY">Ready</option>
+                    <option value="NOTREADY">NotReady</option>
                 </select>
             </div>
 
@@ -163,10 +162,10 @@
             };
 
             try {
-                // tampilkan loading alert
+                // show loading alert
                 Swal.fire({
-                    title: 'Menyimpan...',
-                    text: 'Mohon tunggu sebentar',
+                    title: 'Saving...',
+                    text: 'Please wait a moment',
                     allowOutsideClick: false,
                     didOpen: () => {
                         Swal.showLoading();
@@ -183,14 +182,14 @@
                     const err = await res.json();
                     Swal.fire({
                         icon: "error",
-                        title: "Gagal",
-                        text: err.message || "Gagal menyimpan perubahan."
+                        title: "Failed",
+                        text: err.message || "Failed to save changes."
                     });
                 } else {
                     Swal.fire({
                         icon: "success",
-                        title: "Berhasil",
-                        text: "Data berhasil diperbarui.",
+                        title: "Success",
+                        text: "Data has been successfully updated.",
                         confirmButtonText: "OK"
                     }).then(() => {
                         window.location.href = "/Pinpad/Index";
@@ -200,7 +199,7 @@
                 Swal.fire({
                     icon: "error",
                     title: "Error",
-                    text: "Terjadi kesalahan koneksi ke server."
+                    text: "A server connection error occurred."
                 });
             }
         });

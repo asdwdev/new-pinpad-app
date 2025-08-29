@@ -4,23 +4,23 @@
 }
 
 <div class="p-6">
-    <!-- Breadcrumb -->
+    <!-- Breadcrumb (navigasi lokasi halaman) -->
     <div class="mb-4 text-sm">
         <a href="#" class="text-teal-500 font-semibold hover:text-teal-600 transition-colors">Outlet</a> /
         <span class="text-gray-500">Inquiry</span>
     </div>
 
-    <!-- Baris 1: Tambah Outlet -->
+    <!-- Baris 1: Tombol Tambah Outlet -->
     <div class="mb-4">
         <a href="/Outlet/Create"
             class="bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-md shadow text-sm font-medium transition-colors inline-flex items-center">
-            <span class="mr-1 font-bold text-lg">+</span> Tambah Outlet
+            <span class="mr-1 font-bold text-lg">+</span> Add Outlet
         </a>
     </div>
 
     <!-- Baris 2: Show Entries (kiri) dan Search (kanan) -->
     <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-        <!-- Show Entries -->
+        <!-- Pilih jumlah data yang ditampilkan -->
         <div class="flex items-center space-x-2 mb-3 md:mb-0">
             <label for="entriesSelect" class="text-sm text-gray-700">Show</label>
             <select id="entriesSelect"
@@ -33,7 +33,7 @@
             <span class="text-sm text-gray-700">entries</span>
         </div>
 
-        <!-- Search -->
+        <!-- Kolom pencarian -->
         <div>
             <div class="flex items-center">
                 <label for="searchInput" class="text-sm text-gray-700 mr-2">Search:</label>
@@ -43,13 +43,13 @@
         </div>
     </div>
 
-    <!-- Table -->
+    <!-- Tabel data outlet -->
     <div class="bg-white shadow rounded-lg border border-gray-200 overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead class="bg-gray-100 text-gray-700 text-sm">
                 <tr>
                     <th class="px-4 py-3 font-semibold">Code</th>
-                    <th class="px-4 py-3 font-semibold">Nama Outlet</th>
+                    <th class="px-4 py-3 font-semibold">Outlet Name</th>
                     <th class="px-4 py-3 font-semibold text-center">Action</th>
                 </tr>
             </thead>
@@ -58,20 +58,23 @@
         </table>
     </div>
 
-    <!-- Pagination -->
+    <!-- Navigasi halaman (pagination) -->
     <div class="flex flex-col md:flex-row justify-between items-center mt-4">
         <div class="text-sm text-gray-600 mb-2 md:mb-0" id="tableInfo">
             Showing 1 to 2 of 2 entries
         </div>
         <div class="flex space-x-1" id="paginationButtons">
+            <!-- Tombol sebelumnya -->
             <button id="prevBtn"
                 class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
                 disabled>
                 ← Previous
             </button>
+            <!-- Nomor halaman -->
             <span id="pageNumbers" class="flex space-x-1">
                 <button class="px-3 py-1 border border-teal-500 bg-teal-500 text-white rounded-md text-sm">1</button>
             </span>
+            <!-- Tombol berikutnya -->
             <button id="nextBtn"
                 class="px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-100 text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-white text-gray-700 font-medium"
                 disabled>
@@ -80,7 +83,6 @@
         </div>
     </div>
 </div>
-
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

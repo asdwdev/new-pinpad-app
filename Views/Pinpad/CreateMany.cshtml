@@ -9,7 +9,7 @@
         <nav style="margin-bottom: 32px;" aria-label="Breadcrumb">
             <a href="#" style="color: #0d9488; text-decoration: none; font-size: 14px;">Pinpad</a>
             <span style="margin: 0 8px; color: #9ca3af;">/</span>
-            <span style="color: #6b7280; font-size: 14px;">Tambah Banyak Pinpad</span>
+            <span style="color: #6b7280; font-size: 14px;">Add Multiple Pinpads</span>
         </nav>
 
         <!-- Upload Box -->
@@ -202,20 +202,20 @@
         if (rows.length === 0) {
             Swal.fire({
                 icon: "warning",
-                title: "Tidak ada data",
-                text: "Tidak ada data untuk disimpan"
+                title: "No Data",
+                text: "There is no data to save"
             });
             return;
         }
 
-        // 🔥 konfirmasi dulu
+        // 🔥 ask for confirmation first
         const confirm = await Swal.fire({
-            title: "Yakin simpan data?",
-            text: "Data akan disimpan ke database",
+            title: "Are you sure you want to save the data?",
+            text: "The data will be saved to the database",
             icon: "question",
             showCancelButton: true,
-            confirmButtonText: "Ya, simpan",
-            cancelButtonText: "Batal"
+            confirmButtonText: "Yes, save",
+            cancelButtonText: "Cancel"
         });
 
         if (!confirm.isConfirmed) return; // batal
@@ -235,17 +235,17 @@
             if (data.ok) {
                 Swal.fire({
                     icon: "success",
-                    title: "Berhasil",
+                    title: "Success",
                     text: data.message,
                     confirmButtonText: "OK"
                 }).then(() => {
-                    // redirect kalau perlu
+                    // redirect if needed
                     window.location.href = "/Pinpad/Index";
                 });
             } else {
                 Swal.fire({
                     icon: "error",
-                    title: "Gagal",
+                    title: "Failed",
                     text: data.message
                 });
             }
@@ -255,7 +255,7 @@
             Swal.fire({
                 icon: "error",
                 title: "Error",
-                text: "Error saat simpan ke database."
+                text: "An error occurred while saving to the database."
             });
         }
     });
@@ -291,8 +291,8 @@
                 $("#downloadLoading").addClass("hidden");
                 Swal.fire({
                     icon: "error",
-                    title: "Gagal",
-                    text: "Tidak bisa download template"
+                    title: "Failed",
+                    text: "Unable to download the template"
                 });
             }
         });
